@@ -1,6 +1,6 @@
 # tmc-web-client
 
-[![Build Status](https://travis-ci.org/kesapojat/tmc-web-client.svg)](https://travis-ci.org/kesapojat/tmc-web-client)
+[![Build Status](https://travis-ci.org/kesapojat/tmc-web-client.svg?branch=master)](https://travis-ci.org/kesapojat/tmc-web-client/)
 
 Web client for TMC. Structure: JavaScript + Node.js + Grunt.
 
