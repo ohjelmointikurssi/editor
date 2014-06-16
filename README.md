@@ -1,6 +1,6 @@
-# js-library
+# tmc-web-client
 
-Structure for a JavaScript library (JavaScript + Node.js + Grunt).
+Web client for TMC. Structure: JavaScript + Node.js + Grunt.
 
 ## Install Dependencies
 
