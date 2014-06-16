@@ -6,7 +6,7 @@ notifications:
 
     irc:
         channels:
-            - 'ircnet.eversible.com#kesäpojat'
+            - 'ircnet.eversible.com#kesapojat-ci'
         on_success: change
         use_notice: true
         skip_join: true
