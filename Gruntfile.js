@@ -99,15 +99,6 @@ module.exports = function (grunt) {
                     }
                 }
             }
-        },
-
-        coveralls: {
-
-            options: {
-
-                src: 'coverage/lcov.info'
-
-            }
         }
     });
 
@@ -118,7 +109,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-coveralls');
 
     /* Register tasks */
 
