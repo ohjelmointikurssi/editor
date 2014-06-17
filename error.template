@@ -1,15 +1,12 @@
+<html>
+    <head>
+        <title>{{status}}</title>
+    </head>
+    <body>
 
-<!-- saved from url=(0078)https://raw.githubusercontent.com/codebrowser/web-client/master/error.template -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css"></style></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">&lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;{{status}}&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
+        <center><h1>{{status}}</h1></center>
 
-        &lt;center&gt;&lt;h1&gt;{{status}}&lt;/h1&gt;&lt;/center&gt;
+        <hr>
 
-        &lt;hr&gt;
-
-    &lt;/body&gt;
-&lt;/html&gt;
-</pre></body></html>
+    </body>
+</html>
