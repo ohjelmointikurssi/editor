@@ -20,6 +20,12 @@ module.exports = function (grunt) {
                 files: 'spec/**/*.js',
                 tasks: 'jshint:spec',
 
+            },
+
+            sass: {
+
+                files: 'src/css/*.scss',
+                tasks: 'sass',
             }
         },
 
