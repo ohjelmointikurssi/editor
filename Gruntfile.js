@@ -80,7 +80,7 @@ module.exports = function (grunt) {
 
         jasmine: {
 
-            src: 'src/**/*.js',
+            src: [ 'src/tmc-web-client.js', 'src/*.js' ],
             options: {
 
                 specs: 'spec/**/*-spec.js',
