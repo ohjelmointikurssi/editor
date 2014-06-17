@@ -1,6 +1,6 @@
-TMCWebClient.editor = function (container) {
+TMCWebClient.editor = function (container, exercise) {
 
-    function init(container) {
+    function init(container, exercise) {
 
         var editor = ace.edit(container);
 
@@ -11,14 +11,21 @@ TMCWebClient.editor = function (container) {
 
         // Text
         editor.setTheme('ace/theme/chrome');
-        editor.setFontSize(12);
+        editor.setFontSize(14);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
         editor.getSession().setWrapLimitRange(120, 120);
         editor.getSession().setMode('ace/mode/java');
 
-        editor.setValue('System.out.println("Java on kiva");\n');
+        exercise.getContent(function (content) {
+
+            editor.setValue(content);
+
+            editor.getSelection().clearSelection();
+            editor.moveCursorTo(0, 0);
+            editor.getSession().setScrollTop(0);
+        });
     }
 
-    init(container);
+    init(container, exercise);
 }

@@ -19,6 +19,8 @@
 
         "$": true,
         "ace": true,
+        "JSZip": true,
+        "JSZipUtils": true,
         "TMCWebClient": true
 
     }
