@@ -9,20 +9,22 @@
 	</head>
 
 	<body>
+
         <div data-type='tmc-exercise' data-id='1'></div>
+
+        <!-- JS -->
+        <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+        <script src='assets/js/tmc-web-client-1.1.0-SNAPSHOT.js'></script>
+
+        <script>
+
+            $(function () {
+
+                TMCWebClient.init();
+            });
+
+        </script>
+
 	</body>
-
-    <!-- JS -->
-    <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-    <script src='assets/js/tmc-web-client-1.1.0-SNAPSHOT.js'></script>
-
-    <script>
-
-        $(function () {
-
-            TMCWebClient.init();
-        });
-
-    </script>
 
 </html>
