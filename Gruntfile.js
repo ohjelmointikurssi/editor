@@ -101,6 +101,18 @@ module.exports = function (grunt) {
             }
         },
 
+        sass: {
+
+            dist: {
+
+                files: {
+
+                    'demo/assets/css/tmc-web-client.css': 'src/css/tmc-web-client.scss'
+
+                }
+            }
+        },
+
         copy: {
 
             assets: {
@@ -122,11 +134,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     /* Register tasks */
 
     grunt.registerTask('test', [ 'jshint', 'jasmine' ]);
-    grunt.registerTask('build', [ 'concat', 'uglify', 'copy' ]);
+    grunt.registerTask('build', [ 'concat', 'uglify', 'sass', 'copy' ]);
     grunt.registerTask('default', [ 'test', 'build' ]);
 }

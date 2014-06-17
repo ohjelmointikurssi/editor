@@ -5,6 +5,7 @@
 # Project
 
 .grunt/
+.sass-cache/
 _SpecRunner.html
 coverage/
 dist/
