@@ -99,6 +99,19 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+
+        copy: {
+
+            assets: {
+
+                expand: true,
+                flatten: true,
+                src: 'dist/*.js',
+                dest: 'demo/assets/js/',
+                filter: 'isFile'
+
+            }
         }
     });
 
@@ -109,10 +122,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     /* Register tasks */
 
     grunt.registerTask('test', [ 'jshint', 'jasmine' ]);
-    grunt.registerTask('build', [ 'concat', 'uglify' ]);
+    grunt.registerTask('build', [ 'concat', 'uglify', 'copy' ]);
     grunt.registerTask('default', [ 'test', 'build' ]);
 }

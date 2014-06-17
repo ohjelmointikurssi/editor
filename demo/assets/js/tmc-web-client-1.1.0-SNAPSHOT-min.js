@@ -1,0 +1,1 @@
+var TMCWebClient=function(){var a={};return a.init=function(){console.log("Ready!")},a}();
