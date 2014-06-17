@@ -27,7 +27,7 @@ module.exports = function (grunt) {
 
             dist: {
 
-                src: [ 'src/tmc-web-client.js', 'src/*.js' ],
+                src: [ 'src/tmc-web-client.js', 'src/**/*.js' ],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js',
                 options: {
 
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
 
         jasmine: {
 
-            src: [ 'src/tmc-web-client.js', 'src/*.js' ],
+            src: [ 'src/tmc-web-client.js', 'src/**/*.js' ],
             options: {
 
                 specs: 'spec/**/*-spec.js',
