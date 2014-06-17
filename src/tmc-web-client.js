@@ -16,7 +16,7 @@ var TMCWebClient = (function () {
 
         $(container).append(editorContainer);
 
-        new _module.editor(editorContainer.get(0), new _module.exercise(2350));
+        new _module.editor(editorContainer.get(0), new _module.exercise($(container).data('id')));
     }
 
     _module.init = function () {

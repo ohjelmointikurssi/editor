@@ -17,8 +17,9 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setWrapLimitRange(120, 120);
         editor.getSession().setMode('ace/mode/java');
 
-        exercise.getContent(function (content) {
+        exercise.fetch(function () {
 
+            var content = exercise.getFile('viikko1/Viikko1_001.Nimi/src/Nimi.java').asText();
             editor.setValue(content);
 
             editor.getSelection().clearSelection();
