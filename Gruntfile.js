@@ -27,7 +27,7 @@ module.exports = function (grunt) {
 
             dist: {
 
-                src: 'src/**/*.js',
+                src: [ 'src/tmc-web-client.js', 'src/*.js' ],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js',
                 options: {
 

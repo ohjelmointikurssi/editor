@@ -18,7 +18,8 @@
     "globals": {
 
         "$": true,
-        "ace": true
+        "ace": true,
+        "TMCWebClient": true
 
     }
 }
