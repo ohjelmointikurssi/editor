@@ -10,7 +10,3 @@ _SpecRunner.html
 coverage/
 dist/
 node_modules/
-
-# Assume Unchanged
-
-nbproject/
