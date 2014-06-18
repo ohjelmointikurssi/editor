@@ -1,0 +1,9 @@
+<section>
+
+    {{#files}}
+
+        {{name}}
+
+    {{/files}}
+
+</section>

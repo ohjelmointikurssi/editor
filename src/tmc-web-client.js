@@ -11,12 +11,9 @@ var TMCWebClient = (function () {
 
     function initEditors(containers) {
 
-        var container = containers[0],
-            editorContainer = $('<div/>').addClass('tmc-exercise');
+        var container = containers[0];
 
-        $(container).append(editorContainer);
-
-        new _module.editor(editorContainer.get(0), new _module.exercise($(container).data('id')));
+        new _module.editor(container, new _module.exercise($(container).data('id')));
     }
 
     _module.init = function () {
