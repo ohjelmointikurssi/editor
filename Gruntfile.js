@@ -156,9 +156,10 @@ module.exports = function (grunt) {
 
         jasmine: {
 
-            src: [ 'src/<%= pkg.name %>.js', 'src/**/*.js' ],
+            src: [ 'dist/<%= pkg.name %>-templates.js', 'src/<%= pkg.name %>.js', 'src/**/*.js' ],
             options: {
 
+                vendor: [ 'http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.runtime.min.js' ],
                 specs: 'spec/**/*-spec.js',
                 template: require('grunt-template-jasmine-istanbul'),
                 templateOptions: {
