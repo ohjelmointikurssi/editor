@@ -23,7 +23,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function changeFile() {
 
-        var filename = $(this).html(),
+        var filename = $(this).attr('data-id'),
             content = _exercise.getFile(filename).asText();
 
         show(content);
