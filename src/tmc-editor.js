@@ -66,6 +66,8 @@ TMCWebClient.editor = function (container, exercise) {
 
             render(files);
             show(content);
+
+            $('.tmc-exercise .tab-bar li').first().addClass('active');
         });
     }
 

@@ -1,6 +1,6 @@
 TMCWebClient.exercise = function (id) {
 
-    this.baseUrl = 'http://tmc.josalmi.fi/exercises/';
+    this.baseUrl = 'http://tmc-kesapojat.jamo.io/exercises/';
     this.id = id;
 }
 
