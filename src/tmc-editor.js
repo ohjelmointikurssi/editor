@@ -1,7 +1,9 @@
 TMCWebClient.editor = function (container, exercise) {
 
-    var _template = Handlebars.templates.EditorFilebrowser;
-    var _container = container;
+    var _template = Handlebars.templates.EditorFilebrowser,
+        _container = container,
+        _exercise = exercise,
+        _editor;
 
     function configure(editor) {
 
@@ -19,34 +21,47 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setMode('ace/mode/java');
     }
 
+    function changeFile() {
+
+        var filename = $(this).html(),
+            content = _exercise.getFile(filename).asText();
+
+        show(content);
+    }
+
     function render(files) {
 
         $(_container).append(_template({ files: files }));
+
+        $('li').click(changeFile);
     }
 
-    function init(exercise) {
+    function show(content) {
+
+        _editor.setValue(content);
+
+        _editor.getSelection().clearSelection();
+        _editor.moveCursorTo(0, 0);
+        _editor.getSession().setScrollTop(0);
+    }
+
+    function init() {
 
         var editorContainer = $('<div/>').addClass('tmc-exercise');
         $(_container).append(editorContainer);
 
-        var editor = ace.edit(editorContainer.get(0));
+        _editor = ace.edit(editorContainer.get(0));
+        configure(_editor);
 
-        configure(editor);
+        _exercise.fetch(function () {
 
-        exercise.fetch(function () {
-
-            var files = exercise.getFilesFromSource();
+            var files = _exercise.getFilesFromSource(),
+                content = files[0].asText();
 
             render(files);
-
-            var content = files[0].asText();
-            editor.setValue(content);
-
-            editor.getSelection().clearSelection();
-            editor.moveCursorTo(0, 0);
-            editor.getSession().setScrollTop(0);
+            show(content);
         });
     }
 
-    init(exercise);
+    init();
 }

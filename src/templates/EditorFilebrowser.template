@@ -1,9 +1,11 @@
 <section>
 
-    {{#files}}
+    <ul>
+        {{#files}}
 
-        {{name}}
+            <li>{{name}}</li>
 
-    {{/files}}
+        {{/files}}
+    </ul>
 
 </section>
