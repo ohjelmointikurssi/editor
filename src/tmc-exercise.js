@@ -1,6 +1,6 @@
 TMCWebClient.exercise = function (id) {
 
-    this.baseUrl = 'http://tmc.josalmi.fi/exercises/';
+    this.baseUrl = 'http://tmc-kesapojat.jamo.io/exercises/';
     this.id = id;
 }
 
@@ -18,6 +18,36 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
 
         callback();
     });
+}
+
+TMCWebClient.exercise.prototype.submit = function (callback) {
+
+    if (this.zip === undefined) {
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('api_version', 7);
+    formData.append('commit', 'Submit');
+    formData.append('submission[file]', this.getZipBlob());
+
+    $.ajax({
+        data: formData,
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        url: this.baseUrl + this.id + '/submissions.json',
+        username: 'webclient',
+        password: 'tmc-webclient',
+        beforeSend: TMCWebClient.xhrBasicAuthentication,
+        success: callback
+    });
+
+}
+
+TMCWebClient.exercise.prototype.getZipBlob = function () {
+
+    return this.zip.generate({type: 'blob'});
 }
 
 TMCWebClient.exercise.prototype.getFiles = function () {

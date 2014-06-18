@@ -19,6 +19,9 @@
 
         "$": true,
         "ace": true,
+        "Blob": true,
+        "btoa": true,
+        "FormData": true,
         "Handlebars": true,
         "JSZip": true,
         "JSZipUtils": true,
