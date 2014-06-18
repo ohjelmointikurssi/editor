@@ -32,5 +32,5 @@ TMCWebClient.exercise.prototype.getFile = function (filename) {
 
 TMCWebClient.exercise.prototype.getFilesFromSource = function() {
 
-    return this.zip.file(/\/src\//);
+    return this.zip.file(/\/src(?!\/\.).*/);
 }
