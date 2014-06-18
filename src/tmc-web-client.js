@@ -9,17 +9,19 @@ var TMCWebClient = (function () {
         return $('[data-type="tmc-exercise"]');
     }
 
-    function initEditors(containers) {
+    function initialiseEditors(containers) {
 
+        // Get exercise container
         var container = containers[0];
         $(container).addClass('tmc-exercise');
 
+        // Create editor
         new _module.editor(container, new _module.exercise($(container).data('id')));
     }
 
-    _module.init = function () {
+    _module.initialise = function () {
 
-        initEditors(findExerciseContainers());
+        initialiseEditors(findExerciseContainers());
     }
 
     return _module;
