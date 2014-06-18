@@ -23,7 +23,12 @@ TMCWebClient.editor = function (container, exercise) {
 
     function changeFile() {
 
-        var filename = $(this).attr('data-id'),
+        $('.tmc-exercise .tab-bar li').removeClass('active');
+
+        var element = $(this);
+        element.addClass('active');
+
+        var filename = element.attr('data-id'),
             content = _exercise.getFile(filename).asText();
 
         show(content);
@@ -33,7 +38,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         $(_container).prepend(_template({ files: files }));
 
-        $('li').click(changeFile);
+        $('.tmc-exercise .tab-bar li').click(changeFile);
     }
 
     function show(content) {
