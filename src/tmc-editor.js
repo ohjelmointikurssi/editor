@@ -14,7 +14,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Text
         editor.setTheme('ace/theme/chrome');
-        editor.setFontSize(14);
+        editor.setFontSize(12);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
         editor.getSession().setWrapLimitRange(120, 120);
@@ -31,7 +31,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function render(files) {
 
-        $(_container).append(_template({ files: files }));
+        $(_container).prepend(_template({ files: files }));
 
         $('li').click(changeFile);
     }
@@ -47,7 +47,8 @@ TMCWebClient.editor = function (container, exercise) {
 
     function init() {
 
-        var editorContainer = $('<div/>').addClass('tmc-exercise');
+        var editorContainer = $('<div/>');
+
         $(_container).append(editorContainer);
 
         _editor = ace.edit(editorContainer.get(0));

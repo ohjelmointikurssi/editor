@@ -1,11 +1,7 @@
-<section>
+<ul class='tab-bar'>
 
-    <ul>
-        {{#files}}
+    {{#files}}
+        <li>{{name}}</li>
+    {{/files}}
 
-            <li>{{name}}</li>
-
-        {{/files}}
-    </ul>
-
-</section>
+</ul>

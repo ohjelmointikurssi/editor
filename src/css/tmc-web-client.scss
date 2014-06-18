@@ -2,7 +2,33 @@
 
     width: 800px;
     height: 600px;
-    border: 1px solid lightgray;
-    border-radius: 4px;
+    font-family: 'Helvetica Neue', sans-serif;
 
+    .ace_editor {
+
+        width: 100%;
+        height: 100%;
+        border: 1px solid lightgray;
+
+    }
+
+    .tab-bar {
+
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        color: #555;
+
+        li {
+
+            display: inline-block;
+            overflow-x: hidden;
+            width: 100px;
+            padding: 10px 15px;
+            border: 1px solid lightgray;
+            border-bottom: 0;
+            border-radius: 4px 4px 0 0;
+
+        }
+    }
 }
