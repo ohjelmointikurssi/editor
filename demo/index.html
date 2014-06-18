@@ -9,11 +9,26 @@
         <!-- CSS -->
         <link rel='stylesheet' href='assets/css/tmc-web-client.css' />
 
+        <style>
+
+            #container {
+
+                width: 800px;
+                margin: 0 auto;
+
+            }
+
+        </style>
+
 	</head>
 
 	<body>
 
-        <div data-type='tmc-exercise' data-id='2725'></div>
+        <div id='container'>
+
+            <div data-type='tmc-exercise' data-id='2725'></div>
+
+        </div>
 
         <!-- JS -->
 
@@ -28,7 +43,7 @@
 
             $(function () {
 
-                TMCWebClient.init();
+                TMCWebClient.initialise();
             });
 
         </script>

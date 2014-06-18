@@ -8,6 +8,7 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
 
     var self = this;
 
+    // Fetch exercise as zip
     JSZipUtils.getBinaryContent(this.baseUrl + this.id + '.zip', function (error, data) {
 
         if (error) {

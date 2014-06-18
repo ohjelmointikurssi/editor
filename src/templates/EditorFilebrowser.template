@@ -1,9 +1,9 @@
-<section>
+<h3>{{title}}</h3>
+
+<ul class='tab-bar'>
 
     {{#files}}
-
-        {{name}}
-
+        <li data-id="{{name}}">{{filename name}}</li>
     {{/files}}
 
-</section>
+</ul>
