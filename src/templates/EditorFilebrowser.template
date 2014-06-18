@@ -1,7 +1,7 @@
 <ul class='tab-bar'>
 
     {{#files}}
-        <li>{{name}}</li>
+        <li data-id="{{name}}">{{filename name}}</li>
     {{/files}}
 
 </ul>
