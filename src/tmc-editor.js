@@ -56,8 +56,17 @@ TMCWebClient.editor = function (container, exercise) {
 
     function render(files) {
 
+        console.log(files);
+
+        var attributes = {
+
+            title: files[0].name.split('/')[1],
+            files: files
+
+        }
+
         // Render filebrowser
-        $(_container).prepend(_template.filebrowser({ files: files }));
+        $(_container).prepend(_template.filebrowser(attributes));
 
         // Add click events to tabs
         $('.tmc-exercise .tab-bar li').click(changeFile);
