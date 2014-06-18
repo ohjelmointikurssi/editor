@@ -150,7 +150,7 @@ module.exports = function (grunt) {
 
         clean: {
 
-            build: [ 'build/', 'coverage/', 'demo/assets/' ]
+            build: [ 'dist/', 'coverage/', 'demo/assets/' ]
 
         },
 
