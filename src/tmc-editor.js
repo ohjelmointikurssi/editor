@@ -19,7 +19,9 @@ TMCWebClient.editor = function (container, exercise) {
 
         exercise.fetch(function () {
 
-            var content = exercise.getFile('viikko1/Viikko1_001.Nimi/src/Nimi.java').asText();
+            var files = exercise.getFilesFromSource();
+
+            var content = files[0].asText();
             editor.setValue(content);
 
             editor.getSelection().clearSelection();

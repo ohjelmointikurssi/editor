@@ -1,6 +1,6 @@
 TMCWebClient.exercise = function (id) {
 
-    this.baseUrl = 'http://tmc.josalmi.fi/';
+    this.baseUrl = 'http://tmc.josalmi.fi/exercises/';
     this.id = id;
 }
 
@@ -28,4 +28,9 @@ TMCWebClient.exercise.prototype.getFiles = function () {
 TMCWebClient.exercise.prototype.getFile = function (filename) {
 
     return this.zip.file(filename);
+}
+
+TMCWebClient.exercise.prototype.getFilesFromSource = function() {
+
+    return this.zip.file(/\/src(?!\/\.).*/);
 }
