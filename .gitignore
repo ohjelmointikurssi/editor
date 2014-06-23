@@ -11,4 +11,4 @@ coverage/
 demo/assets/
 dist/
 node_modules/
-nbproject/
+nbproject/private/
