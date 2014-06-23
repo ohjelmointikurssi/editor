@@ -9,6 +9,8 @@ TMCWebClient.output = function (container) {
     // Create container for submission results
     this._outputContainer = $('<div/>');
 
+    this._outputContainer.addClass('tmc-output');
+
     $(container).append(this._outputContainer);
 }
 
