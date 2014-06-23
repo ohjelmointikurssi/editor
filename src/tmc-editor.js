@@ -52,6 +52,40 @@ TMCWebClient.editor = function (container, exercise) {
             // Set active tab
             $('.tmc-exercise .tab-bar li').first().addClass('active');
         });
+
+        createSubmitHandler();
+    }
+
+    function createSubmitHandler() {
+
+        var submitButton = $('<button/>').text('Submit');
+        submitButton.on('click', function() {
+            
+            saveActiveFile();
+            _exercise.submit(function(data) {
+                
+                var intervalId = setInterval(function() {
+
+                    /* jshint camelcase:false */
+                    $.ajax(data.submission_url, {
+                        beforeSend: TMCWebClient.xhrBasicAuthentication,
+                        dataType: 'json',
+                        success: function(data) {
+
+                            if (data.status !== 'processing') {
+                                clearInterval(intervalId);
+                                console.log(data);
+                            } else {
+                                console.log(data.status);
+                            }
+                        }
+                    });
+                    /* jshint camelcase:true */
+                }, 1000);
+            });
+        });
+
+        $(_container).append(submitButton);
     }
 
     function render(files) {
@@ -87,6 +121,8 @@ TMCWebClient.editor = function (container, exercise) {
 
     function changeFile() {
 
+        saveActiveFile();
+
         var element = $(this);
 
         // Clear previous active tab
@@ -100,6 +136,12 @@ TMCWebClient.editor = function (container, exercise) {
             content = _exercise.getFile(filename).asText();
 
         show(content);
+    }
+
+    function saveActiveFile() {
+
+        var filename = $('.tmc-exercise .tab-bar li.active').attr('data-id');
+        _exercise.saveFile(filename, _editor.getValue());
     }
 
     initialise();

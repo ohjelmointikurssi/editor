@@ -65,3 +65,8 @@ TMCWebClient.exercise.prototype.getFilesFromSource = function() {
 
     return this.zip.file(/\/src(?!\/\.).*/);
 }
+
+TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
+
+    this.zip.file(filename, content);
+}
