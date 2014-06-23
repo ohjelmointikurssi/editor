@@ -56,8 +56,6 @@ TMCWebClient.editor = function (container, exercise) {
 
     function render(files) {
 
-        console.log(files);
-
         var attributes = {
 
             title: files[0].name.split('/')[1],
