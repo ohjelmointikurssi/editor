@@ -8,6 +8,8 @@ TMCWebClient.editor = function (container, exercise) {
 
         _container = container,
         _editor,
+        _output,
+        _submitButton,
         _exercise = exercise;
 
     function configure(editor) {
@@ -40,7 +42,7 @@ TMCWebClient.editor = function (container, exercise) {
         configure(_editor);
 
         // Fetch exercise
-        _exercise.fetch(function () {
+        _exercise.fetchZip(function () {
 
             var files = _exercise.getFilesFromSource(),
                 content = files[0].asText();
@@ -52,42 +54,75 @@ TMCWebClient.editor = function (container, exercise) {
             // Set active tab
             $(_container).find('.tab-bar li').first().addClass('active');
         });
+
+        createOutputContainer();
+    }
+
+    function createOutputContainer() {
+
+        _output = new TMCWebClient.output(_container);
     }
 
     function createSubmitHandler() {
 
-        $(_container).find('.actions .submit').first().click(function() {
+        $(_container).find('.actions .submit').first().click(submitOnClickHandler);
+    }
 
-            saveActiveFile();
-            _exercise.submit(function(data) {
+    function submitOnClickHandler() {
 
-                var intervalId = setInterval(function() {
+        _output.clear();
+        _submitButton.prop('disabled', true);
+        saveActiveFile();
 
-                    /* jshint camelcase:false */
-                    $.ajax(data.submission_url, {
-                        beforeSend: TMCWebClient.xhrBasicAuthentication,
-                        dataType: 'json',
-                        success: function(data) {
+        _exercise.submit(function(data) {
 
-                            if (data.status !== 'processing') {
-                                clearInterval(intervalId);
-                                console.log(data);
-                            } else {
-                                console.log(data.status);
-                            }
-                        }
-                    });
-                    /* jshint camelcase:true */
-                }, 1000);
-            });
+            /* jshint camelcase:false */
+            submissionPoller(data.submission_url);
+            /* jshint camelcase:true */
         });
+    }
+
+    function submissionPoller(submissionUrl) {
+
+        var intervalId = setInterval(function() {
+
+            $.ajax(submissionUrl, {
+
+                beforeSend: TMCWebClient.xhrBasicAuthentication,
+                dataType: 'json',
+
+                error: function(data) {
+
+                    clearInterval(intervalId);
+                    _submitButton.prop('disabled', false);
+                    console.log(data);
+                },
+
+                success: function(data) {
+
+                    if (data.status !== 'processing') {
+                        clearInterval(intervalId);
+                        _submitButton.prop('disabled', false);
+                        showResults(data);
+                    } else {
+                        console.log(data.status);
+                    }
+                }
+            });
+        }, 1000);
+    }
+
+    function showResults(data) {
+
+        console.log(data);
+        _output.showResults(data);
     }
 
     function render(files) {
 
         var attributes = {
 
-            title: files[0].name.split('/')[1],
+            title: _exercise.getName(),
             files: files
 
         }
