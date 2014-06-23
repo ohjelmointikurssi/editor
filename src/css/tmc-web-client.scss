@@ -61,6 +61,12 @@
 
         float: right;
 
+        i:hover {
+
+            opacity: 0.7 !important;
+
+        }
+
         i.submit {
 
             display: block;
@@ -68,6 +74,7 @@
             height: 30px;
             background-image: url('../images/submit.png');
             opacity: 0.5;
+            cursor: pointer;
 
         }
     }

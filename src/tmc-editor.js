@@ -2,14 +2,13 @@ TMCWebClient.editor = function (container, exercise) {
 
     var _template = {
 
-            filebrowser: Handlebars.templates.EditorFilebrowser
+            editor: Handlebars.templates.Editor
 
         },
 
         _container = container,
         _editor,
         _output,
-        _submitButton,
         _exercise = exercise;
 
     function configure(editor) {
@@ -71,10 +70,9 @@ TMCWebClient.editor = function (container, exercise) {
     function submitOnClickHandler() {
 
         _output.clear();
-        _submitButton.prop('disabled', true);
         saveActiveFile();
 
-        _exercise.submit(function(data) {
+        _exercise.submit(function (data) {
 
             /* jshint camelcase:false */
             submissionPoller(data.submission_url);
@@ -84,25 +82,23 @@ TMCWebClient.editor = function (container, exercise) {
 
     function submissionPoller(submissionUrl) {
 
-        var intervalId = setInterval(function() {
+        var intervalId = setInterval(function () {
 
             $.ajax(submissionUrl, {
 
                 beforeSend: TMCWebClient.xhrBasicAuthentication,
                 dataType: 'json',
 
-                error: function(data) {
+                error: function (data) {
 
                     clearInterval(intervalId);
-                    _submitButton.prop('disabled', false);
                     console.log(data);
                 },
 
-                success: function(data) {
+                success: function (data) {
 
                     if (data.status !== 'processing') {
                         clearInterval(intervalId);
-                        _submitButton.prop('disabled', false);
                         showResults(data);
                     } else {
                         console.log(data.status);
@@ -127,8 +123,8 @@ TMCWebClient.editor = function (container, exercise) {
 
         }
 
-        // Render filebrowser
-        $(_container).prepend(_template.filebrowser(attributes));
+        // Render editor
+        $(_container).prepend(_template.editor(attributes));
 
         // Add click events to tabs
         $(_container).find('.tab-bar li').click(changeFile);

@@ -4,8 +4,8 @@ TMCWebClient.exercise = function (id) {
     this._id = id;
 }
 
-TMCWebClient.exercise.prototype.fetch = function(callback) {
-    
+TMCWebClient.exercise.prototype.fetch = function (callback) {
+
     if(this.exercise !== undefined) {
         callback();
         return;
@@ -14,19 +14,23 @@ TMCWebClient.exercise.prototype.fetch = function(callback) {
     var self = this;
 
     $.ajax({
+
         beforeSend: TMCWebClient.xhrBasicAuthentication,
-        
+
         data: {
+
             'api_version' : 7
+
         },
 
-        success: function(exercise) {
+        success: function (exercise) {
 
             self._exercise = exercise;
             callback();
         },
 
         url: this._baseUrl + this._id + '.json'
+
     });
 }
 
@@ -59,6 +63,7 @@ TMCWebClient.exercise.prototype.submit = function (callback) {
     formData.append('submission[file]', this.getZipBlob());
 
     $.ajax({
+
         data: formData,
         type: 'POST',
         processData: false,
@@ -66,8 +71,8 @@ TMCWebClient.exercise.prototype.submit = function (callback) {
         url: this._baseUrl + this._id + '/submissions.json',
         beforeSend: TMCWebClient.xhrBasicAuthentication,
         success: callback
-    });
 
+    });
 }
 
 TMCWebClient.exercise.prototype.getName = function () {
@@ -79,7 +84,7 @@ TMCWebClient.exercise.prototype.getName = function () {
 
 TMCWebClient.exercise.prototype.getZipBlob = function () {
 
-    return this._zip.generate({type: 'blob'});
+    return this._zip.generate({ type: 'blob' });
 }
 
 TMCWebClient.exercise.prototype.getFiles = function () {
@@ -92,7 +97,7 @@ TMCWebClient.exercise.prototype.getFile = function (filename) {
     return this._zip.file(filename);
 }
 
-TMCWebClient.exercise.prototype.getFilesFromSource = function() {
+TMCWebClient.exercise.prototype.getFilesFromSource = function () {
 
     return this._zip.file(/\/src(?!\/\.).*/);
 }
