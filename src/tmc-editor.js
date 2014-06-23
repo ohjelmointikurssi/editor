@@ -9,6 +9,7 @@ TMCWebClient.editor = function (container, exercise) {
         _container = container,
         _editor,
         _output,
+        _intervalId,
         _exercise = exercise;
 
     function configure(editor) {
@@ -69,7 +70,9 @@ TMCWebClient.editor = function (container, exercise) {
 
     function submitOnClickHandler() {
 
-        _output.processing();
+        clearInterval(_intervalId);
+
+        _output.process();
         saveActiveFile();
 
         _exercise.submit(function (data) {
@@ -105,7 +108,9 @@ TMCWebClient.editor = function (container, exercise) {
                     }
                 }
             });
-        }, 1000);
+        }, 3000);
+
+        _intervalId = intervalId;
     }
 
     function showResults(data) {

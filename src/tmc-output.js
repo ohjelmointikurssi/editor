@@ -19,7 +19,7 @@ TMCWebClient.output.prototype.clear = function () {
     this._outputContainer.empty();
 }
 
-TMCWebClient.output.prototype.processing = function () {
+TMCWebClient.output.prototype.process = function () {
 
     this.clear();
     this._outputContainer.show();
