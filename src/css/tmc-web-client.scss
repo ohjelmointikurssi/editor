@@ -45,9 +45,10 @@
 
     h1.title {
 
+        margin-right: 15px;
         float: left;
         overflow-x: hidden;
-        width: 200px;
+        max-width: 200px;
         font-size: 14px;
         font-weight: 500;
         text-overflow: ellipsis;
