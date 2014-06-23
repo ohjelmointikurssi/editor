@@ -8,6 +8,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         _container = container,
         _editor,
+        _output,
         _submitButton,
         _exercise = exercise;
 
@@ -55,6 +56,12 @@ TMCWebClient.editor = function (container, exercise) {
         });
 
         createSubmitHandler();
+        createOutputContainer();
+    }
+
+    function createOutputContainer() {
+
+        _output = new TMCWebClient.output(_container);
     }
 
     function createSubmitHandler() {
@@ -67,8 +74,10 @@ TMCWebClient.editor = function (container, exercise) {
 
     function submitOnClickHandler() {
 
+        _output.clear();
         _submitButton.prop('disabled', true);
         saveActiveFile();
+
         _exercise.submit(function(data) {
 
             /* jshint camelcase:false */
@@ -80,13 +89,14 @@ TMCWebClient.editor = function (container, exercise) {
     function submissionPoller(submissionUrl) {
 
         var intervalId = setInterval(function() {
-            
+
             $.ajax(submissionUrl, {
+
                 beforeSend: TMCWebClient.xhrBasicAuthentication,
                 dataType: 'json',
 
                 error: function(data) {
-                    
+
                     clearInterval(intervalId);
                     _submitButton.prop('disabled', false);
                     console.log(data);
@@ -109,6 +119,7 @@ TMCWebClient.editor = function (container, exercise) {
     function showResults(data) {
 
         console.log(data);
+        _output.showResults(data);
     }
 
     function render(files) {

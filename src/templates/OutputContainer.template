@@ -1,0 +1,10 @@
+<h3>Test results</h3>
+
+<p>Status: {{status}}</p>
+
+<ul>
+
+    {{#tests}}
+        <li>{{name}} – {{message}}</li>
+    {{/tests}}
+</ul>
