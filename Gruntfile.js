@@ -131,6 +131,12 @@ module.exports = function (grunt) {
 
                     'demo/assets/css/<%= pkg.name %>.css': 'src/css/<%= pkg.name %>.scss'
 
+                },
+
+                options: {
+
+                    style: 'compressed'
+
                 }
             }
         },
