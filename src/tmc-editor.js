@@ -69,7 +69,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function submitOnClickHandler() {
 
-        _output.clear();
+        _output.processing();
         saveActiveFile();
 
         _exercise.submit(function (data) {
