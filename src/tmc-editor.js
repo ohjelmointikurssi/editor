@@ -19,7 +19,7 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setFoldStyle('markbeginend');
 
         // Text
-        editor.setTheme('ace/theme/chrome');
+        editor.setTheme('ace/theme/light');
         editor.setFontSize(12);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);

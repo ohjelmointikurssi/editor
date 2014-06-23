@@ -1,18 +1,59 @@
+/* Fonts */
+
+@font-face {
+
+    font-family: 'LiberationMono';
+    src: url('../fonts/liberation-mono/LiberationMono-Regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+
+    font-family: 'LiberationMono';
+    src: url('../fonts/liberation-mono/LiberationMono-Italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+@font-face {
+
+    font-family: 'LiberationMono';
+    src: url('../fonts/liberation-mono/LiberationMono-Bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+@font-face {
+
+    font-family: 'LiberationMono';
+    src: url('../fonts/liberation-mono/LiberationMono-BoldItalic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+
+}
+
 .tmc-exercise {
 
-    margin-bottom: 60px;
+    margin: 100px 0;
     width: 800px;
     height: 600px;
     font-family: 'Helvetica Neue', sans-serif;
 
     h1.title {
 
+        margin-right: 15px;
         float: left;
         overflow-x: hidden;
-        width: 200px;
+        max-width: 200px;
         font-size: 14px;
         font-weight: 500;
         text-overflow: ellipsis;
+        color: #555;
+
 
     }
 
@@ -21,7 +62,7 @@
         margin: 0;
         padding: 0;
         font-size: 14px;
-        color: #428bca;
+        color: #3071a9;
 
         li {
 
@@ -40,7 +81,6 @@
             border-bottom: 0;
             border-radius: 4px 4px 0 0;
             color: #555;
-            font-weight: 500;
 
         }
     }
