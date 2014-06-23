@@ -38,9 +38,9 @@
 
 .tmc-exercise {
 
+    position: relative;
     margin: 100px 0;
     width: 800px;
-    height: 600px;
     font-family: 'Helvetica Neue', sans-serif;
 
     h1.title {
@@ -111,7 +111,7 @@
     .ace_editor {
 
         width: 100%;
-        height: 100%;
+        height: 600px;
         border: 1px solid lightgray;
 
     }
@@ -119,18 +119,13 @@
     .tmc-output {
 
         position: absolute;
+        bottom: 0;
         z-index: 4;
-        left: 50%;
-        top: 50%;
         padding: 0 20px;
-        width: 650px;
-        height: 300px;
-        margin-left: -325px;
-        margin-top: -150px;
+        width: 760px;
+        height: 200px;
         background-color: white;
         border: 1px solid lightgray;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(50, 50, 50, 0.25);
 
     }
 }
