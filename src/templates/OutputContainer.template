@@ -5,6 +5,6 @@
 <ul>
 
     {{#tests}}
-        <li>{{name}} – {{message}}</li>
+        <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
     {{/tests}}
 </ul>
