@@ -8,6 +8,8 @@
 .sass-cache/
 _SpecRunner.html
 coverage/
-demo/assets/
+demo/assets/css/
+demo/assets/js/*
+!demo/assets/js/vendor/
 dist/
 node_modules/
