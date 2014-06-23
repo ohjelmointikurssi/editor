@@ -24,7 +24,7 @@ TMCWebClient.editor = function (container, exercise) {
         editor.setFontSize(12);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
-        editor.getSession().setWrapLimitRange(120, 120);
+        editor.getSession().setWrapLimitRange(100, 100);
         editor.getSession().setMode('ace/mode/java');
     }
 
