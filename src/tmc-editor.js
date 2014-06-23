@@ -41,7 +41,7 @@ TMCWebClient.editor = function (container, exercise) {
         configure(_editor);
 
         // Fetch exercise
-        _exercise.fetch(function () {
+        _exercise.fetchZip(function () {
 
             var files = _exercise.getFilesFromSource(),
                 content = files[0].asText();
@@ -84,19 +84,19 @@ TMCWebClient.editor = function (container, exercise) {
             $.ajax(submissionUrl, {
                 beforeSend: TMCWebClient.xhrBasicAuthentication,
                 dataType: 'json',
+
                 error: function(data) {
                     
                     clearInterval(intervalId);
+                    _submitButton.prop('disabled', false);
                     console.log(data);
                 },
-                complete: function() {
 
-                    _submitButton.prop('disabled', false);
-                },
                 success: function(data) {
 
                     if (data.status !== 'processing') {
                         clearInterval(intervalId);
+                        _submitButton.prop('disabled', false);
                         showResults(data);
                     } else {
                         console.log(data.status);
@@ -107,6 +107,7 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function showResults(data) {
+
         console.log(data);
     }
 
@@ -114,7 +115,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         var attributes = {
 
-            title: files[0].name.split('/')[1],
+            title: _exercise.getName(),
             files: files
 
         }

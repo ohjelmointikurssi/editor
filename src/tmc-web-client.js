@@ -11,14 +11,20 @@ var TMCWebClient = (function () {
 
     function initialiseEditors(containers) {
 
-        containers.each(function () {
+        containers.each(function (index, container) {
 
-            $(this).addClass('tmc-exercise');
+            $(container).addClass('tmc-exercise');
 
-            // Create editor
-            new _module.editor(this, new _module.exercise($(this).data('id')));
+            var exercise = new _module.exercise($(container).data('id'));
+
+            exercise.fetch(function() {
+                // Create editor
+                new _module.editor(container, exercise);
+            });           
         });
     }
+
+    _module.server = 'http://tmc-kesapojat.jamo.io';
 
     _module.initialise = function () {
 

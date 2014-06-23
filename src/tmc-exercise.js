@@ -1,21 +1,47 @@
 TMCWebClient.exercise = function (id) {
 
-    this.baseUrl = 'http://tmc-kesapojat.jamo.io/exercises/';
-    this.id = id;
+    this._baseUrl = TMCWebClient.server + '/exercises/';
+    this._id = id;
 }
 
-TMCWebClient.exercise.prototype.fetch = function (callback) {
+TMCWebClient.exercise.prototype.fetch = function(callback) {
+    
+    if(this.exercise !== undefined) {
+        callback();
+        return;
+    }
+
+    var self = this;
+
+    $.ajax({
+        beforeSend: TMCWebClient.xhrBasicAuthentication,
+        
+        data: {
+            'api_version' : 7
+        },
+
+        success: function(exercise) {
+
+            self._exercise = exercise;
+            callback();
+        },
+
+        url: this._baseUrl + this._id + '.json'
+    });
+}
+
+TMCWebClient.exercise.prototype.fetchZip = function (callback) {
 
     var self = this;
 
     // Fetch exercise as zip
-    JSZipUtils.getBinaryContent(this.baseUrl + this.id + '.zip', function (error, data) {
+    JSZipUtils.getBinaryContent(this._baseUrl + this._id + '.zip', function (error, data) {
 
         if (error) {
             throw error;
         }
 
-        self.zip = new JSZip(data);
+        self._zip = new JSZip(data);
 
         callback();
     });
@@ -23,7 +49,7 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
 
 TMCWebClient.exercise.prototype.submit = function (callback) {
 
-    if (this.zip === undefined) {
+    if (this._zip === undefined) {
         return;
     }
 
@@ -37,36 +63,41 @@ TMCWebClient.exercise.prototype.submit = function (callback) {
         type: 'POST',
         processData: false,
         contentType: false,
-        url: this.baseUrl + this.id + '/submissions.json',
-        username: 'webclient',
-        password: 'tmc-webclient',
+        url: this._baseUrl + this._id + '/submissions.json',
         beforeSend: TMCWebClient.xhrBasicAuthentication,
         success: callback
     });
 
 }
 
+TMCWebClient.exercise.prototype.getName = function () {
+
+    /* jshint camelcase: false */
+    return this._exercise.exercise_name;
+    /* jshint camelcase: true */
+}
+
 TMCWebClient.exercise.prototype.getZipBlob = function () {
 
-    return this.zip.generate({type: 'blob'});
+    return this._zip.generate({type: 'blob'});
 }
 
 TMCWebClient.exercise.prototype.getFiles = function () {
 
-    return this.zip.files;
+    return this._zip.files;
 }
 
 TMCWebClient.exercise.prototype.getFile = function (filename) {
 
-    return this.zip.file(filename);
+    return this._zip.file(filename);
 }
 
 TMCWebClient.exercise.prototype.getFilesFromSource = function() {
 
-    return this.zip.file(/\/src(?!\/\.).*/);
+    return this._zip.file(/\/src(?!\/\.).*/);
 }
 
 TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
 
-    this.zip.file(filename, content);
+    this._zip.file(filename, content);
 }
