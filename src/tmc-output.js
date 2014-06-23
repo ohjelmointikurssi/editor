@@ -4,10 +4,7 @@ TMCWebClient.output = function (container) {
 
         output: Handlebars.templates.OutputContainer
 
-    },
-
-    this._outputContainer,
-    this._results;
+    }
 
     // Create container for submission results
     this._outputContainer = $('<div/>');
