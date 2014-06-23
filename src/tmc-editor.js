@@ -8,6 +8,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         _container = container,
         _editor,
+        _submitButton,
         _exercise = exercise;
 
     function configure(editor) {
@@ -58,34 +59,55 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createSubmitHandler() {
 
-        var submitButton = $('<button/>').text('Submit');
-        submitButton.on('click', function() {
-            
-            saveActiveFile();
-            _exercise.submit(function(data) {
-                
-                var intervalId = setInterval(function() {
+        _submitButton = $('<button/>').text('Submit');
+        _submitButton.on('click', submitOnClickHandler);
 
-                    /* jshint camelcase:false */
-                    $.ajax(data.submission_url, {
-                        beforeSend: TMCWebClient.xhrBasicAuthentication,
-                        dataType: 'json',
-                        success: function(data) {
+        $(_container).append(_submitButton);
+    }
 
-                            if (data.status !== 'processing') {
-                                clearInterval(intervalId);
-                                console.log(data);
-                            } else {
-                                console.log(data.status);
-                            }
-                        }
-                    });
-                    /* jshint camelcase:true */
-                }, 1000);
-            });
+    function submitOnClickHandler() {
+
+        _submitButton.prop('disabled', true);
+        saveActiveFile();
+        _exercise.submit(function(data) {
+
+            /* jshint camelcase:false */
+            submissionPoller(data.submission_url);
+            /* jshint camelcase:true */
         });
+    }
 
-        $(_container).append(submitButton);
+    function submissionPoller(submissionUrl) {
+
+        var intervalId = setInterval(function() {
+            
+            $.ajax(submissionUrl, {
+                beforeSend: TMCWebClient.xhrBasicAuthentication,
+                dataType: 'json',
+                error: function(data) {
+                    
+                    clearInterval(intervalId);
+                    console.log(data);
+                },
+                complete: function() {
+
+                    _submitButton.prop('disabled', false);
+                },
+                success: function(data) {
+
+                    if (data.status !== 'processing') {
+                        clearInterval(intervalId);
+                        showResults(data);
+                    } else {
+                        console.log(data.status);
+                    }
+                }
+            });
+        }, 1000);
+    }
+
+    function showResults(data) {
+        console.log(data);
     }
 
     function render(files) {
