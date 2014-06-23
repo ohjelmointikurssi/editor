@@ -6,7 +6,7 @@ TMCWebClient.exercise = function (id) {
 
 TMCWebClient.exercise.prototype.fetch = function (callback) {
 
-    if(this.exercise !== undefined) {
+    if (this.exercise !== undefined) {
         callback();
         return;
     }
@@ -30,7 +30,6 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
         },
 
         url: this._baseUrl + this._id + '.json'
-
     });
 }
 
