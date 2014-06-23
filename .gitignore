@@ -13,3 +13,4 @@ demo/assets/js/*
 !demo/assets/js/vendor/
 dist/
 node_modules/
+nbproject/private/

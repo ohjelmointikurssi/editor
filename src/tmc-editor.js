@@ -50,13 +50,45 @@ TMCWebClient.editor = function (container, exercise) {
             show(content);
 
             // Set active tab
-            $('.tmc-exercise .tab-bar li').first().addClass('active');
+            $(_container).find('.tab-bar li').first().addClass('active');
         });
+
+        createSubmitHandler();
+    }
+
+    function createSubmitHandler() {
+
+        var submitButton = $('<button/>').text('Submit');
+        submitButton.on('click', function() {
+            
+            saveActiveFile();
+            _exercise.submit(function(data) {
+                
+                var intervalId = setInterval(function() {
+
+                    /* jshint camelcase:false */
+                    $.ajax(data.submission_url, {
+                        beforeSend: TMCWebClient.xhrBasicAuthentication,
+                        dataType: 'json',
+                        success: function(data) {
+
+                            if (data.status !== 'processing') {
+                                clearInterval(intervalId);
+                                console.log(data);
+                            } else {
+                                console.log(data.status);
+                            }
+                        }
+                    });
+                    /* jshint camelcase:true */
+                }, 1000);
+            });
+        });
+
+        $(_container).append(submitButton);
     }
 
     function render(files) {
-
-        console.log(files);
 
         var attributes = {
 
@@ -69,7 +101,7 @@ TMCWebClient.editor = function (container, exercise) {
         $(_container).prepend(_template.filebrowser(attributes));
 
         // Add click events to tabs
-        $('.tmc-exercise .tab-bar li').click(changeFile);
+        $(_container).find('.tab-bar li').click(changeFile);
     }
 
     function show(content) {
@@ -87,10 +119,12 @@ TMCWebClient.editor = function (container, exercise) {
 
     function changeFile() {
 
+        saveActiveFile();
+
         var element = $(this);
 
         // Clear previous active tab
-        $('.tmc-exercise .tab-bar li').removeClass('active');
+        $(_container).find('.tab-bar li').removeClass('active');
 
         // Set active tab
         element.addClass('active');
@@ -100,6 +134,12 @@ TMCWebClient.editor = function (container, exercise) {
             content = _exercise.getFile(filename).asText();
 
         show(content);
+    }
+
+    function saveActiveFile() {
+
+        var filename = $('.tmc-exercise .tab-bar li.active').attr('data-id');
+        _exercise.saveFile(filename, _editor.getValue());
     }
 
     initialise();
