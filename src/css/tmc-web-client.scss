@@ -57,8 +57,24 @@
 
     }
 
+    .actions {
+
+        float: right;
+
+        i.submit {
+
+            display: block;
+            width: 30px;
+            height: 30px;
+            background-image: url('../images/submit.png');
+            opacity: 0.5;
+
+        }
+    }
+
     .tab-bar {
 
+        float: left;
         margin: 0;
         padding: 0;
         font-size: 14px;

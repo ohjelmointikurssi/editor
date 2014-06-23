@@ -7,3 +7,9 @@
     {{/files}}
 
 </ul>
+
+<section class='actions'>
+
+    <i class='submit' title='Submit'></i>
+
+</section>

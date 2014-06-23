@@ -52,18 +52,15 @@ TMCWebClient.editor = function (container, exercise) {
             // Set active tab
             $(_container).find('.tab-bar li').first().addClass('active');
         });
-
-        createSubmitHandler();
     }
 
     function createSubmitHandler() {
 
-        var submitButton = $('<button/>').text('Submit');
-        submitButton.on('click', function() {
-            
+        $(_container).find('.actions .submit').first().click(function() {
+
             saveActiveFile();
             _exercise.submit(function(data) {
-                
+
                 var intervalId = setInterval(function() {
 
                     /* jshint camelcase:false */
@@ -84,8 +81,6 @@ TMCWebClient.editor = function (container, exercise) {
                 }, 1000);
             });
         });
-
-        $(_container).append(submitButton);
     }
 
     function render(files) {
@@ -102,6 +97,8 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Add click events to tabs
         $(_container).find('.tab-bar li').click(changeFile);
+
+        createSubmitHandler();
     }
 
     function show(content) {
