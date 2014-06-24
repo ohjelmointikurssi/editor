@@ -35,17 +35,15 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
         status: results.status,
         tests: results.test_cases,
-        ratio: this.progress(results.test_cases)
+        ratio: this.calculateProgress(results.test_cases)
 
     }
     /* jshint camelcase: true */
 
-    console.log(attributes.ratio);
-
     this._outputContainer.append(this._template.output(attributes));
 }
 
-TMCWebClient.output.prototype.progress = function (tests) {
+TMCWebClient.output.prototype.calculateProgress = function (tests) {
 
     var passed = 0;
     var failed = 0;
