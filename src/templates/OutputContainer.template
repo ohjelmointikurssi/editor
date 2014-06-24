@@ -20,35 +20,40 @@
     <p>Status: {{status}}</p>
 
     <div class='results'>
-        <div class='test-results'>
+
+<div class='test-results'>
 
             <ul>
                 {{#tests}}
                     <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
                 {{/tests}}
             </ul>
-
         </div>
 
         <div class='validation-results'>
 
-        {{#if validations}}
+            {{#if validations}}
 
-            {{#validations}}
+                {{#validations}}
 
-                <h4>{{name}}</h4>
+                    <h4>{{name}}</h4>
 
-                <ul>
-                    {{#messages}}
-                        <li>Line {{line}}: {{message}}</li>
-                    {{/messages}}
-                </ul>
+                    <ul>
+                        {{#messages}}
+                            <li>Line {{line}}: {{message}}</li>
+                        {{/messages}}
+                    </ul>
 
-            {{/validations}}
-        {{else}}
-            <p>All validations passed.</p>
-        {{/if}}
+                {{/validations}}
+
+            {{else}}
+
+                <p>All validations passed.</p>
+
+            {{/if}}
 
         </div>
+
     </div>
+
 {{/if}}
