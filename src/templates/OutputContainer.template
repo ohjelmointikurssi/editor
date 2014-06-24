@@ -8,9 +8,30 @@
 
 <p>Status: {{status}}</p>
 
-<ul>
+<div class='results'>
+    <div class='test-results'>
 
-    {{#tests}}
-        <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
-    {{/tests}}
-</ul>
+        <ul>
+
+            {{#tests}}
+                <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
+            {{/tests}}
+        </ul>
+
+    </div>
+
+    <div class='validation-results'>
+
+        {{#if validations}}
+            <ul>
+
+                {{#validations}}
+                    <li>Line {{line}}: {{message}}</li>
+                {{/validations}}
+            </ul>
+        {{else}}
+            <p>All validations passed.</p>
+        {{/if}}
+
+    </div>
+</div>

@@ -81,13 +81,13 @@
         i.submit {
 
             background-image: url('../images/submit.png');
-        
+
         }
 
         i.submission {
-        
+
             background-image: url('../images/submit.png');
-        
+
         }
 
 
@@ -137,7 +137,8 @@
         z-index: 4;
         padding: 0 20px;
         width: 760px;
-        height: 200px;
+        height: auto;
+        min-height: 200px;
         background-color: white;
         border: 1px solid lightgray;
 
@@ -160,6 +161,38 @@
                 float: right;
 
             }
+        }
+
+        .results {
+
+            width: 100%;
+            display: table-row;
+            border-spacing: 10px;
+
+            .test-results {
+
+                display: table-cell;
+
+                padding: 0 10px 0 10px;
+                margin: 0 5px 10px 5px;
+                width: 350px;
+
+                box-shadow: 0 0 0 1px lightgray inset;
+
+            }
+
+            .validation-results {
+
+                display: table-cell;
+
+                padding: 0 10px 0 10px;
+                margin: 0 5px 10px 5px;
+                width: 350px;
+
+                box-shadow: 0 0 0 1px lightgray inset;
+
+            }
+
         }
     }
 }

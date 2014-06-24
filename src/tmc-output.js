@@ -35,6 +35,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
         status: results.status,
         tests: results.test_cases,
+        validations: this.validations(results.validations),
         ratio: this.calculateProgress(results.test_cases)
 
     }
@@ -59,4 +60,13 @@ TMCWebClient.output.prototype.calculateProgress = function (tests) {
         fail: failed / tests.length * 100
 
     }
+}
+
+TMCWebClient.output.prototype.validations = function (validations) {
+
+    if (!validations.validationErrors) {
+        return null;
+    }
+
+    return validations.validationErrors[Object.keys(validations.validationErrors)[0]];
 }
