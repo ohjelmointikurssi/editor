@@ -71,9 +71,9 @@ TMCWebClient.editor = function (container, exercise) {
     function submitOnClickHandler() {
 
         clearInterval(_intervalId);
-
-        _output.process();
         saveActiveFile();
+
+        _output.processing();
 
         _exercise.submit(function (data) {
 

@@ -61,6 +61,15 @@
 
         float: right;
 
+        i {
+
+            display: block;
+            font-style: normal;
+            cursor: pointer;
+            opacity: 0.5;
+
+        }
+
         i:hover {
 
             opacity: 0.7 !important;
@@ -69,12 +78,31 @@
 
         i.submit {
 
-            display: block;
             width: 30px;
             height: 30px;
             background-image: url('../images/submit.png');
-            opacity: 0.5;
-            cursor: pointer;
+
+        }
+
+        i.close {
+
+            font-size: 18px;
+            font-weight: 500;
+            color: #888;
+            opacity: 1;
+
+        }
+
+        i.close::after {
+
+            content: 'x'
+
+        }
+
+        i.close:hover {
+
+            color: #555 !important;
+            opacity: 1 !important;
 
         }
     }
@@ -127,5 +155,10 @@
         background-color: white;
         border: 1px solid lightgray;
 
+        .actions {
+
+            margin-top: 10px;
+
+        }
     }
 }

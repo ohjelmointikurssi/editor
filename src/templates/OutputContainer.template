@@ -1,10 +1,24 @@
-<h3>Test results</h3>
+<section class='actions'>
 
-<p>Status: {{status}}</p>
+    <i class='close'></i>
 
-<ul>
+</section>
 
-    {{#tests}}
-        <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
-    {{/tests}}
-</ul>
+<h3>Results</h3>
+
+{{#unless status}}
+    <p>Processing...</p>
+{{/unless}}
+
+{{#if status}}
+
+    <p>Status: {{status}}</p>
+
+    <ul>
+
+        {{#tests}}
+            <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
+        {{/tests}}
+    </ul>
+
+{{/if}}

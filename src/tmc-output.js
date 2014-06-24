@@ -7,11 +7,25 @@ TMCWebClient.output = function (container) {
     }
 
     // Create container for submission results
-    this._outputContainer = $('<div/>').hide();
-
-    this._outputContainer.addClass('tmc-output');
-
+    this._outputContainer = $('<div/>').addClass('tmc-output').hide();
     $(container).append(this._outputContainer);
+}
+
+TMCWebClient.output.prototype.render = function (attributes) {
+
+    this.clear();
+
+    var self = this,
+        html = $(this._template.output(attributes));
+
+    // Close handler
+    html.find('.close').click(function () {
+
+        self.close();
+    });
+
+    this._outputContainer.append(html);
+    this._outputContainer.show();
 }
 
 TMCWebClient.output.prototype.clear = function () {
@@ -19,16 +33,17 @@ TMCWebClient.output.prototype.clear = function () {
     this._outputContainer.empty();
 }
 
-TMCWebClient.output.prototype.process = function () {
+TMCWebClient.output.prototype.close = function () {
 
-    this.clear();
-    this._outputContainer.show();
-    this._outputContainer.html('<p>Processing...</p>');
+    this._outputContainer.hide();
+}
+
+TMCWebClient.output.prototype.processing = function () {
+
+    this.render();
 }
 
 TMCWebClient.output.prototype.showResults = function (results) {
-
-    this.clear();
 
     /* jshint camelcase: false */
     var attributes = {
@@ -39,5 +54,5 @@ TMCWebClient.output.prototype.showResults = function (results) {
     }
     /* jshint camelcase: true */
 
-    this._outputContainer.append(this._template.output(attributes));
+    this.render(attributes);
 }
