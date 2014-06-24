@@ -81,9 +81,10 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
+TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, processing) {
 
     if (this._lastSubmission === undefined && this._exercise.submissions.length === 0) {
+        error();
         return;
     }
 
@@ -94,19 +95,16 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
 
     var self = this;
 
-    var data = {
-        'api_version': TMCWebClient.apiVersion
-    }
-
+    var url = TMCWebClient.server + '/submissions/' + this._exercise.submissions[0].id + '.json?api_version=' + TMCWebClient.apiVersion;
+    
     $.ajax({
-        data: data,
-        url: TMCWebClient.server + '/submissions/' + this._exercise.submissions[0].id + '.json',
+        url: url,
         beforeSend: TMCWebClient.xhrBasicAuthentication,
         
         success: function(data) {
 
             if (data.status === 'processing') {
-                console.log('Submission not ready');
+                processing(url);
                 return;
             }
             self._lastSubmission = data;
