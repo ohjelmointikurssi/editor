@@ -43,7 +43,7 @@
 
         <div class='validation-results'>
 
-            {{#if validations}}
+            {{#if validations.results}}
 
                 <p><em>{{validations.errorCount}}</em> validations <em class='negative'>failed</em>.</p>
 
