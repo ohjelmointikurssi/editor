@@ -35,7 +35,7 @@ TMCWebClient.output.prototype.clear = function () {
 
 TMCWebClient.output.prototype.visible = function () {
 
-    return this._outputContainer.is(':visible');
+    return this.outputContainer.is(':visible');
 }
 
 TMCWebClient.output.prototype.close = function () {
