@@ -140,6 +140,13 @@ TMCWebClient.editor = function (container, exercise) {
 
         $(_container).find('.actions .output').first().click(function () {
 
+            // Toggle output
+            if (_output.visible()) {
+
+                _output.close();
+                return;
+            }
+
             _output.processing();
             _exercise.fetchLastSubmission(function (data) {
 
@@ -210,6 +217,7 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function setFileMode(filename) {
+
         var modes = {
 
             'c':    'c_cpp',
@@ -225,11 +233,13 @@ TMCWebClient.editor = function (container, exercise) {
             'yml':  'yaml'
 
         },
+
         // Fallback to text
         mode = 'text';
 
         // Can determine filename extension
         var lastDotIndex = filename.lastIndexOf('.');
+
         if (lastDotIndex !== -1 && lastDotIndex !== 0) {
 
             var filenameExtension = filename.substring(lastDotIndex + 1);
