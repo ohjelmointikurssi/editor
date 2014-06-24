@@ -56,7 +56,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
         status: results.status,
         passed: results.all_tests_passed,
         tests: results.test_cases,
-        validations: this.validations(results.validations),
+        validations: this.getValidations(results.validations),
         ratio: this.calculateProgress(results.test_cases)
 
     }
@@ -65,6 +65,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
     this.render(attributes);
 
     this.createTestResultsHandler();
+    this.createValidationResultsHandler();
 }
 
 TMCWebClient.output.prototype.calculateProgress = function (tests) {
@@ -86,7 +87,7 @@ TMCWebClient.output.prototype.calculateProgress = function (tests) {
     }
 }
 
-TMCWebClient.output.prototype.validations = function (validations) {
+TMCWebClient.output.prototype.getValidations = function (validations) {
 
     if (!validations.validationErrors) {
         return null;
@@ -94,7 +95,25 @@ TMCWebClient.output.prototype.validations = function (validations) {
 
     var validationMessages = validations.validationErrors;
 
+    // Number of validation errors
+    var errorCount = 0;
+
+    // Array containing all validation objects
     var array = [];
+
+    var statistics = {
+
+        results: array,
+        errorCount: errorCount
+
+    }
+
+    this.buildValidations(statistics, validationMessages);
+
+    return statistics;
+}
+
+TMCWebClient.output.prototype.buildValidations = function (validations, validationMessages) {
 
     for (var key in validationMessages) {
 
@@ -113,10 +132,10 @@ TMCWebClient.output.prototype.validations = function (validations) {
             }
         }
 
-        array.push(validation);
-    }
+        validations.errorCount += validation.messages.length;
 
-    return array;
+        validations.results.push(validation);
+    }
 }
 
 TMCWebClient.output.prototype.createTestResultsHandler = function () {
@@ -132,6 +151,23 @@ TMCWebClient.output.prototype.createTestResultsHandler = function () {
 TMCWebClient.output.prototype.detailedTestResultsOnClickHandler = function () {
 
     var element = this._outputContainer.find('.results .test-results .details');
+
+    element.toggle();
+}
+
+TMCWebClient.output.prototype.createValidationResultsHandler = function () {
+
+    var self = this;
+
+    this._outputContainer.find('.results .validation-results').first().click(function () {
+
+        self.detailedValidationResultsOnClickHandler();
+    });
+}
+
+TMCWebClient.output.prototype.detailedValidationResultsOnClickHandler = function () {
+
+    var element = this._outputContainer.find('.results .validation-results .details');
 
     element.toggle();
 }
