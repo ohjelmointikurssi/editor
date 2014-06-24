@@ -49,6 +49,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
     var attributes = {
 
         status: results.status,
+        passed: results.all_tests_passed,
         tests: results.test_cases,
         validations: this.validations(results.validations),
         ratio: this.calculateProgress(results.test_cases)
@@ -83,5 +84,29 @@ TMCWebClient.output.prototype.validations = function (validations) {
         return null;
     }
 
-    return validations.validationErrors[Object.keys(validations.validationErrors)[0]];
+    var validationMessages = validations.validationErrors;
+
+    var array = [];
+
+    for (var key in validationMessages) {
+
+        var validation = {};
+
+        validation.name = key;
+        validation.messages = [];
+
+        var obj = validationMessages[key];
+
+        for (var prop in obj) {
+
+            // Important check that this is objects own property
+            if (obj.hasOwnProperty(prop)) {
+                validation.messages.push(obj[prop]);
+            }
+        }
+
+        array.push(validation);
+    }
+
+    return array;
 }

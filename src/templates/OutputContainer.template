@@ -4,10 +4,10 @@
 
 </section>
 
-<h3>Results</h3>
+<h1 class='title'>Results</h1>
 
 {{#unless status}}
-    <p>Processing...</p>
+    <p class='processing'>Processing...</p>
 {{/unless}}
 
 {{#if status}}
@@ -17,34 +17,50 @@
         <div class='section-positive' style="width:{{ratio.pass}}%;" />
     </div>
 
-    <p>Status: {{status}}</p>
-
     <div class='results'>
+
         <div class='test-results'>
 
-            <ul>
+            {{#if passed}}
 
-                {{#tests}}
-                    <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
-                {{/tests}}
-            </ul>
+                <p>All tests passed.</p>
+
+            {{else}}
+
+                <ul>
+                    {{#tests}}
+                        <li>{{name}} – {{message}}</li>
+                    {{/tests}}
+                </ul>
+
+            {{/if}}
 
         </div>
 
         <div class='validation-results'>
 
             {{#if validations}}
-                <ul>
 
-                    {{#validations}}
-                        <li>Line {{line}}: {{message}}</li>
-                    {{/validations}}
-                </ul>
+                {{#validations}}
+
+                    <h4>{{name}}</h4>
+
+                    <ul>
+                        {{#messages}}
+                            <li>Line {{line}}: {{message}}</li>
+                        {{/messages}}
+                    </ul>
+
+                {{/validations}}
+
             {{else}}
+
                 <p>All validations passed.</p>
+
             {{/if}}
 
         </div>
+
     </div>
 
 {{/if}}
