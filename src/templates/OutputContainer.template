@@ -1,5 +1,11 @@
 <h3>Test results</h3>
 
+<div class='progress-bar'>
+    <div class='section-negative' style="width:{{ratio.fail}}%;" />
+
+    <div class='section-positive' style="width:{{ratio.pass}}%;" />
+</div>
+
 <p>Status: {{status}}</p>
 
 <ul>

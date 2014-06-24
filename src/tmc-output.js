@@ -34,10 +34,31 @@ TMCWebClient.output.prototype.showResults = function (results) {
     var attributes = {
 
         status: results.status,
-        tests: results.test_cases
+        tests: results.test_cases,
+        ratio: this.progress(results.test_cases)
 
     }
     /* jshint camelcase: true */
 
+    console.log(attributes.ratio);
+
     this._outputContainer.append(this._template.output(attributes));
+}
+
+TMCWebClient.output.prototype.progress = function (tests) {
+
+    var passed = 0;
+    var failed = 0;
+
+    tests.forEach(function (test) {
+
+        test.successful ? passed++ : failed++;
+    });
+
+    return {
+
+        pass: passed / tests.length * 100,
+        fail: failed / tests.length * 100
+
+    }
 }

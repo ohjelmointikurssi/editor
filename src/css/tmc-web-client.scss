@@ -127,5 +127,25 @@
         background-color: white;
         border: 1px solid lightgray;
 
+        .progress-bar {
+
+            height: 10px;
+            width: 100%;
+
+            .section-negative {
+
+                background-color: #bd2c00;
+                height: 100%;
+                float: left;
+            }
+
+            .section-positive {
+
+                background-color: #6cc644;
+                height: 100%;
+                float: right;
+
+            }
+        }
     }
 }
