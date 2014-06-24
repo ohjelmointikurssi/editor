@@ -1,14 +1,14 @@
 TMCWebClient.output = function (container) {
 
-    this._template = {
+    this.template = {
 
         output: Handlebars.templates.OutputContainer
 
     }
 
     // Create container for submission results
-    this._outputContainer = $('<div/>').addClass('tmc-output').hide();
-    $(container).append(this._outputContainer);
+    this.outputContainer = $('<div/>').addClass('tmc-output').hide();
+    $(container).append(this.outputContainer);
 }
 
 TMCWebClient.output.prototype.render = function (attributes) {
@@ -16,7 +16,7 @@ TMCWebClient.output.prototype.render = function (attributes) {
     this.clear();
 
     var self = this,
-        html = $(this._template.output(attributes));
+        html = $(this.template.output(attributes));
 
     // Close handler
     html.find('.close').click(function () {
@@ -24,18 +24,18 @@ TMCWebClient.output.prototype.render = function (attributes) {
         self.close();
     });
 
-    this._outputContainer.append(html);
-    this._outputContainer.show();
+    this.outputContainer.append(html);
+    this.outputContainer.show();
 }
 
 TMCWebClient.output.prototype.clear = function () {
 
-    this._outputContainer.empty();
+    this.outputContainer.empty();
 }
 
 TMCWebClient.output.prototype.close = function () {
 
-    this._outputContainer.hide();
+    this.outputContainer.hide();
 }
 
 TMCWebClient.output.prototype.processing = function () {
@@ -137,7 +137,7 @@ TMCWebClient.output.prototype.createTestResultsHandler = function () {
 
     var self = this;
 
-    this._outputContainer.find('.results .test-results').first().click(function () {
+    this.outputContainer.find('.results .test-results').first().click(function () {
 
         self.detailedTestResultsOnClickHandler();
     });
@@ -145,7 +145,7 @@ TMCWebClient.output.prototype.createTestResultsHandler = function () {
 
 TMCWebClient.output.prototype.detailedTestResultsOnClickHandler = function () {
 
-    var element = this._outputContainer.find('.results .test-results .details');
+    var element = this.outputContainer.find('.results .test-results .details');
 
     element.toggle();
 }
@@ -154,7 +154,7 @@ TMCWebClient.output.prototype.createValidationResultsHandler = function () {
 
     var self = this;
 
-    this._outputContainer.find('.results .validation-results').first().click(function () {
+    this.outputContainer.find('.results .validation-results').first().click(function () {
 
         self.detailedValidationResultsOnClickHandler();
     });
@@ -162,7 +162,7 @@ TMCWebClient.output.prototype.createValidationResultsHandler = function () {
 
 TMCWebClient.output.prototype.detailedValidationResultsOnClickHandler = function () {
 
-    var element = this._outputContainer.find('.results .validation-results .details');
+    var element = this.outputContainer.find('.results .validation-results .details');
 
     element.toggle();
 }

@@ -1,7 +1,7 @@
 TMCWebClient.exercise = function (id) {
 
-    this._baseUrl = TMCWebClient.server + '/exercises/';
-    this._id = id;
+    this.baseUrl = TMCWebClient.server + '/exercises/';
+    this.id = id;
 }
 
 TMCWebClient.exercise.prototype.fetch = function (callback) {
@@ -25,11 +25,11 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
 
         success: function(exercise) {
 
-            self._exercise = exercise;
+            self.exercise = exercise;
             callback();
         },
 
-        url: this._baseUrl + this._id + '.json'
+        url: this.baseUrl + this.id + '.json'
     });
 }
 
@@ -49,9 +49,9 @@ TMCWebClient.exercise.prototype.fetchZip = function(callback) {
 
     var self = this;
 
-    this.downloadZip(this._baseUrl + this._id + '.zip', function(zip) {
+    this.downloadZip(this.baseUrl + this.id + '.zip', function(zip) {
 
-        self._zip = zip;
+        self.zip = zip;
 
         callback();
     });
@@ -59,7 +59,7 @@ TMCWebClient.exercise.prototype.fetchZip = function(callback) {
 
 TMCWebClient.exercise.prototype.submit = function(callback) {
 
-    if (this._zip === undefined) {
+    if (this.zip === undefined) {
         return;
     }
 
@@ -74,7 +74,7 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
         type: 'POST',
         processData: false,
         contentType: false,
-        url: this._baseUrl + this._id + '/submissions.json',
+        url: this.baseUrl + this.id + '/submissions.json',
         beforeSend: TMCWebClient.xhrBasicAuthentication,
         success: callback
 
@@ -83,34 +83,34 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
 
 TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, processing) {
 
-    if (this._lastSubmission !== undefined) {
-        callback(this._lastSubmission);
+    if (this.lastSubmission !== undefined) {
+        callback(this.lastSubmission);
         return;
     }
 
-    if (this._exercise.submissions.length === 0) {
+    if (this.exercise.submissions.length === 0) {
         error();
         return;
     }
 
-    
+
 
     var self = this;
 
-    var url = TMCWebClient.server + '/submissions/' + this._exercise.submissions[0].id + '.json?api_version=' + TMCWebClient.apiVersion;
-    
+    var url = TMCWebClient.server + '/submissions/' + this.exercise.submissions[0].id + '.json?api_version=' + TMCWebClient.apiVersion;
+
     $.ajax({
         url: url,
         beforeSend: TMCWebClient.xhrBasicAuthentication,
-        
+
         success: function(data) {
 
             if (data.status === 'processing') {
                 processing(url);
                 return;
             }
-            self._lastSubmission = data;
-            callback(self._lastSubmission); 
+            self.lastSubmission = data;
+            callback(self.lastSubmission);
         }
     });
 }
@@ -118,36 +118,36 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, 
 TMCWebClient.exercise.prototype.getName = function () {
 
     /* jshint camelcase: false */
-    return this._exercise.exercise_name;
+    return this.exercise.exercise_name;
     /* jshint camelcase: true */
 }
 
 TMCWebClient.exercise.prototype.getZipBlob = function () {
 
-    return this._zip.generate({ type: 'blob' });
+    return this.zip.generate({ type: 'blob' });
 }
 
 TMCWebClient.exercise.prototype.getFiles = function () {
 
-    return this._zip.files;
+    return this.zip.files;
 }
 
 TMCWebClient.exercise.prototype.getFile = function (filename) {
 
-    return this._zip.file(filename);
+    return this.zip.file(filename);
 }
 
 TMCWebClient.exercise.prototype.getFilesFromSource = function () {
 
-    return this._zip.file(/\/src(?!\/\.).*/);
+    return this.zip.file(/\/src(?!\/\.).*/);
 }
 
 TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
 
-    this._zip.file(filename, content);
+    this.zip.file(filename, content);
 }
 
 TMCWebClient.exercise.prototype.setLastSubmission = function(lastSubmission) {
-    
-    this._lastSubmission = lastSubmission;
+
+    this.lastSubmission = lastSubmission;
 };
