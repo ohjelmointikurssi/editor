@@ -81,9 +81,10 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
+TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, fallback) {
 
     if (this._lastSubmission === undefined && this._exercise.submissions.length === 0) {
+        fallback();
         return;
     }
 
@@ -107,6 +108,7 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
 
             if (data.status === 'processing') {
                 console.log('Submission not ready');
+                fallback();
                 return;
             }
             self._lastSubmission = data;

@@ -127,6 +127,9 @@ TMCWebClient.editor = function (container, exercise) {
             _exercise.fetchLastSubmission(function (data) {
 
                 showResults(data);
+            }, function() {
+
+                submitOnClickHandler();
             });
         });
     }
