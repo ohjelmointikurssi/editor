@@ -49,6 +49,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
     var attributes = {
 
         status: results.status,
+        passed: results.all_tests_passed,
         tests: results.test_cases,
         validations: this.validations(results.validations),
         ratio: this.calculateProgress(results.test_cases)
