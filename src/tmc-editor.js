@@ -103,8 +103,6 @@ TMCWebClient.editor = function (container, exercise) {
                     if (data.status !== 'processing') {
                         clearInterval(intervalId);
                         showResults(data);
-                    } else {
-                        console.log(data.status);
                     }
                 }
             });
