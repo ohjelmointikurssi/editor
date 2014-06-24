@@ -38,6 +38,28 @@ $pantone-black: #1d1d1b;
 
 }
 
+/* Animations */
+
+@keyframes pulse {
+
+    0% { opacity: 0.2; }
+    25% { opacity: 0.5; }
+    50% { opacity: 1; }
+    75% { opacity: 0.5; }
+    100% { opacity: 0.2; }
+
+}
+
+@-webkit-keyframes pulse {
+
+    0% { opacity: 0.2; }
+    25% { opacity: 0.5; }
+    50% { opacity: 1; }
+    75% { opacity: 0.5; }
+    100% { opacity: 0.2; }
+
+}
+
 /* Components */
 
 .tmc-exercise {
@@ -181,6 +203,13 @@ $pantone-black: #1d1d1b;
         .actions {
 
             margin-top: 10px;
+
+        }
+
+        .processing {
+
+            -webkit-animation: pulse 4s infinite linear;
+            animation: pulse 4s infinite linear;
 
         }
 
