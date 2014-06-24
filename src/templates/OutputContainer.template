@@ -22,7 +22,6 @@
         <div class='test-results'>
 
             <ul>
-
                 {{#tests}}
                     <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
                 {{/tests}}
@@ -33,14 +32,23 @@
         <div class='validation-results'>
 
             {{#if validations}}
-                <ul>
 
-                    {{#validations}}
-                        <li>Line {{line}}: {{message}}</li>
-                    {{/validations}}
-                </ul>
+                {{#validations}}
+
+                    <h4>{{name}}</h4>
+
+                    <ul>
+                        {{#messages}}
+                            <li>Line {{line}}: {{message}}</li>
+                        {{/messages}}
+                    </ul>
+
+                {{/validations}}
+
             {{else}}
+
                 <p>All validations passed.</p>
+
             {{/if}}
 
         </div>
