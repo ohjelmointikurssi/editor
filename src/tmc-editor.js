@@ -49,6 +49,7 @@ TMCWebClient.editor = function (container, exercise) {
 
             // Render
             render(files);
+            setFileMode(files[0].name);
             show(content);
 
             // Set active tab
@@ -179,7 +180,41 @@ TMCWebClient.editor = function (container, exercise) {
         var filename = element.attr('data-id'),
             content = _exercise.getFile(filename).asText();
 
+        setFileMode(filename);
+
         show(content);
+    }
+
+    function setFileMode(filename) {
+        var modes = {
+
+            'c':    'c_cpp',
+            'css':  'css',
+            'h':    'c_cpp',
+            'htm':  'html',
+            'html': 'html',
+            'java': 'java',
+            'js':   'javascript',
+            'json': 'json',
+            'rb':   'ruby',
+            'xml':  'xml',
+            'yml':  'yaml'
+
+        },
+        // Fallback to text
+        mode = 'text';
+
+        // Can determine filename extension
+        var lastDotIndex = filename.lastIndexOf('.');
+        if (lastDotIndex !== -1 && lastDotIndex !== 0) {
+
+            var filenameExtension = filename.substring(lastDotIndex + 1);
+
+            // Set mode or fallback to text if no mode is specified for the filename extension
+            mode = modes[filenameExtension] || mode;
+        }
+
+        _editor.getSession().setMode('ace/mode/' + mode);
     }
 
     function saveActiveFile() {
