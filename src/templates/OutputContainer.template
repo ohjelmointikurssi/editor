@@ -23,12 +23,12 @@
 
             {{#if passed}}
 
-                <p>All tests passed.</p>
+                <p>All tests <em class='positive'>passed</em>.</p>
 
             {{else}}
 
                 <section class='summary'>
-                    <p>{{ratio.failed}} / {{ratio.total}} tests failed.</p>
+                    <p><em>{{ratio.failed}}</em> out of <em>{{ratio.total}}</em> tests <em class='negative'>failed</em>.</p>
                 </section>
 
                 <section class='details' style='display:none;'>
@@ -61,7 +61,7 @@
 
             {{else}}
 
-                <p>All validations passed.</p>
+                <p>All validations <em class='positive'>passed</em>.</p>
 
             {{/if}}
 
