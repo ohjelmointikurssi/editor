@@ -58,6 +58,8 @@ TMCWebClient.output.prototype.showResults = function (results) {
     /* jshint camelcase: true */
 
     this.render(attributes);
+
+    this.createTestResultsHandler();
 }
 
 TMCWebClient.output.prototype.calculateProgress = function (tests) {
@@ -72,8 +74,9 @@ TMCWebClient.output.prototype.calculateProgress = function (tests) {
 
     return {
 
-        pass: passed / tests.length * 100,
-        fail: failed / tests.length * 100
+        passed: passed,
+        failed: failed,
+        total: tests.length
 
     }
 }
@@ -109,4 +112,21 @@ TMCWebClient.output.prototype.validations = function (validations) {
     }
 
     return array;
+}
+
+TMCWebClient.output.prototype.createTestResultsHandler = function () {
+
+    var self = this;
+
+    this._outputContainer.find('.results .test-results').first().click(function () {
+
+        self.detailedTestResultsOnClickHandler();
+    });
+}
+
+TMCWebClient.output.prototype.detailedTestResultsOnClickHandler = function () {
+
+    var element = this._outputContainer.find('.results .test-results .details');
+
+    element.toggle();
 }

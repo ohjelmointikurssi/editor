@@ -13,8 +13,8 @@
 {{#if status}}
 
     <div class='progress-bar'>
-        <div class='section-negative' style="width:{{ratio.fail}}%;" />
-        <div class='section-positive' style="width:{{ratio.pass}}%;" />
+        <div class='section-negative' style='width:{{percentage ratio.failed ratio.total}}%;' />
+        <div class='section-positive' style='width:{{percentage ratio.passed ratio.total}}%;' />
     </div>
 
     <div class='results'>
@@ -27,11 +27,17 @@
 
             {{else}}
 
-                <ul>
-                    {{#tests}}
-                        <li>{{name}} – {{message}}</li>
-                    {{/tests}}
-                </ul>
+                <section class='summary'>
+                    <p>{{ratio.failed}} / {{ratio.total}} tests failed.</p>
+                </section>
+
+                <section class='details' style='display:none;'>
+                    <ul>
+                        {{#tests}}
+                            <li>{{name}} – {{message}}</li>
+                        {{/tests}}
+                    </ul>
+                </section>
 
             {{/if}}
 
