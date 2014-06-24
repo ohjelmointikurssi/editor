@@ -83,9 +83,16 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
 
 TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
 
-    if (this._exercise.submissions.length === 0) {
+    if (this._lastSubmission === undefined && this._exercise.submissions.length === 0) {
         return;
     }
+
+    if (this._lastSubmission !== undefined) {
+        callback(this._lastSubmission);
+        return;
+    }
+
+    var self = this;
 
     var data = {
         'api_version': TMCWebClient.apiVersion
@@ -95,7 +102,16 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
         data: data,
         url: TMCWebClient.server + '/submissions/' + this._exercise.submissions[0].id + '.json',
         beforeSend: TMCWebClient.xhrBasicAuthentication,
-        success: callback
+        
+        success: function(data) {
+
+            if (data.status === 'processing') {
+                console.log('Submission not ready');
+                return;
+            }
+            self._lastSubmission = data;
+            callback(self._lastSubmission); 
+        }
     });
 }
 
@@ -130,3 +146,8 @@ TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
 
     this._zip.file(filename, content);
 }
+
+TMCWebClient.exercise.prototype.setLastSubmission = function(lastSubmission) {
+    
+    this._lastSubmission = lastSubmission;
+};

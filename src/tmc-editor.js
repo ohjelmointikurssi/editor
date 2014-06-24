@@ -103,6 +103,7 @@ TMCWebClient.editor = function (container, exercise) {
 
                     if (data.status !== 'processing') {
                         clearInterval(intervalId);
+                        _exercise.setLastSubmission(data);
                         showResults(data);
                     }
                 }
@@ -120,7 +121,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createLastSubmissionHandler() {
 
-        $(_container).find('.actions .submission').first().click(function () {
+        $(_container).find('.actions .output').first().click(function () {
 
             _output.processing();
             _exercise.fetchLastSubmission(function (data) {
