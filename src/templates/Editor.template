@@ -10,7 +10,7 @@
 
 <section class='actions'>
 
-    <i class='submission' title='Last submission'></i>
+    <i class='output' title='Last submission'></i>
     <i class='submit' title='Submit'></i>
 
 </section>
