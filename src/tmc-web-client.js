@@ -1,10 +1,11 @@
 /* exported TMCWebClient */
 
-var TMCWebClient = (function () {
+var TMCWebClient = (function() {
 
     var _module = {
 
-        server: 'http://tmc-kesapojat.jamo.io'
+        server: 'http://tmc-kesapojat.jamo.io',
+        apiVersion: 7
 
     };
 

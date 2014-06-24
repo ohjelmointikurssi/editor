@@ -64,9 +64,24 @@
         i {
 
             display: block;
+            float: left;
+            width: 30px;
+            height: 30px;
             font-style: normal;
             cursor: pointer;
             opacity: 0.5;
+
+        }
+
+        i.submit {
+
+            background-image: url('../images/submit.png');
+
+        }
+
+        i.submission {
+
+            background-image: url('../images/submit.png');
 
         }
 
@@ -76,16 +91,10 @@
 
         }
 
-        i.submit {
-
-            width: 30px;
-            height: 30px;
-            background-image: url('../images/submit.png');
-
-        }
-
         i.close {
 
+            width: auto;
+            height: auto;
             font-size: 18px;
             font-weight: 500;
             color: #888;
@@ -151,7 +160,8 @@
         z-index: 4;
         padding: 0 20px;
         width: 760px;
-        height: 200px;
+        height: auto;
+        min-height: 200px;
         background-color: white;
         border: 1px solid lightgray;
 
@@ -159,6 +169,59 @@
 
             margin-top: 10px;
 
+        }
+
+        .progress-bar {
+
+            height: 10px;
+            width: 100%;
+
+            .section-negative {
+
+                background-color: #bd2c00;
+                height: 100%;
+                float: left;
+
+            }
+
+            .section-positive {
+
+                background-color: #6cc644;
+                height: 100%;
+                float: right;
+
+            }
+        }
+
+        .results {
+
+            width: 100%;
+            display: table-row;
+            border-spacing: 10px;
+
+            .test-results {
+
+                display: table-cell;
+
+                padding: 0 10px 0 10px;
+                margin: 0 5px 10px 5px;
+                width: 350px;
+
+                box-shadow: 0 0 0 1px lightgray inset;
+
+            }
+
+            .validation-results {
+
+                display: table-cell;
+
+                padding: 0 10px 0 10px;
+                margin: 0 5px 10px 5px;
+                width: 350px;
+
+                box-shadow: 0 0 0 1px lightgray inset;
+
+            }
         }
     }
 }
