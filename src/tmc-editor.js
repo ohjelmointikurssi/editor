@@ -140,6 +140,13 @@ TMCWebClient.editor = function (container, exercise) {
 
         $(_container).find('.actions .output').first().click(function () {
 
+            // Toggle output
+            if (_output.visible()) {
+
+                _output.close();
+                return;
+            }
+
             _output.processing();
             _exercise.fetchLastSubmission(function (data) {
 
