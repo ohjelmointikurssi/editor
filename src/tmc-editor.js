@@ -130,6 +130,9 @@ TMCWebClient.editor = function (container, exercise) {
             }, function() {
 
                 submitOnClickHandler();
+            }, function(submissionUrl) {
+
+                submissionPoller(submissionUrl);
             });
         });
     }
