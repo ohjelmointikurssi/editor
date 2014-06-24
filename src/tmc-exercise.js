@@ -83,15 +83,17 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
 
 TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, processing) {
 
-    if (this._lastSubmission === undefined && this._exercise.submissions.length === 0) {
-        error();
-        return;
-    }
-
     if (this._lastSubmission !== undefined) {
         callback(this._lastSubmission);
         return;
     }
+
+    if (this._exercise.submissions.length === 0) {
+        error();
+        return;
+    }
+
+    
 
     var self = this;
 
