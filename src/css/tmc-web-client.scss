@@ -67,16 +67,30 @@
 
         }
 
-        i.submit {
+        i {
 
             display: block;
+            float: left;
             width: 30px;
             height: 30px;
-            background-image: url('../images/submit.png');
             opacity: 0.5;
             cursor: pointer;
 
         }
+
+        i.submit {
+
+            background-image: url('../images/submit.png');
+        
+        }
+
+        i.submission {
+        
+            background-image: url('../images/submit.png');
+        
+        }
+
+
     }
 
     .tab-bar {

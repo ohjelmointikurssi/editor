@@ -19,11 +19,11 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
 
         data: {
 
-            'api_version' : 7
+            'api_version': TMCWebClient.apiVersion
 
         },
 
-        success: function (exercise) {
+        success: function(exercise) {
 
             self._exercise = exercise;
             callback();
@@ -33,31 +33,38 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.fetchZip = function (callback) {
+TMCWebClient.exercise.prototype.downloadZip = function(url, callback) {
 
-    var self = this;
-
-    // Fetch exercise as zip
-    JSZipUtils.getBinaryContent(this._baseUrl + this._id + '.zip', function (error, data) {
+    JSZipUtils.getBinaryContent(url, function(error, data) {
 
         if (error) {
             throw error;
         }
 
-        self._zip = new JSZip(data);
+        callback(new JSZip(data));
+    });
+}
+
+TMCWebClient.exercise.prototype.fetchZip = function(callback) {
+
+    var self = this;
+
+    this.downloadZip(this._baseUrl + this._id + '.zip', function(zip) {
+
+        self._zip = zip;
 
         callback();
     });
 }
 
-TMCWebClient.exercise.prototype.submit = function (callback) {
+TMCWebClient.exercise.prototype.submit = function(callback) {
 
     if (this._zip === undefined) {
         return;
     }
 
     var formData = new FormData();
-    formData.append('api_version', 7);
+    formData.append('api_version', TMCWebClient.apiVersion);
     formData.append('commit', 'Submit');
     formData.append('submission[file]', this.getZipBlob());
 
@@ -71,6 +78,24 @@ TMCWebClient.exercise.prototype.submit = function (callback) {
         beforeSend: TMCWebClient.xhrBasicAuthentication,
         success: callback
 
+    });
+}
+
+TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback) {
+
+    if (this._exercise.submissions.length === 0) {
+        return;
+    }
+
+    var data = {
+        'api_version': TMCWebClient.apiVersion
+    }
+
+    $.ajax({
+        data: data,
+        url: TMCWebClient.server + '/submissions/' + this._exercise.submissions[0].id + '.json',
+        beforeSend: TMCWebClient.xhrBasicAuthentication,
+        success: callback
     });
 }
 

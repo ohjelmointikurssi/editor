@@ -119,6 +119,17 @@ TMCWebClient.editor = function (container, exercise) {
         _output.showResults(data);
     }
 
+    function createLastSubmissionHandler() {
+
+        $(_container).find('.actions .submission').first().click(function() {
+            _output.process();
+            _exercise.fetchLastSubmission(function(data) {
+                showResults(data);
+            });
+        });
+
+    }
+
     function render(files) {
 
         var attributes = {
@@ -135,6 +146,7 @@ TMCWebClient.editor = function (container, exercise) {
         $(_container).find('.tab-bar li').click(changeFile);
 
         createSubmitHandler();
+        createLastSubmissionHandler();
     }
 
     function show(content) {
