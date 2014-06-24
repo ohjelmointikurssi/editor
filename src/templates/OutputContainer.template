@@ -21,11 +21,19 @@
 
         <div class='test-results'>
 
-            <ul>
-                {{#tests}}
-                    <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
-                {{/tests}}
-            </ul>
+            {{#if passed}}
+
+                <p>All tests passed.</p>
+
+            {{else}}
+
+                <ul>
+                    {{#tests}}
+                        <li>{{name}} – {{message}}</li>
+                    {{/tests}}
+                </ul>
+
+            {{/if}}
 
         </div>
 
