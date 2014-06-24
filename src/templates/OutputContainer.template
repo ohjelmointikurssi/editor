@@ -7,7 +7,7 @@
 <h1 class='title'>Results</h1>
 
 {{#unless status}}
-    <p>Processing...</p>
+    <p class='processing'>Processing...</p>
 {{/unless}}
 
 {{#if status}}
