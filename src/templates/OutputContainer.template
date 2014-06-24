@@ -21,13 +21,14 @@
 
     <div class='results'>
 
-<div class='test-results'>
+        <div class='test-results'>
 
             <ul>
                 {{#tests}}
                     <li>{{name}} {{#unless successful}} – {{message}}{{/unless}}</li>
                 {{/tests}}
             </ul>
+
         </div>
 
         <div class='validation-results'>
