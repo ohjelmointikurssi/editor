@@ -40,7 +40,7 @@ $pantone-black: #1d1d1b;
 
 /* Animations */
 
-@keyframes pulse {
+@keyframes processing {
 
     0% { opacity: 0.2; }
     25% { opacity: 0.5; }
@@ -50,13 +50,33 @@ $pantone-black: #1d1d1b;
 
 }
 
-@-webkit-keyframes pulse {
+@-webkit-keyframes processing {
 
     0% { opacity: 0.2; }
     25% { opacity: 0.5; }
     50% { opacity: 1; }
     75% { opacity: 0.5; }
     100% { opacity: 0.2; }
+
+}
+
+@keyframes pulse {
+
+    0% { opacity: 0.1; }
+    25% { opacity: 0.3; }
+    50% { opacity: 0.5; }
+    75% { opacity: 0.3; }
+    100% { opacity: 0.1; }
+
+}
+
+@-webkit-keyframes pulse {
+
+    0% { opacity: 0.1; }
+    25% { opacity: 0.3; }
+    50% { opacity: 0.5; }
+    75% { opacity: 0.3; }
+    100% { opacity: 0.1; }
 
 }
 
@@ -101,6 +121,13 @@ $pantone-black: #1d1d1b;
         i.submit {
 
             background-image: url('../images/submit.png');
+
+        }
+
+        i.submit.pulse {
+
+            -webkit-animation: pulse 4s infinite linear;
+            animation: pulse 4s infinite linear;
 
         }
 
@@ -208,8 +235,8 @@ $pantone-black: #1d1d1b;
 
         .processing {
 
-            -webkit-animation: pulse 4s infinite linear;
-            animation: pulse 4s infinite linear;
+            -webkit-animation: processing 4s infinite linear;
+            animation: processing 4s infinite linear;
 
         }
 

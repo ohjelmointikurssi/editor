@@ -74,6 +74,7 @@ TMCWebClient.editor = function (container, exercise) {
         clearInterval(_intervalId);
         saveActiveFile();
 
+        processingSubmission(true);
         _output.processing();
 
         _exercise.submit(function (data) {
@@ -102,8 +103,12 @@ TMCWebClient.editor = function (container, exercise) {
                 success: function (data) {
 
                     if (data.status !== 'processing') {
+
                         clearInterval(intervalId);
+
                         _exercise.setLastSubmission(data);
+
+                        processingSubmission(false);
                         showResults(data);
                     }
                 }
@@ -111,6 +116,18 @@ TMCWebClient.editor = function (container, exercise) {
         }, 3000);
 
         _intervalId = intervalId;
+    }
+
+    function processingSubmission(state) {
+
+        var submitElement = $(_container).find('.actions .submit').first();
+
+        if (!state) {
+            submitElement.removeClass('pulse');
+            return;
+        }
+
+        submitElement.addClass('pulse');
     }
 
     function showResults(data) {
