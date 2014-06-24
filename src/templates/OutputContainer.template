@@ -4,7 +4,7 @@
 
 </section>
 
-<h3>Results</h3>
+<h1 class='title'>Results</h1>
 
 {{#unless status}}
     <p>Processing...</p>
@@ -17,9 +17,8 @@
         <div class='section-positive' style="width:{{ratio.pass}}%;" />
     </div>
 
-    <p>Status: {{status}}</p>
-
     <div class='results'>
+
         <div class='test-results'>
 
             <ul>
@@ -45,6 +44,7 @@
             {{/if}}
 
         </div>
+
     </div>
 
 {{/if}}

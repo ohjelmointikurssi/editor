@@ -1,3 +1,5 @@
+$pantone-black: #1d1d1b;
+
 /* Fonts */
 
 @font-face {
@@ -43,7 +45,7 @@
     width: 800px;
     font-family: 'Helvetica Neue', sans-serif;
 
-    h1.title {
+    h1.name {
 
         margin-right: 15px;
         float: left;
@@ -53,7 +55,6 @@
         font-weight: 500;
         text-overflow: ellipsis;
         color: #555;
-
 
     }
 
@@ -164,6 +165,16 @@
         min-height: 200px;
         background-color: white;
         border: 1px solid lightgray;
+        font-size: 14px;
+        color: $pantone-black;
+
+        h1.title {
+
+            margin: 20px 0;
+            font-size: 16px;
+            font-weight: 500;
+
+        }
 
         .actions {
 
@@ -173,22 +184,23 @@
 
         .progress-bar {
 
-            height: 10px;
+            margin: 20px 0;
+            height: 15px;
             width: 100%;
-
-            .section-negative {
-
-                background-color: #bd2c00;
-                height: 100%;
-                float: left;
-
-            }
 
             .section-positive {
 
-                background-color: #6cc644;
+                background-color: rgb(154, 247, 122);
                 height: 100%;
                 float: right;
+
+            }
+
+            .section-negative {
+
+                background-color: rgb(250, 130, 130);;
+                height: 100%;
+                float: left;
 
             }
         }
@@ -196,30 +208,26 @@
         .results {
 
             width: 100%;
-            display: table-row;
-            border-spacing: 10px;
+
+            div {
+
+                margin-bottom: 20px;
+                padding: 10px 5px;
+                width: 350px;
+                border: 1px solid lightgray;
+                border-radius: 4px;
+
+            }
 
             .test-results {
 
-                display: table-cell;
-
-                padding: 0 10px 0 10px;
-                margin: 0 5px 10px 5px;
-                width: 350px;
-
-                box-shadow: 0 0 0 1px lightgray inset;
+                float: left;
 
             }
 
             .validation-results {
 
-                display: table-cell;
-
-                padding: 0 10px 0 10px;
-                margin: 0 5px 10px 5px;
-                width: 350px;
-
-                box-shadow: 0 0 0 1px lightgray inset;
+                float: right;
 
             }
         }
