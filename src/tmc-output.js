@@ -54,8 +54,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
     // Build errored
     if (results.status === 'error') {
-        this.showError(results);
-        return;
+        return this.showError(results);
     }
 
     /* jshint camelcase: false */
