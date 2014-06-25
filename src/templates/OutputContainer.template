@@ -27,7 +27,7 @@
 
             {{else}}
 
-                <p><em>{{ratio.failed}}</em> out of <em>{{ratio.total}}</em> tests <em class='negative'>failed</em>.</p>
+                <p><em>{{ratio.failed}}</em> out of <em>{{ratio.total}}</em> {{pluralize ratio.total 'test'}} <em class='negative'>failed</em>.</p>
 
                 <section class='details' style='display:none;'>
                     <ul>
@@ -45,7 +45,7 @@
 
             {{#if validations.results}}
 
-                <p><em>{{validations.errorCount}}</em> validations <em class='negative'>failed</em>.</p>
+                <p><em>{{validations.errorCount}}</em> {{pluralize validations.errorCount 'validation'}} <em class='negative'>failed</em>.</p>
 
                 <section class='details' style='display:none;'>
                     {{#validations.results}}
