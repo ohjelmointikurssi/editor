@@ -42,22 +42,64 @@ $pantone-black: #1d1d1b;
 
 @keyframes pulse {
 
-    0% { opacity: 0.1; }
-    25% { opacity: 0.3; }
-    50% { opacity: 0.5; }
-    75% { opacity: 0.3; }
-    100% { opacity: 0.1; }
+    0% {
 
+        opacity: 0.1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+
+    }
+
+    25% { opacity: 0.3; }
+
+    50% {
+
+        opacity: 0.5;
+        -webkit-transform: scale(1.1, 1.1);
+        transform: scale(1.1, 1.1);
+
+    }
+
+    75% { opacity: 0.3; }
+
+    100% {
+
+        opacity: 0.1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+
+    }
 }
 
 @-webkit-keyframes pulse {
 
-    0% { opacity: 0.1; }
-    25% { opacity: 0.3; }
-    50% { opacity: 0.5; }
-    75% { opacity: 0.3; }
-    100% { opacity: 0.1; }
+    0% {
 
+        opacity: 0.1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+
+    }
+
+    25% { opacity: 0.3; }
+
+    50% {
+
+        opacity: 0.5;
+        -webkit-transform: scale(1.1, 1.1);
+        transform: scale(1.1, 1.1);
+
+    }
+
+    75% { opacity: 0.3; }
+
+    100% {
+
+        opacity: 0.1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+
+    }
 }
 
 /* Components */
@@ -119,7 +161,7 @@ $pantone-black: #1d1d1b;
 
         i.submit {
 
-            background-image: url('../images/submit.png');
+            background-image: url('../images/submit.svg');
 
         }
 
