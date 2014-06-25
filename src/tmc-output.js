@@ -145,7 +145,7 @@ TMCWebClient.output.prototype.buildValidations = function (validations, validati
 
         for (var prop in obj) {
 
-            // Important check that this is objects own property
+            // Important check that this is object's own property
             if (obj.hasOwnProperty(prop)) {
                 validation.messages.push(obj[prop]);
             }
@@ -170,9 +170,8 @@ TMCWebClient.output.prototype.createResultHandlers = function (tests, validation
 
 TMCWebClient.output.prototype.createTestResultsHandler = function () {
 
-    var self = this;
-
-    var element = this.outputContainer.find('.results .test-results');
+    var self = this,
+        element = this.outputContainer.find('.results .test-results');
 
     element.addClass('active');
     element.click(function () {
@@ -193,9 +192,8 @@ TMCWebClient.output.prototype.detailedTestResultsOnClickHandler = function () {
 
 TMCWebClient.output.prototype.createValidationResultsHandler = function () {
 
-    var self = this;
-
-    var element = this.outputContainer.find('.results .validation-results');
+    var self = this,
+        element = this.outputContainer.find('.results .validation-results');
 
     element.addClass('active');
     element.click(function () {
