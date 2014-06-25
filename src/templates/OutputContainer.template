@@ -19,6 +19,8 @@
 
     <div class='results'>
 
+        <p class='description'>Your submission {{#if passed}}passed and you were awarded points.{{else}}failed.{{/if}} See <a href='{{submissionUrl}}' target='_blank'>results</a>.</p>
+
         <div class='test-results'>
 
             {{#if passed}}

@@ -57,7 +57,8 @@ TMCWebClient.output.prototype.showResults = function (results) {
         passed: results.all_tests_passed,
         tests: results.test_cases,
         validations: this.getValidations(results.validations),
-        ratio: this.calculateProgress(results.test_cases)
+        ratio: this.calculateProgress(results.test_cases),
+        submissionUrl: results.submission_url
 
     }
     /* jshint camelcase: true */
