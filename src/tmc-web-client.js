@@ -32,12 +32,15 @@ var TMCWebClient = (function() {
 
     _module.initialise = function () {
 
-        initialiseEditors(findExerciseContainers());
+        _module.session.login(function() {
+            
+            initialiseEditors(findExerciseContainers());
+        });
     }
 
     _module.getAuthenticationToken = function () {
 
-        return btoa('webclient:tmc-webclient');
+        return btoa(encodeURIComponent(_module.session.getUsername()) + ':' + encodeURIComponent(_module.session.getPassword()));
     }
 
     _module.xhrBasicAuthentication = function (xhr) {
