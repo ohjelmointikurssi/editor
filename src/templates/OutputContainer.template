@@ -12,7 +12,7 @@
 
 {{#if status}}
 
-    <div class='progress-bar'>
+    <div class='progress-bar {{#if validations.errorCount}}validation-bar{{/if}}'>
         <div class='section-negative' style='width:{{percentage ratio.failed ratio.total}}%;' />
         <div class='section-positive' style='width:{{percentage ratio.passed ratio.total}}%;' />
     </div>
@@ -27,7 +27,7 @@
 
             {{else}}
 
-                <p><em>{{ratio.failed}}</em> out of <em>{{ratio.total}}</em> tests <em class='negative'>failed</em>.</p>
+                <p><em>{{ratio.failed}}</em> out of <em>{{ratio.total}}</em> {{pluralize ratio.total 'test'}} <em class='negative'>failed</em>.</p>
 
                 <section class='details' style='display:none;'>
                     <ol>
@@ -45,7 +45,7 @@
 
             {{#if validations.results}}
 
-                <p><em>{{validations.errorCount}}</em> validations <em class='negative'>failed</em>.</p>
+                <p><em>{{validations.errorCount}}</em> {{pluralize validations.errorCount 'validation'}} <em class='negative'>failed</em>.</p>
 
                 <section class='details' style='display:none;'>
                     {{#validations.results}}
