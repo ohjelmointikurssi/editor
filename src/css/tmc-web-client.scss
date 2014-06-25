@@ -69,7 +69,7 @@ $pantone-black: #1d1d1b;
     width: 800px;
     font-family: 'Helvetica Neue', sans-serif;
 
-    h1 {
+    h1, h2 {
 
         margin: 0;
         font-size: 16px;
@@ -255,6 +255,47 @@ $pantone-black: #1d1d1b;
 
             }
 
+            h2 {
+
+                font-size: 14px;
+
+            }
+
+            em {
+
+                font-style: normal;
+                font-weight: 600;
+                color: $pantone-black;
+
+            }
+
+            em.positive {
+
+                color: rgb(154, 247, 122);
+
+            }
+
+            em.negative {
+
+                color: rgb(250, 130, 130);
+
+            }
+
+            ol {
+
+                padding-left: 30px;
+
+            }
+
+            li {
+
+                em {
+
+                    font-weight: 500;
+
+                }
+            }
+
             .extended {
 
                 float: none !important;
@@ -273,25 +314,6 @@ $pantone-black: #1d1d1b;
                 font-size: 16px;
                 color: #444;
 
-                em {
-
-                    font-style: normal;
-                    font-weight: 600;
-                    color: $pantone-black;
-
-                }
-
-                em.positive {
-
-                    color: rgb(154, 247, 122);
-
-                }
-
-                em.negative {
-
-                    color: rgb(250, 130, 130);
-
-                }
             }
 
             .test-results {

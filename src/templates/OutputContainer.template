@@ -30,11 +30,11 @@
                 <p><em>{{ratio.failed}}</em> out of <em>{{ratio.total}}</em> tests <em class='negative'>failed</em>.</p>
 
                 <section class='details' style='display:none;'>
-                    <ul>
+                    <ol>
                         {{#tests}}
-                            <li>{{name}} – {{message}}</li>
+                            <li><em>{{name}}</em> – {{message}}</li>
                         {{/tests}}
-                    </ul>
+                    </ol>
                 </section>
 
             {{/if}}
@@ -50,13 +50,13 @@
                 <section class='details' style='display:none;'>
                     {{#validations.results}}
 
-                        <h4>{{name}}</h4>
+                        <h2>{{name}}</h2>
 
-                        <ul>
+                        <ol>
                             {{#messages}}
-                                <li>Line {{line}}: {{message}}</li>
+                                <li><em>Line {{line}}</em>: {{message}}</li>
                             {{/messages}}
-                        </ul>
+                        </ol>
 
                     {{/validations.results}}
                 </section>
