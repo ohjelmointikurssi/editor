@@ -72,7 +72,7 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
     this.render(attributes);
 
-    this.createResultHandlers(attributes.ratio.failed, attributes.validations);
+    this.createResultHandlers(attributes.ratio, attributes.validations);
 }
 
 TMCWebClient.output.prototype.showError = function (results) {
@@ -157,9 +157,9 @@ TMCWebClient.output.prototype.buildValidations = function (validations, validati
     }
 }
 
-TMCWebClient.output.prototype.createResultHandlers = function (testsFailed, validations) {
+TMCWebClient.output.prototype.createResultHandlers = function (tests, validations) {
 
-    if (testsFailed !== 0) {
+    if (tests.failed !== 0) {
         this.createTestResultsHandler();
     }
 
