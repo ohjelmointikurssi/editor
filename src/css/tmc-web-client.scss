@@ -89,14 +89,19 @@ $pantone-black: #1d1d1b;
     width: 800px;
     font-family: 'Helvetica Neue', sans-serif;
 
+    h1 {
+
+        font-size: 16px;
+        font-weight: 500;
+
+    }
+
     h1.name {
 
         margin-right: 15px;
         float: left;
         overflow-x: hidden;
         max-width: 200px;
-        font-size: 14px;
-        font-weight: 500;
         text-overflow: ellipsis;
         color: #555;
 
@@ -222,8 +227,6 @@ $pantone-black: #1d1d1b;
         h1.title {
 
             margin: 20px 0;
-            font-size: 16px;
-            font-weight: 500;
 
         }
 
