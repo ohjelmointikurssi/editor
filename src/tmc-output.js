@@ -2,7 +2,8 @@ TMCWebClient.output = function (container) {
 
     this.template = {
 
-        output: Handlebars.templates.OutputContainer
+        output: Handlebars.templates.OutputContainer,
+        error: Handlebars.templates.OutputErrorContainer
 
     }
 
@@ -11,12 +12,13 @@ TMCWebClient.output = function (container) {
     $(container).append(this.outputContainer);
 }
 
-TMCWebClient.output.prototype.render = function (attributes) {
+TMCWebClient.output.prototype.render = function (attributes, template) {
 
     this.clear();
 
     var self = this,
-        html = $(this.template.output(attributes));
+        _template = template || this.template.output,
+        html = $(_template(attributes));
 
     // Close handler
     html.find('.close').click(function () {
@@ -50,6 +52,12 @@ TMCWebClient.output.prototype.processing = function () {
 
 TMCWebClient.output.prototype.showResults = function (results) {
 
+    // Build errored
+    if (results.status === 'error') {
+        this.showError(results);
+        return;
+    }
+
     /* jshint camelcase: false */
     var attributes = {
 
@@ -64,7 +72,18 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
     this.render(attributes);
 
-    this.createResultHandlers(attributes.passed, attributes.validations);
+    this.createResultHandlers(attributes.ratio.failed, attributes.validations);
+}
+
+TMCWebClient.output.prototype.showError = function (results) {
+
+    var attributes = {
+
+        error: results.error
+
+    }
+
+    this.render(attributes, this.template.error);
 }
 
 TMCWebClient.output.prototype.calculateProgress = function (tests) {
@@ -138,9 +157,9 @@ TMCWebClient.output.prototype.buildValidations = function (validations, validati
     }
 }
 
-TMCWebClient.output.prototype.createResultHandlers = function (testsPassed, validations) {
+TMCWebClient.output.prototype.createResultHandlers = function (testsFailed, validations) {
 
-    if (!testsPassed) {
+    if (testsFailed !== 0) {
         this.createTestResultsHandler();
     }
 
