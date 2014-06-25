@@ -213,8 +213,11 @@ $pantone-black: #1d1d1b;
     .tab-bar {
 
         float: left;
+        overflow: scroll;
         margin: 0;
         padding: 0;
+        width: 650px;
+        height: 37px;
         font-size: 14px;
         color: #3071a9;
 
