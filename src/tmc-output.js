@@ -70,9 +70,10 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
 TMCWebClient.output.prototype.calculateProgress = function (tests) {
 
-    var passed = 0;
-    var failed = 0;
+    var passed = 0,
+        failed = 0;
 
+    // Count how many tests passed or failed
     tests.forEach(function (test) {
 
         test.successful ? passed++ : failed++;
@@ -150,9 +151,12 @@ TMCWebClient.output.prototype.createTestResultsHandler = function () {
 
 TMCWebClient.output.prototype.detailedTestResultsOnClickHandler = function () {
 
-    var element = this.outputContainer.find('.results .test-results .details');
+    // Toggle validation results
+    this.outputContainer.find('.results .validation-results').toggle();
 
-    element.toggle();
+    // Toggle detailed information about test results
+    this.outputContainer.find('.results .test-results').toggleClass('extended');
+    this.outputContainer.find('.results .test-results .details').toggle();
 }
 
 TMCWebClient.output.prototype.createValidationResultsHandler = function () {
@@ -167,7 +171,10 @@ TMCWebClient.output.prototype.createValidationResultsHandler = function () {
 
 TMCWebClient.output.prototype.detailedValidationResultsOnClickHandler = function () {
 
-    var element = this.outputContainer.find('.results .validation-results .details');
+    // Toggle test results
+    this.outputContainer.find('.results .test-results').toggle();
 
-    element.toggle();
+    // Toggle detailed information about validation results
+    this.outputContainer.find('.results .validation-results').toggleClass('extended');
+    this.outputContainer.find('.results .validation-results .details').toggle();
 }
