@@ -167,7 +167,7 @@ TMCWebClient.editor = function (container, exercise) {
         $(_container).find('.actions .new').first().click(function () {
 
             var path = _exercise.getSourcePath();
-            var classname = prompt('Filename');
+            var classname = prompt('Filename:');
 
             _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
             update();
@@ -176,6 +176,9 @@ TMCWebClient.editor = function (container, exercise) {
 
     function update() {
 
+        // Remember currently active tab
+        var currentFile = $('.tmc-exercise .tab-bar li.active').attr('data-id');
+
         // Clear navigation panel
         $(_container).find('.top').empty();
 
@@ -183,7 +186,7 @@ TMCWebClient.editor = function (container, exercise) {
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-        $(_container).find('.tab-bar li').first().addClass('active');
+         $(_container).find('.tab-bar li[data-id="' + currentFile + '"]').addClass('active');
     }
 
     function render(files) {
