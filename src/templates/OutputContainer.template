@@ -34,7 +34,7 @@
                 <section class='details' style='display:none;'>
                     <ol>
                         {{#tests}}
-                            <li><em>{{name}}</em> – {{message}}</li>
+                            {{#unless successful}}<li><em>{{name}}</em> – {{message}}</li>{{/unless}}
                         {{/tests}}
                     </ol>
                 </section>
