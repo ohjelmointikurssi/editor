@@ -2,7 +2,8 @@ TMCWebClient.output = function (container) {
 
     this.template = {
 
-        output: Handlebars.templates.OutputContainer
+        output: Handlebars.templates.OutputContainer,
+        error: Handlebars.templates.OutputErrorContainer
 
     }
 
@@ -11,12 +12,13 @@ TMCWebClient.output = function (container) {
     $(container).append(this.outputContainer);
 }
 
-TMCWebClient.output.prototype.render = function (attributes) {
+TMCWebClient.output.prototype.render = function (attributes, template) {
 
     this.clear();
 
     var self = this,
-        html = $(this.template.output(attributes));
+        _template = template || this.template.output,
+        html = $(_template(attributes));
 
     // Close handler
     html.find('.close').click(function () {
@@ -50,6 +52,11 @@ TMCWebClient.output.prototype.processing = function () {
 
 TMCWebClient.output.prototype.showResults = function (results) {
 
+    // Build errored
+    if (results.status === 'error') {
+        return this.showError(results);
+    }
+
     /* jshint camelcase: false */
     var attributes = {
 
@@ -65,7 +72,18 @@ TMCWebClient.output.prototype.showResults = function (results) {
 
     this.render(attributes);
 
-    this.createResultHandlers(attributes.passed, attributes.validations);
+    this.createResultHandlers(attributes.ratio, attributes.validations);
+}
+
+TMCWebClient.output.prototype.showError = function (results) {
+
+    var attributes = {
+
+        error: results.error
+
+    }
+
+    this.render(attributes, this.template.error);
 }
 
 TMCWebClient.output.prototype.calculateProgress = function (tests) {
@@ -127,7 +145,7 @@ TMCWebClient.output.prototype.buildValidations = function (validations, validati
 
         for (var prop in obj) {
 
-            // Important check that this is objects own property
+            // Important check that this is object's own property
             if (obj.hasOwnProperty(prop)) {
                 validation.messages.push(obj[prop]);
             }
@@ -139,9 +157,9 @@ TMCWebClient.output.prototype.buildValidations = function (validations, validati
     }
 }
 
-TMCWebClient.output.prototype.createResultHandlers = function (testsPassed, validations) {
+TMCWebClient.output.prototype.createResultHandlers = function (tests, validations) {
 
-    if (!testsPassed) {
+    if (tests.failed !== 0) {
         this.createTestResultsHandler();
     }
 
@@ -152,9 +170,8 @@ TMCWebClient.output.prototype.createResultHandlers = function (testsPassed, vali
 
 TMCWebClient.output.prototype.createTestResultsHandler = function () {
 
-    var self = this;
-
-    var element = this.outputContainer.find('.results .test-results');
+    var self = this,
+        element = this.outputContainer.find('.results .test-results');
 
     element.addClass('active');
     element.click(function () {
@@ -175,9 +192,8 @@ TMCWebClient.output.prototype.detailedTestResultsOnClickHandler = function () {
 
 TMCWebClient.output.prototype.createValidationResultsHandler = function () {
 
-    var self = this;
-
-    var element = this.outputContainer.find('.results .validation-results');
+    var self = this,
+        element = this.outputContainer.find('.results .validation-results');
 
     element.addClass('active');
     element.click(function () {

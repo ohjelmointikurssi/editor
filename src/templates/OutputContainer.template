@@ -23,7 +23,7 @@
 
         <div class='test-results'>
 
-            {{#if passed}}
+            {{#unless ratio.failed}}
 
                 <p>All tests <em class='positive'>passed</em>.</p>
 
@@ -39,7 +39,7 @@
                     </ol>
                 </section>
 
-            {{/if}}
+            {{/unless}}
 
         </div>
 
