@@ -1,16 +1,19 @@
-<h1 class='name'>{{title}}</h1>
+<div class='top'>
+    <h1 class='name'>{{title}}</h1>
 
-<ul class='tab-bar'>
+    <ul class='tab-bar'>
 
-    {{#files}}
-        <li data-id="{{name}}">{{filename name}}</li>
-    {{/files}}
+        {{#files}}
+            <li data-id="{{name}}">{{filename name}}</li>
+        {{/files}}
 
-</ul>
+    </ul>
 
-<section class='actions'>
+    <section class='actions'>
 
-    <i class='output' title='Last submission'></i>
-    <i class='submit' title='Submit'></i>
+        <i class='new' title='New file'></i>
+        <i class='output' title='Last submission'></i>
+        <i class='submit' title='Submit'></i>
 
-</section>
+    </section>
+</div>

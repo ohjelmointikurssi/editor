@@ -23,7 +23,7 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
 
         },
 
-        success: function(exercise) {
+        success: function (exercise) {
 
             self.exercise = exercise;
             callback();
@@ -120,6 +120,14 @@ TMCWebClient.exercise.prototype.getName = function () {
     /* jshint camelcase: false */
     return this.exercise.exercise_name;
     /* jshint camelcase: true */
+}
+
+TMCWebClient.exercise.prototype.getSourcePath = function () {
+
+    var name = this.getFilesFromSource()[0].name.split('/');
+    name.pop();
+
+    return name.join('/');
 }
 
 TMCWebClient.exercise.prototype.getZipBlob = function () {

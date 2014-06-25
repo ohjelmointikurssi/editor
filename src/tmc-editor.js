@@ -45,7 +45,7 @@ TMCWebClient.editor = function (container, exercise) {
         _exercise.fetchZip(function () {
 
             var files = _exercise.getFilesFromSource(),
-                content = files[0].asText();
+                    content = files[0].asText();
 
             // Render
             render(files);
@@ -132,7 +132,6 @@ TMCWebClient.editor = function (container, exercise) {
 
     function showResults(data) {
 
-        console.log(data);
         _output.showResults(data);
     }
 
@@ -163,6 +162,30 @@ TMCWebClient.editor = function (container, exercise) {
         });
     }
 
+    function createNewFileHandler() {
+
+        $(_container).find('.actions .new').first().click(function () {
+
+            var path = _exercise.getSourcePath();
+            var classname = prompt('Filename');
+
+            _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
+            update();
+        });
+    }
+
+    function update() {
+
+        // Clear navigation panel
+        $(_container).find('.top').empty();
+
+        // Render navigation panel
+        render(_exercise.getFilesFromSource());
+
+        // Set active tab
+        $(_container).find('.tab-bar li').first().addClass('active');
+    }
+
     function render(files) {
 
         var attributes = {
@@ -180,6 +203,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         createSubmitHandler();
         createLastSubmissionHandler();
+        createNewFileHandler();
     }
 
     function show(content) {

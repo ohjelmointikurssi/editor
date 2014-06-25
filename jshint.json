@@ -25,6 +25,7 @@
         "Handlebars": true,
         "JSZip": true,
         "JSZipUtils": true,
+        "prompt": true,
         "TMCWebClient": true
 
     }

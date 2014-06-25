@@ -160,6 +160,23 @@ $pantone-black: #1d1d1b;
 
         }
 
+        i.new {
+
+            line-height: 38px;
+            width: 20px;
+            font-size: 22px;
+            font-weight: 500;
+            color: #888;
+            opacity: 1;
+
+        }
+
+        i.new::after {
+
+            content: '+'
+
+        }
+
         i.submit {
 
             background-image: url('../images/submit.svg');
