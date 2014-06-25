@@ -45,7 +45,7 @@ TMCWebClient.editor = function (container, exercise) {
         _exercise.fetchZip(function () {
 
             var files = _exercise.getFilesFromSource(),
-                    content = files[0].asText();
+                content = files[0].asText();
 
             // Render
             render(files);
