@@ -1,11 +1,21 @@
-<div>
+<div class='login-box'>
 
 	<form class='login-form' method='post'>
 
 		<h1 class='name'>Login</h1>
 
-		Username <input class='username' name='username' required value='{{username}}'> <br>
-		Password <input class='password' name='password' type='password' required> <br>
+		<label>
+			Username 
+			<br>
+			<input class='username' name='username' required value='{{username}}'>
+		</label>
+		<br>
+		<label>
+			Password
+			<br>
+			<input class='password' name='password' type='password' required>
+		</label>
+		<br><br>
 		<button>Login</button>
 		<p class='status'></p>
 	</form>
