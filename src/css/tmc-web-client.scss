@@ -267,8 +267,14 @@ $pantone-black: #1d1d1b;
 
             .extended {
 
-                width: 720px;
                 float: none !important;
+                width: 728px;
+
+            }
+
+            .active {
+
+                cursor: pointer;
 
             }
 
