@@ -249,8 +249,8 @@ $pantone-black: #1d1d1b;
 
     .tmc-output {
 
-        position: absolute;
-        bottom: 0;
+        position: relative;
+        margin-top: -200px;
         z-index: 4;
         padding: 0 20px;
         width: 760px;
