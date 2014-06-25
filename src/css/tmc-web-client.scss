@@ -40,26 +40,6 @@ $pantone-black: #1d1d1b;
 
 /* Animations */
 
-@keyframes processing {
-
-    0% { opacity: 0.2; }
-    25% { opacity: 0.5; }
-    50% { opacity: 1; }
-    75% { opacity: 0.5; }
-    100% { opacity: 0.2; }
-
-}
-
-@-webkit-keyframes processing {
-
-    0% { opacity: 0.2; }
-    25% { opacity: 0.5; }
-    50% { opacity: 1; }
-    75% { opacity: 0.5; }
-    100% { opacity: 0.2; }
-
-}
-
 @keyframes pulse {
 
     0% { opacity: 0.1; }
@@ -91,6 +71,7 @@ $pantone-black: #1d1d1b;
 
     h1 {
 
+        margin: 0;
         font-size: 16px;
         font-weight: 500;
 
@@ -98,6 +79,7 @@ $pantone-black: #1d1d1b;
 
     h1.name {
 
+        margin-top: 8px;
         margin-right: 15px;
         float: left;
         overflow-x: hidden;
@@ -233,13 +215,6 @@ $pantone-black: #1d1d1b;
         .actions {
 
             margin-top: 10px;
-
-        }
-
-        .processing {
-
-            -webkit-animation: processing 4s infinite linear;
-            animation: processing 4s infinite linear;
 
         }
 
