@@ -21,7 +21,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Text
         editor.setTheme('ace/theme/light');
-        editor.setFontSize(12);
+        editor.setFontSize(13);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
         editor.getSession().setWrapLimitRange(100, 100);
