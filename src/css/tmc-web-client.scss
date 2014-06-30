@@ -247,6 +247,22 @@ $pantone-black: #1d1d1b;
             text-overflow: ellipsis;
             cursor: pointer;
 
+            i.delete {
+
+                font-style: normal;
+                cursor: pointer;
+                font-weight: 500;
+                color: #888;
+                padding: 0 0 0 10px;
+
+            }
+
+            i.delete::after {
+
+                content: 'x'
+
+            }
+
         }
 
         li.active {
