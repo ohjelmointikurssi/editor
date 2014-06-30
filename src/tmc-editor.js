@@ -171,7 +171,10 @@ TMCWebClient.editor = function (container, exercise) {
 
             setFileMode(classname);
 
+            // Save new file
             _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
+
+            // Update navigation bar
             update();
         });
     }
