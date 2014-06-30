@@ -204,9 +204,6 @@ TMCWebClient.editor = function (container, exercise) {
 
     function update() {
 
-        // Remember currently active tab
-        var currentFile = $('.tmc-exercise .tab-bar li.active').attr('data-id');
-
         // Clear navigation bar
         $(_container).find('.top').empty();
 
@@ -214,11 +211,7 @@ TMCWebClient.editor = function (container, exercise) {
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-        if (!currentFile || !_exercise.getFile(currentFile)) {
-            $(_container).find('.tab-bar li').last().click();
-        } else {
-            $(_container).find('.tab-bar li[data-id="' + currentFile + '"]').addClass('active');
-        }
+        $(_container).find('.tab-bar li').last().click();
     }
 
     function render(files) {
