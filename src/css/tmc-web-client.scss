@@ -432,6 +432,21 @@ $pantone-black: #1d1d1b;
     }
 }
 
+/* Overlay */
+
+.tmc-exercise.overlay {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.95;
+
+}
+
 /* Login */
 
 .tmc-exercise.login {
