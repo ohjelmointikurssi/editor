@@ -53,7 +53,7 @@ TMCWebClient.editor = function (container, exercise) {
             show(content);
 
             // Set active tab
-            $(_container).find('.tab-bar li').first().addClass('active');
+            $('.tab-bar li', _container).first().addClass('active');
         });
 
         createOutputContainer();
@@ -66,7 +66,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createSubmitHandler() {
 
-        $(_container).find('.actions .submit').first().click(submitOnClickHandler);
+        $('.actions .submit', _container).first().click(submitOnClickHandler);
     }
 
     function submitOnClickHandler() {
@@ -120,7 +120,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function processingSubmission(state) {
 
-        var submitElement = $(_container).find('.actions .submit').first();
+        var submitElement = $('.actions .submit', _container).first();
 
         if (!state) {
             submitElement.removeClass('pulse');
@@ -137,7 +137,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createLastSubmissionHandler() {
 
-        $(_container).find('.actions .output').first().click(function () {
+        $('.actions .output', _container).first().click(function () {
 
             // Toggle output
             if (_output.visible()) {
@@ -164,7 +164,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createNewFileHandler() {
 
-        $(_container).find('.actions .new').first().click(function () {
+        $('.actions .new', _container).first().click(function () {
 
             var path = _exercise.getSourcePath();
             var classname = prompt('Filename:');
@@ -181,7 +181,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createDeleteFileHandler() {
 
-        $(_container).find('.top .tab-bar li i.delete').each(function (index, element) {
+        $('.top .tab-bar li i.delete', _container).each(function (index, element) {
 
             // Get file id
             var id = $(element).parent().attr('data-id');
@@ -205,13 +205,13 @@ TMCWebClient.editor = function (container, exercise) {
     function update() {
 
         // Delete navigation bar
-        $(_container).find('.top').remove();
+        $('.top', _container).remove();
 
         // Render navigation bar
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-        $(_container).find('.tab-bar li').last().click();
+        $('.tab-bar li', _container).last().click();
     }
 
     function render(files) {
@@ -227,7 +227,7 @@ TMCWebClient.editor = function (container, exercise) {
         $(_container).prepend(_template.editor(attributes));
 
         // Add click events to tabs
-        $(_container).find('.tab-bar li').click(changeFile);
+        $('.tab-bar li', _container).click(changeFile);
 
         createSubmitHandler();
         createLastSubmissionHandler();
@@ -255,7 +255,7 @@ TMCWebClient.editor = function (container, exercise) {
         var element = $(this);
 
         // Clear previous active tab
-        $(_container).find('.tab-bar li').removeClass('active');
+        $('.tab-bar li', _container).removeClass('active');
 
         // Set active tab
         element.addClass('active');
@@ -306,7 +306,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function saveActiveFile() {
 
-        var filename = $('.tmc-exercise .tab-bar li.active').attr('data-id');
+        var filename = $('.tmc-exercise .tab-bar li.active', _container).attr('data-id');
         _exercise.saveFile(filename, _editor.getValue());
     }
 
