@@ -14,13 +14,14 @@ TMCWebClient.session = (function () {
     }
 
     _module.logout = function () {
-		console.log('invoked logout');
-		localStorage.removeItem('username');
-		localStorage.removeItem('password');
-		_module.username = undefined;
-		_module.password = undefined;
-		_module.login(function(){});
-	}
+
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
+
+        _module.username = undefined;
+        _module.password = undefined;
+        _module.login(function (){});
+    }
 
     _module.login = function (callback) {
 

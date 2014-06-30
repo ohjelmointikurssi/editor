@@ -1,4 +1,5 @@
 <i class='logout' title='Logout'>Logout</i>
+
 <div class='top'>
     <h1 class='name'>{{title}}</h1>
 

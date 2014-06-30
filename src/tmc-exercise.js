@@ -33,9 +33,9 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.downloadZip = function(url, callback) {
+TMCWebClient.exercise.prototype.downloadZip = function (url, callback) {
 
-    JSZipUtils.getBinaryContent(url, function(error, data) {
+    JSZipUtils.getBinaryContent(url, function (error, data) {
 
         if (error) {
             throw error;
@@ -45,11 +45,11 @@ TMCWebClient.exercise.prototype.downloadZip = function(url, callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.fetchZip = function(callback) {
+TMCWebClient.exercise.prototype.fetchZip = function (callback) {
 
     var self = this;
 
-    this.downloadZip(this.baseUrl + this.id + '.zip', function(zip) {
+    this.downloadZip(this.baseUrl + this.id + '.zip', function (zip) {
 
         self.zip = zip;
         self.getSourcePath();
@@ -58,7 +58,7 @@ TMCWebClient.exercise.prototype.fetchZip = function(callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.submit = function(callback, fallback) {
+TMCWebClient.exercise.prototype.submit = function (callback, fallback) {
 
     if (this.zip === undefined) {
         return;
@@ -83,7 +83,7 @@ TMCWebClient.exercise.prototype.submit = function(callback, fallback) {
     });
 }
 
-TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, processing) {
+TMCWebClient.exercise.prototype.fetchLastSubmission = function (callback, error, processing) {
 
     if (this.lastSubmission !== undefined) {
         callback(this.lastSubmission);
@@ -95,8 +95,6 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, 
         return;
     }
 
-
-
     var self = this;
 
     var url = TMCWebClient.server + '/submissions/' + this.exercise.submissions[0].id + '.json?api_version=' + TMCWebClient.apiVersion;
@@ -105,7 +103,7 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, 
         url: url,
         beforeSend: TMCWebClient.xhrBasicAuthentication,
 
-        success: function(data) {
+        success: function (data) {
 
             if (data.status === 'processing') {
                 processing(url);
@@ -168,7 +166,7 @@ TMCWebClient.exercise.prototype.removeFile = function (filename) {
     this.zip.remove(filename);
 }
 
-TMCWebClient.exercise.prototype.setLastSubmission = function(lastSubmission) {
+TMCWebClient.exercise.prototype.setLastSubmission = function (lastSubmission) {
 
     this.lastSubmission = lastSubmission;
 };

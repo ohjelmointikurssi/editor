@@ -62,10 +62,12 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function createLogoutHandler() {
+
         $(_container).find('.logout').first().click(logoutOnClickHandler);
     }
 
     function logoutOnClickHandler() {
+
         TMCWebClient.session.logout();
     }
 
@@ -93,6 +95,7 @@ TMCWebClient.editor = function (container, exercise) {
             submissionPoller(data.submission_url);
             /* jshint camelcase:true */
         }, function (data) {
+
             _output.close();
             console.log(data);
         });
