@@ -52,6 +52,7 @@ TMCWebClient.exercise.prototype.fetchZip = function(callback) {
     this.downloadZip(this.baseUrl + this.id + '.zip', function(zip) {
 
         self.zip = zip;
+        self.getSourcePath();
 
         callback();
     });
@@ -124,10 +125,14 @@ TMCWebClient.exercise.prototype.getName = function () {
 
 TMCWebClient.exercise.prototype.getSourcePath = function () {
 
+    if (this.sourcePath) {
+        return this.sourcePath;
+    }
+
     var name = this.getFilesFromSource()[0].name.split('/');
     name.pop();
 
-    return name.join('/');
+    return this.sourcePath = name.join('/');
 }
 
 TMCWebClient.exercise.prototype.getZipBlob = function () {
