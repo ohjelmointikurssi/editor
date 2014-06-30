@@ -207,10 +207,10 @@ TMCWebClient.editor = function (container, exercise) {
         // Remember currently active tab
         var currentFile = $('.tmc-exercise .tab-bar li.active').attr('data-id');
 
-        // Clear navigation panel
+        // Clear navigation bar
         $(_container).find('.top').empty();
 
-        // Render navigation panel
+        // Render navigation bar
         render(_exercise.getFilesFromSource());
 
         // Set active tab
