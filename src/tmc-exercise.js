@@ -119,8 +119,10 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, 
 TMCWebClient.exercise.prototype.getName = function () {
 
     /* jshint camelcase: false */
-    return this.exercise.exercise_name;
+    var exerciseName = this.exercise.exercise_name;
     /* jshint camelcase: true */
+
+    return exerciseName.substring(exerciseName.lastIndexOf('.') + 1);
 }
 
 TMCWebClient.exercise.prototype.getSourcePath = function () {
