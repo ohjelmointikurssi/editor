@@ -176,6 +176,24 @@ TMCWebClient.editor = function (container, exercise) {
         });
     }
 
+    function createDeleteFileHandler() {
+
+        $(_container).find('.top .tab-bar li i.delete').each(function (index, element) {
+
+            // Get file id
+            var id = $(element).parent().attr('data-id');
+
+            $(element).click(function () {
+
+                // Remove file
+                _exercise.removeFile(id);
+
+                // Update navigation bar
+                update();
+            });
+        });
+    }
+
     function update() {
 
         // Remember currently active tab
@@ -209,6 +227,7 @@ TMCWebClient.editor = function (container, exercise) {
         createSubmitHandler();
         createLastSubmissionHandler();
         createNewFileHandler();
+        createDeleteFileHandler();
     }
 
     function show(content) {

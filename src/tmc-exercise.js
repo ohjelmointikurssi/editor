@@ -155,6 +155,11 @@ TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
     this.zip.file(filename, content);
 }
 
+TMCWebClient.exercise.prototype.removeFile = function (filename) {
+
+    this.zip.remove(filename);
+}
+
 TMCWebClient.exercise.prototype.setLastSubmission = function(lastSubmission) {
 
     this.lastSubmission = lastSubmission;
