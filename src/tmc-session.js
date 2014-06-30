@@ -20,7 +20,7 @@ TMCWebClient.session = (function () {
 
         _module.username = undefined;
         _module.password = undefined;
-        _module.login(function (){});
+        _module.login($.noop);
     }
 
     _module.login = function (callback) {
