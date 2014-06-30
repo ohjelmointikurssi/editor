@@ -102,6 +102,12 @@ $pantone-black: #1d1d1b;
     }
 }
 
+/* Clear */
+
+body {
+    margin: 0;
+}
+
 /* Components */
 
 .tmc-exercise {
@@ -528,4 +534,18 @@ $pantone-black: #1d1d1b;
         color: red;
 
     }
+}
+
+.logout { 
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 5px 15px 5px 13px;
+    background-color: white;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-radius: 0 0 0 20px;
+    z-index: 5;
 }

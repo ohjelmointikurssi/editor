@@ -61,16 +61,6 @@ TMCWebClient.editor = function (container, exercise) {
         createOutputContainer();
     }
 
-    function createLogoutHandler() {
-
-        $(_container).find('.logout').first().click(logoutOnClickHandler);
-    }
-
-    function logoutOnClickHandler() {
-
-        TMCWebClient.session.logout();
-    }
-
     function createOutputContainer() {
 
         _output = new TMCWebClient.output(_container);
@@ -252,7 +242,6 @@ TMCWebClient.editor = function (container, exercise) {
         createSubmitHandler();
         createLastSubmissionHandler();
         createNewFileHandler();
-        createLogoutHandler();
         createDeleteFileHandler();
     }
 

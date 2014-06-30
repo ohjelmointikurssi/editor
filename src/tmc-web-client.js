@@ -30,11 +30,17 @@ var TMCWebClient = (function() {
         });
     }
 
+    function initialiseLogoutButton() {
+
+        $('body').find('.logout').first().click(TMCWebClient.session.logout);
+    }
+
     _module.initialise = function () {
 
         _module.session.login(function() {
             
             initialiseEditors(findExerciseContainers());
+            initialiseLogoutButton();
         });
     }
 
