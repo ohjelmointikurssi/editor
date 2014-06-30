@@ -20,12 +20,12 @@ TMCWebClient.session = (function () {
             return;
         }
 
-        var form = $(_template.login({'username': _module.username})),
+        var form = $(_template.login({ 'username': _module.username })),
             status = $('.status', form);
 
-        $('.login-form', form).submit(function () {
+        $('form', form).submit(function () {
 
-            var formData = $('.login-form', form).serialize(),
+            var formData = $('form', form).serialize(),
                 username = $('.username', form).val(),
                 password = $('.password', form).val();
 
