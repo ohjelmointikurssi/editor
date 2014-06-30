@@ -59,6 +59,14 @@ TMCWebClient.editor = function (container, exercise) {
         createOutputContainer();
     }
 
+    function createLogoutHandler() {
+        $(_container).find('.logout').first().click(logoutOnClickHandler);
+    }
+
+    function logoutOnClickHandler() {
+        TMCWebClient.session.logout();
+    }
+
     function createOutputContainer() {
 
         _output = new TMCWebClient.output(_container);
@@ -82,6 +90,9 @@ TMCWebClient.editor = function (container, exercise) {
             /* jshint camelcase:false */
             submissionPoller(data.submission_url);
             /* jshint camelcase:true */
+        }, function (data) {
+            _output.close();
+            console.log(data);
         });
     }
 
@@ -207,6 +218,7 @@ TMCWebClient.editor = function (container, exercise) {
         createSubmitHandler();
         createLastSubmissionHandler();
         createNewFileHandler();
+        createLogoutHandler();
     }
 
     function show(content) {

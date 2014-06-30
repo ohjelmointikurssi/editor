@@ -57,7 +57,7 @@ TMCWebClient.exercise.prototype.fetchZip = function(callback) {
     });
 }
 
-TMCWebClient.exercise.prototype.submit = function(callback) {
+TMCWebClient.exercise.prototype.submit = function(callback, fallback) {
 
     if (this.zip === undefined) {
         return;
@@ -76,7 +76,8 @@ TMCWebClient.exercise.prototype.submit = function(callback) {
         contentType: false,
         url: this.baseUrl + this.id + '/submissions.json',
         beforeSend: TMCWebClient.xhrBasicAuthentication,
-        success: callback
+        success: callback,
+        error: fallback
 
     });
 }
