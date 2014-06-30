@@ -204,8 +204,8 @@ TMCWebClient.editor = function (container, exercise) {
 
     function update() {
 
-        // Clear navigation bar
-        $(_container).find('.top').empty();
+        // Delete navigation bar
+        $(_container).find('.top').remove();
 
         // Render navigation bar
         render(_exercise.getFilesFromSource());
