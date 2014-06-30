@@ -162,12 +162,12 @@ $pantone-black: #1d1d1b;
 
         i.new {
 
-            line-height: 38px;
+            opacity: 1;
             width: 20px;
             font-size: 22px;
             font-weight: 500;
+            line-height: 34px;
             color: #888;
-            opacity: 1;
 
         }
 
@@ -436,6 +436,7 @@ $pantone-black: #1d1d1b;
 
 .tmc-exercise.overlay {
 
+    opacity: 0.95;
     position: absolute;
     top: 0;
     left: 0;
@@ -443,7 +444,6 @@ $pantone-black: #1d1d1b;
     width: 100%;
     height: 100%;
     background-color: white;
-    opacity: 0.95;
 
 }
 
