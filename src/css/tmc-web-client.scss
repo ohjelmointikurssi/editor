@@ -230,13 +230,14 @@ $pantone-black: #1d1d1b;
     .tab-bar {
 
         float: left;
-        overflow: auto;
+        overflow: hidden;
         margin: 0;
         padding: 0;
         width: 550px;
         height: 40px;
         font-size: 14px;
         color: #3071a9;
+        white-space: nowrap;
 
         li {
 
@@ -246,6 +247,12 @@ $pantone-black: #1d1d1b;
             padding: 10px 15px;
             text-overflow: ellipsis;
             cursor: pointer;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
 
         }
 
