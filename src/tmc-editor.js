@@ -192,7 +192,7 @@ TMCWebClient.editor = function (container, exercise) {
                 _exercise.removeFile(id);
 
                 // If currently active tab equals deleted file, clear editor
-                if ($('.tmc-exercise .tab-bar li.active').attr('data-id') === id) {
+                if ($('.top .tab-bar li.active', _container).attr('data-id') === id) {
                     _editor.setValue('');
                 }
 
@@ -306,7 +306,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function saveActiveFile() {
 
-        var filename = $('.tmc-exercise .tab-bar li.active', _container).attr('data-id');
+        var filename = $('.top .tab-bar li.active', _container).attr('data-id');
         _exercise.saveFile(filename, _editor.getValue());
     }
 
