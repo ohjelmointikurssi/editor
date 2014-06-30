@@ -52,6 +52,7 @@ TMCWebClient.exercise.prototype.fetchZip = function(callback) {
     this.downloadZip(this.baseUrl + this.id + '.zip', function(zip) {
 
         self.zip = zip;
+        self.getSourcePath();
 
         callback();
     });
@@ -118,16 +119,22 @@ TMCWebClient.exercise.prototype.fetchLastSubmission = function(callback, error, 
 TMCWebClient.exercise.prototype.getName = function () {
 
     /* jshint camelcase: false */
-    return this.exercise.exercise_name;
+    var exerciseName = this.exercise.exercise_name;
     /* jshint camelcase: true */
+
+    return exerciseName.substring(exerciseName.lastIndexOf('.') + 1);
 }
 
 TMCWebClient.exercise.prototype.getSourcePath = function () {
 
+    if (this.sourcePath) {
+        return this.sourcePath;
+    }
+
     var name = this.getFilesFromSource()[0].name.split('/');
     name.pop();
 
-    return name.join('/');
+    return this.sourcePath = name.join('/');
 }
 
 TMCWebClient.exercise.prototype.getZipBlob = function () {
@@ -153,6 +160,11 @@ TMCWebClient.exercise.prototype.getFilesFromSource = function () {
 TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
 
     this.zip.file(filename, content);
+}
+
+TMCWebClient.exercise.prototype.removeFile = function (filename) {
+
+    this.zip.remove(filename);
 }
 
 TMCWebClient.exercise.prototype.setLastSubmission = function(lastSubmission) {
