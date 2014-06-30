@@ -171,6 +171,8 @@ TMCWebClient.editor = function (container, exercise) {
             var path = _exercise.getSourcePath();
             var classname = prompt('Filename:');
 
+            setFileMode(classname);
+
             // Save new file
             _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
 
