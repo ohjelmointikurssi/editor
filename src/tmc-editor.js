@@ -211,8 +211,8 @@ TMCWebClient.editor = function (container, exercise) {
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-        if (!currentFile) {
-            $(_container).find('.tab-bar li').first().click();
+        if (!currentFile || !_exercise.getFile(currentFile)) {
+            $(_container).find('.tab-bar li').last().click();
         } else {
             $(_container).find('.tab-bar li[data-id="' + currentFile + '"]').addClass('active');
         }
