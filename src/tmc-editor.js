@@ -7,6 +7,8 @@ TMCWebClient.editor = function (container, exercise) {
         },
 
         _container = container,
+        _navBar,
+        _offsetLeftFix = 0,
         _editor,
         _output,
         _intervalId,
@@ -53,7 +55,7 @@ TMCWebClient.editor = function (container, exercise) {
             show(content);
 
             // Set active tab
-            $(_container).find('.tab-bar li').first().addClass('active');
+            $('.tab-bar li', _container).first().addClass('active');
         });
 
         createOutputContainer();
@@ -74,7 +76,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createSubmitHandler() {
 
-        $(_container).find('.actions .submit').first().click(submitOnClickHandler);
+        $('.actions .submit', _container).first().click(submitOnClickHandler);
     }
 
     function submitOnClickHandler() {
@@ -131,7 +133,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function processingSubmission(state) {
 
-        var submitElement = $(_container).find('.actions .submit').first();
+        var submitElement = $('.actions .submit', _container).first();
 
         if (!state) {
             submitElement.removeClass('pulse');
@@ -148,7 +150,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createLastSubmissionHandler() {
 
-        $(_container).find('.actions .output').first().click(function () {
+        $('.actions .output', _container).first().click(function () {
 
             // Toggle output
             if (_output.visible()) {
@@ -175,29 +177,54 @@ TMCWebClient.editor = function (container, exercise) {
 
     function createNewFileHandler() {
 
-        $(_container).find('.actions .new').first().click(function () {
+        $('.actions .new', _container).first().click(function () {
 
             var path = _exercise.getSourcePath();
             var classname = prompt('Filename:');
 
+            setFileMode(classname);
+
+            // Save new file
             _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
+
+            // Update navigation bar
             update();
+        });
+    }
+
+    function createDeleteFileHandler() {
+
+        $('.top .tab-bar li i.delete', _container).each(function (index, element) {
+
+            // Get file id
+            var id = $(element).parent().attr('data-id');
+
+            $(element).click(function () {
+
+                // Remove file
+                _exercise.removeFile(id);
+
+                // If currently active tab equals deleted file, clear editor
+                if ($('.top .tab-bar li.active', _container).attr('data-id') === id) {
+                    _editor.setValue('');
+                }
+
+                // Update navigation bar
+                update();
+            });
         });
     }
 
     function update() {
 
-        // Remember currently active tab
-        var currentFile = $('.tmc-exercise .tab-bar li.active').attr('data-id');
+        // Delete navigation bar
+        $('.top', _container).remove();
 
-        // Clear navigation panel
-        $(_container).find('.top').empty();
-
-        // Render navigation panel
+        // Render navigation bar
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-         $(_container).find('.tab-bar li[data-id="' + currentFile + '"]').addClass('active');
+        $('.tab-bar li', _container).last().click();
     }
 
     function render(files) {
@@ -212,13 +239,18 @@ TMCWebClient.editor = function (container, exercise) {
         // Render editor
         $(_container).prepend(_template.editor(attributes));
 
+        _navBar = $('.tab-bar', _container).first();
+
+        _offsetLeftFix = $('li', _navBar)[0].offsetLeft;
+
         // Add click events to tabs
-        $(_container).find('.tab-bar li').click(changeFile);
+        $('li', _navBar).click(changeFile);
 
         createSubmitHandler();
         createLastSubmissionHandler();
         createNewFileHandler();
         createLogoutHandler();
+        createDeleteFileHandler();
     }
 
     function show(content) {
@@ -241,10 +273,12 @@ TMCWebClient.editor = function (container, exercise) {
         var element = $(this);
 
         // Clear previous active tab
-        $(_container).find('.tab-bar li').removeClass('active');
+        $('.tab-bar li', _container).removeClass('active');
 
         // Set active tab
         element.addClass('active');
+
+        scrollToTab(element);
 
         // File
         var filename = element.attr('data-id'),
@@ -253,6 +287,11 @@ TMCWebClient.editor = function (container, exercise) {
         setFileMode(filename);
 
         show(content);
+    }
+
+    function scrollToTab(element) {
+
+        _navBar[0].scrollLeft = element[0].offsetLeft - _offsetLeftFix - _navBar.width() / 2 + element.width() / 2;
     }
 
     function setFileMode(filename) {
@@ -292,7 +331,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function saveActiveFile() {
 
-        var filename = $('.tmc-exercise .tab-bar li.active').attr('data-id');
+        var filename = $('.top .tab-bar li.active', _container).attr('data-id');
         _exercise.saveFile(filename, _editor.getValue());
     }
 

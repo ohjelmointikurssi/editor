@@ -5,7 +5,7 @@
     <ul class='tab-bar'>
 
         {{#files}}
-            <li data-id="{{name}}">{{filename name}}</li>
+            <li data-id="{{name}}">{{filename name}} <i class='delete' title='Delete file'></i></li>
         {{/files}}
 
     </ul>

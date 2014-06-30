@@ -1,11 +1,19 @@
-TMCWebClient.session = (function() {
+TMCWebClient.session = (function () {
 
-	var _module = {
-		username: localStorage.username,
-		password: localStorage.password
-	};
+    var _template = {
 
-	_module.logout = function () {
+        login: Handlebars.templates.Login
+
+    }
+
+    var _module = {
+
+        username: localStorage.username,
+        password: localStorage.password
+
+    }
+
+    _module.logout = function () {
 		console.log('invoked logout');
 		localStorage.removeItem('username');
 		localStorage.removeItem('password');
@@ -14,54 +22,51 @@ TMCWebClient.session = (function() {
 		_module.login(function(){});
 	}
 
-	_module.login = function (callback) {
+    _module.login = function (callback) {
 
-		if (_module.username !== undefined && _module.password !== undefined) {
-			callback();
-			return;
-		}
+        if (_module.username !== undefined && _module.password !== undefined) {
+            callback();
+            return;
+        }
 
-		var form = $(Handlebars.templates.Login({
-			'username': _module.username
-		})),
-		    status = $('.status', form);
+        var form = $(_template.login({ 'username': _module.username })),
+            status = $('.status', form);
 
+        $('form', form).submit(function () {
 
+            var formData = $('form', form).serialize(),
+                username = $('.username', form).val(),
+                password = $('.password', form).val();
 
-		$('.login-form', form).submit(function() {
+            status.text('');
 
-			var formData = $('.login-form', form).serialize(),
-			    username = $('.username', form).val(),
-			    password = $('.password', form).val();
+            $.post(TMCWebClient.server + '/auth.text', formData, function (data) {
 
+                if (data === 'OK') {
+                    form.remove();
+                    _module.username = localStorage.username = username;
+                    _module.password = localStorage.password = password;
+                    callback();
+                } else {
+                    status.text('Wrong username or password!');
+                }
+            });
 
-			status.text('');
-			$.post(TMCWebClient.server + '/auth.text', formData, function(data) {
+            return false;
+        });
 
-				if (data === 'OK') {
-					form.remove();
-					_module.username = localStorage.username = username;
-					_module.password = localStorage.password = password;
-					callback();
-				} else {
-					status.text('Wrong username or password!');
-				}
-			});
-			return false;
-		});
+        $('body').append(form);
+    }
 
-		$('body').append(form);
-	}
+    _module.getUsername = function () {
 
-	_module.getUsername = function() {
+        return _module.username;
+    }
 
-		return _module.username;
-	}
+    _module.getPassword = function () {
 
-	_module.getPassword = function() {
+        return _module.password;
+    }
 
-		return _module.password;
-	}
-
-	return _module;
+    return _module;
 })();
