@@ -1,58 +1,63 @@
-TMCWebClient.session = (function() {
+TMCWebClient.session = (function () {
 
-	var _module = {
-		username: localStorage.username,
-		password: localStorage.password
-	};
+    var _template = {
 
-	_module.login = function (callback) {
+        login: Handlebars.templates.Login
 
-		if (_module.username !== undefined && _module.password !== undefined) {
-			callback();
-			return;
-		}
+    }
 
-		var form = $(Handlebars.templates.Login({
-			'username': _module.username
-		})),
-		    status = $('.status', form);
+    var _module = {
 
+        username: localStorage.username,
+        password: localStorage.password
 
+    }
 
-		$('.login-form', form).submit(function() {
+    _module.login = function (callback) {
 
-			var formData = $('.login-form', form).serialize(),
-			    username = $('.username', form).val(),
-			    password = $('.password', form).val();
+        if (_module.username !== undefined && _module.password !== undefined) {
+            callback();
+            return;
+        }
 
+        var form = $(_template.login({'username': _module.username})),
+            status = $('.status', form);
 
-			status.text('');
-			$.post(TMCWebClient.server + '/auth.text', formData, function(data) {
+        $('.login-form', form).submit(function () {
 
-				if (data === 'OK') {
-					form.remove();
-					_module.username = localStorage.username = username;
-					_module.password = localStorage.password = password;
-					callback();
-				} else {
-					status.text('Wrong username or password!');
-				}
-			});
-			return false;
-		});
+            var formData = $('.login-form', form).serialize(),
+                username = $('.username', form).val(),
+                password = $('.password', form).val();
 
-		$('body').append(form);
-	}
+            status.text('');
 
-	_module.getUsername = function() {
+            $.post(TMCWebClient.server + '/auth.text', formData, function (data) {
 
-		return _module.username;
-	}
+                if (data === 'OK') {
+                    form.remove();
+                    _module.username = localStorage.username = username;
+                    _module.password = localStorage.password = password;
+                    callback();
+                } else {
+                    status.text('Wrong username or password!');
+                }
+            });
 
-	_module.getPassword = function() {
+            return false;
+        });
 
-		return _module.password;
-	}
+        $('body').append(form);
+    }
 
-	return _module;
+    _module.getUsername = function () {
+
+        return _module.username;
+    }
+
+    _module.getPassword = function () {
+
+        return _module.password;
+    }
+
+    return _module;
 })();
