@@ -169,9 +169,7 @@ TMCWebClient.editor = function (container, exercise) {
             var path = _exercise.getSourcePath();
             var classname = prompt('Filename:');
 
-            if (classname.indexOf('.java') === -1) {
-                classname += '.java';
-            }
+            setFileMode(classname);
 
             _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
             update();
