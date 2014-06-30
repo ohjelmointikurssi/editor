@@ -188,6 +188,11 @@ TMCWebClient.editor = function (container, exercise) {
                 // Remove file
                 _exercise.removeFile(id);
 
+                // If currently active tab equals deleted file, clear editor
+                if ($('.tmc-exercise .tab-bar li.active').attr('data-id') === id) {
+                    _editor.setValue('');
+                }
+
                 // Update navigation bar
                 update();
             });
@@ -206,7 +211,11 @@ TMCWebClient.editor = function (container, exercise) {
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-         $(_container).find('.tab-bar li[data-id="' + currentFile + '"]').addClass('active');
+        if (!currentFile) {
+            $(_container).find('.tab-bar li').first().click();
+        } else {
+            $(_container).find('.tab-bar li[data-id="' + currentFile + '"]').addClass('active');
+        }
     }
 
     function render(files) {
