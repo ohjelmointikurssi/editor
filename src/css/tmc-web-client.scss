@@ -105,7 +105,9 @@ $pantone-black: #1d1d1b;
 /* Clear */
 
 body {
+
     margin: 0;
+
 }
 
 /* Components */
@@ -536,7 +538,9 @@ body {
     }
 }
 
-.logout { 
+.logout {
+
+    cursor: pointer;
     display: block;
     position: fixed;
     top: 0;
@@ -548,4 +552,11 @@ body {
     border-left: 1px solid black;
     border-radius: 0 0 0 20px;
     z-index: 5;
+
+}
+
+.logout:hover {
+
+    opacity: 0.75;
+
 }
