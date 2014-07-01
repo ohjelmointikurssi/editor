@@ -297,6 +297,12 @@ TMCWebClient.editor = function (container, exercise) {
 
             templates = {
 
+            'c':    'int ' + name + '() { }',
+            'h':    'int ' + name + '() { }',
+            'html': '<!DOCTYPE html>\n<head>' +
+                    '\n  <title>Title</title>' +
+                    '\n</head>\n<body>\n  <p>' +
+                    'Text</p>\n</body>\n</html>',
             'java': 'public class ' + name + ' { }',
             'js':   'function ' + name + '() { }'
 
