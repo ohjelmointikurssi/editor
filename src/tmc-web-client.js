@@ -30,17 +30,17 @@ var TMCWebClient = (function() {
         });
     }
 
-    function initialiseLogoutButton() {
+    function initialiseLogoutHandler() {
 
-        $('body').find('.logout').first().click(TMCWebClient.session.logout);
+        $('body').find('.tmc-exercise-logout').first().click(TMCWebClient.session.logout);
     }
 
     _module.initialise = function () {
 
         _module.session.login(function() {
-            
+
             initialiseEditors(findExerciseContainers());
-            initialiseLogoutButton();
+            initialiseLogoutHandler();
         });
     }
 
