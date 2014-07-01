@@ -156,7 +156,7 @@ module.exports = function (grunt) {
 
         clean: {
 
-            build: [ 'dist/', 'coverage/', 'demo/assets/' ]
+            build: [ 'dist/', 'coverage/', 'demo/assets/js/tmc-web-client*.js' ]
 
         },
 
@@ -199,7 +199,7 @@ module.exports = function (grunt) {
 
     /* Register tasks */
 
-    grunt.registerTask('test', [ 'jshint', 'jasmine' ]);
+    grunt.registerTask('test', [ 'jshint', 'handlebars', 'jasmine' ]);
     grunt.registerTask('build', [ 'handlebars', 'concat:dist', 'concat:handlebars', 'uglify', 'sass', 'copy' ]);
     grunt.registerTask('default', [ 'test', 'build' ]);
 }
