@@ -173,12 +173,17 @@ TMCWebClient.editor = function (container, exercise) {
         $('.actions .new', _container).first().click(function () {
 
             var path = _exercise.getSourcePath();
-            var classname = prompt('Filename:');
+            var filename = prompt('Filename:');
+            filename = filename.trim();
 
-            setFileMode(classname);
+            if (!filename || filename.length === 0) {
+                return;
+            }
+
+            setFileMode(filename);
 
             // Save new file
-            _exercise.saveFile(path + '/' + classname, 'public class ' + classname.split('.')[0] + ' { }');
+            _exercise.saveFile(path + '/' + filename, 'public class ' + filename.split('.')[0] + ' { }');
 
             // Update navigation bar
             update();
