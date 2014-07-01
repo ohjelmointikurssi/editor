@@ -183,7 +183,7 @@ TMCWebClient.editor = function (container, exercise) {
             setFileMode(filename);
 
             // Save new file
-            _exercise.saveFile(path + '/' + filename, 'public class ' + filename.split('.')[0] + ' { }');
+            _exercise.saveFile(path + '/' + filename, getTemplate(filename));
 
             // Update navigation bar
             update();
@@ -291,6 +291,24 @@ TMCWebClient.editor = function (container, exercise) {
         _navBar[0].scrollLeft = element[0].offsetLeft - _offsetLeftFix - _navBar.width() / 2 + element.width() / 2;
     }
 
+    function getTemplate(filename) {
+
+        var name = filename.split('.')[0],
+
+            templates = {
+
+            'java': 'public class ' + name + ' { }',
+            'js':   'function ' + name + '() { }'
+
+        },
+
+        // Get filename extension
+        fileExtension = _exercise.getFileExtension(filename);
+
+        // Set template or fallback to blank text if no template is specified for the filename extension
+        return templates[fileExtension] || '';
+    }
+
     function setFileMode(filename) {
 
         var modes = {
@@ -310,18 +328,13 @@ TMCWebClient.editor = function (container, exercise) {
         },
 
         // Fallback to text
-        mode = 'text';
+        mode = 'text',
 
-        // Can determine filename extension
-        var lastDotIndex = filename.lastIndexOf('.');
+        // Get filename extension
+        fileExtension = _exercise.getFileExtension(filename);
 
-        if (lastDotIndex !== -1 && lastDotIndex !== 0) {
-
-            var filenameExtension = filename.substring(lastDotIndex + 1);
-
-            // Set mode or fallback to text if no mode is specified for the filename extension
-            mode = modes[filenameExtension] || mode;
-        }
+        // Set mode or fallback to text if no mode is specified for the filename extension
+        mode = modes[fileExtension] || mode;
 
         _editor.getSession().setMode('ace/mode/' + mode);
     }

@@ -156,6 +156,19 @@ TMCWebClient.exercise.prototype.getFilesFromSource = function () {
     return this.zip.file(/\/src(?!\/\.).*/);
 }
 
+TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
+
+    // Can determine filename extension
+    var lastDotIndex = filename.lastIndexOf('.');
+
+    if (lastDotIndex !== -1 && lastDotIndex !== 0) {
+
+        var filenameExtension = filename.substring(lastDotIndex + 1);
+
+        return filenameExtension;
+    }
+}
+
 TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
 
     this.zip.file(filename, content);
