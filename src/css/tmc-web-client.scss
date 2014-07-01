@@ -537,26 +537,3 @@ body {
 
     }
 }
-
-.logout {
-
-    cursor: pointer;
-    display: block;
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 5px 15px 5px 13px;
-    background-color: white;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
-    border-radius: 0 0 0 20px;
-    z-index: 5;
-
-}
-
-.logout:hover {
-
-    opacity: 0.75;
-
-}
