@@ -13,8 +13,8 @@
 {{#if status}}
 
     <div class='progress-bar {{#if validations.errorCount}}validation-bar{{/if}}'>
-        <div class='section-negative' style='width:{{percentage ratio.failed ratio.total}}%;' />
         <div class='section-positive' style='width:{{percentage ratio.passed ratio.total}}%;' />
+        <div class='section-negative' style='width:{{percentage ratio.failed ratio.total}}%;' />
     </div>
 
     <div class='results'>
