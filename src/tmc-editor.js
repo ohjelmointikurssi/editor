@@ -12,7 +12,10 @@ TMCWebClient.editor = function (container, exercise) {
         _editor,
         _output,
         _intervalId,
-        _exercise = exercise;
+        _exercise = exercise,
+        _filename,
+        _snapshotCache = {},
+        _snapshots = [];
 
     function configure(editor) {
 
@@ -49,16 +52,35 @@ TMCWebClient.editor = function (container, exercise) {
             var files = _exercise.getFilesFromSource(),
                 content = files[0].asText();
 
+            _filename = files[0].name;
+
             // Render
             render(files);
-            setFileMode(files[0].name);
+            setFileMode(_filename);
             show(content);
 
             // Set active tab
             $('.tab-bar li', _container).first().addClass('active');
+
+            _editor.on('change', snapshotHandler);
         });
 
         createOutputContainer();
+    }
+
+    function snapshotHandler(e) {
+
+        if (_filename === undefined) {
+            return;
+        }
+
+        var previous = _exercise.getFile(_filename).asText();
+        if (_snapshotCache[_filename] === undefined) {
+            _snapshotCache[_filename] = true;
+            _snapshots.push(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, '', previous, true));
+        }    
+        _snapshots.push(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, previous, _editor.getValue(), false));
+        saveActiveFile();
     }
 
     function createOutputContainer() {
@@ -172,6 +194,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         $('.actions .new', _container).first().click(function () {
 
+            saveActiveFile();
             var path = _exercise.getSourcePath();
             var filename = prompt('Filename:');
             filename = filename.trim();
@@ -180,13 +203,17 @@ TMCWebClient.editor = function (container, exercise) {
                 return;
             }
 
+            clearEditor();
+
+            filename = path + '/' + filename;
             setFileMode(filename);
 
             // Save new file
-            _exercise.saveFile(path + '/' + filename, getTemplate(filename));
+            _exercise.saveFile(filename, getTemplate(filename));
 
             // Update navigation bar
             update();
+            _filename = filename;
         });
     }
 
@@ -204,7 +231,7 @@ TMCWebClient.editor = function (container, exercise) {
 
                 // If currently active tab equals deleted file, clear editor
                 if ($('.top .tab-bar li.active', _container).attr('data-id') === id) {
-                    _editor.setValue('');
+                    clearEditor();
                 }
 
                 // Update navigation bar
@@ -222,7 +249,7 @@ TMCWebClient.editor = function (container, exercise) {
         render(_exercise.getFilesFromSource());
 
         // Set active tab
-        $('.tab-bar li', _container).last().click();
+        changeFile($('.tab-bar li', _container).last());
     }
 
     function render(files) {
@@ -242,7 +269,7 @@ TMCWebClient.editor = function (container, exercise) {
         _offsetLeftFix = $('li', _navBar)[0].offsetLeft;
 
         // Add click events to tabs
-        $('li', _navBar).click(changeFile);
+        $('li', _navBar).click(tabClick);
 
         createSubmitHandler();
         createLastSubmissionHandler();
@@ -263,11 +290,14 @@ TMCWebClient.editor = function (container, exercise) {
         _editor.getSession().setScrollTop(0);
     }
 
-    function changeFile() {
+    function tabClick() {
 
         saveActiveFile();
+        clearEditor();
+        changeFile($(this));
+    }
 
-        var element = $(this);
+    function changeFile(element) {
 
         // Clear previous active tab
         $('.tab-bar li', _container).removeClass('active');
@@ -278,12 +308,12 @@ TMCWebClient.editor = function (container, exercise) {
         scrollToTab(element);
 
         // File
-        var filename = element.attr('data-id'),
-            content = _exercise.getFile(filename).asText();
-
+        var filename = element.attr('data-id');
+        var content = _exercise.getFile(filename).asText();
         setFileMode(filename);
 
         show(content);
+        _filename = filename;
     }
 
     function scrollToTab(element) {
@@ -293,7 +323,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function getTemplate(filename) {
 
-        var name = filename.split('.')[0],
+        var name = filename.substr(filename.lastIndexOf('/') + 1).split('.')[0],
 
             templates = {
 
@@ -347,8 +377,13 @@ TMCWebClient.editor = function (container, exercise) {
 
     function saveActiveFile() {
 
-        var filename = $('.top .tab-bar li.active', _container).attr('data-id');
-        _exercise.saveFile(filename, _editor.getValue());
+        _exercise.saveFile(_filename, _editor.getValue());
+    }
+
+    function clearEditor() {
+        
+        _filename = undefined;
+        _editor.setValue('');
     }
 
     initialise();

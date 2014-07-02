@@ -21,13 +21,15 @@
         "ace": true,
         "Blob": true,
         "btoa": true,
+        "diff_match_patch": true,
         "FormData": true,
         "Handlebars": true,
         "JSZip": true,
         "JSZipUtils": true,
         "localStorage": true,
         "prompt": true,
-        "TMCWebClient": true
+        "TMCWebClient": true,
+        "window": true
 
     }
 }

@@ -124,6 +124,21 @@ TMCWebClient.exercise.prototype.getName = function () {
     return exerciseName.substring(exerciseName.lastIndexOf('.') + 1);
 }
 
+TMCWebClient.exercise.prototype.getExerciseName = function() {
+    
+    /* jshint camelcase: false */
+    return this.exercise.exercise_name;
+    /* jshint camelcase: true */
+}
+
+
+TMCWebClient.exercise.prototype.getCourseName = function() {
+
+    /* jshint camelcase: false */
+    return this.exercise.course_name;
+    /* jshint camelcase: true */
+}
+
 TMCWebClient.exercise.prototype.getSourcePath = function () {
 
     if (this.sourcePath) {
@@ -158,7 +173,18 @@ TMCWebClient.exercise.prototype.getFilesFromSource = function () {
 
 TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
 
+    
+    // We want no path to mess this thing
+
+    var lastSlashIndex = filename.lastIndexOf('/');
+
+    if (lastSlashIndex !== -1) {
+
+        filename = filename.substring(lastSlashIndex + 1);
+    }
+
     // Can determine filename extension
+
     var lastDotIndex = filename.lastIndexOf('.');
 
     if (lastDotIndex !== -1 && lastDotIndex !== 0) {
