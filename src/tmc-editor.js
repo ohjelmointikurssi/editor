@@ -14,8 +14,7 @@ TMCWebClient.editor = function (container, exercise) {
         _intervalId,
         _exercise = exercise,
         _filename,
-        _snapshotCache = {},
-        _snapshots = [];
+        _snapshotCache = {};
 
     function configure(editor) {
 
@@ -78,10 +77,10 @@ TMCWebClient.editor = function (container, exercise) {
 
         if (_snapshotCache[_filename] === undefined) {
             _snapshotCache[_filename] = true;
-            _snapshots.push(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, '', previous, true));
+            TMCWebClient.spyware.add(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, '', previous, true));
         }
 
-        _snapshots.push(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, previous, _editor.getValue(), false));
+        TMCWebClient.spyware.add(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, previous, _editor.getValue(), false));
         saveActiveFile();
     }
 
@@ -113,6 +112,8 @@ TMCWebClient.editor = function (container, exercise) {
             _output.close();
             console.log(data);
         });
+
+        TMCWebClient.spyware.submit();
     }
 
     function submissionPoller(submissionUrl) {

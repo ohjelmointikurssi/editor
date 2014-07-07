@@ -153,7 +153,12 @@ TMCWebClient.exercise.prototype.getSourcePath = function () {
 
 TMCWebClient.exercise.prototype.getZipBlob = function () {
 
-    return this.zip.generate({ type: 'blob' });
+    return this.getZip({type: 'blob'});
+}
+
+TMCWebClient.exercise.prototype.getZip = function (args) {
+
+    return this.zip.generate(args);
 }
 
 TMCWebClient.exercise.prototype.getFiles = function () {
