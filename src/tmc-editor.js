@@ -75,10 +75,12 @@ TMCWebClient.editor = function (container, exercise) {
         }
 
         var previous = _exercise.getFile(_filename).asText();
+
         if (_snapshotCache[_filename] === undefined) {
             _snapshotCache[_filename] = true;
             _snapshots.push(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, '', previous, true));
-        }    
+        }
+
         _snapshots.push(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, previous, _editor.getValue(), false));
         saveActiveFile();
     }
@@ -381,7 +383,7 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function clearEditor() {
-        
+
         _filename = undefined;
         _editor.setValue('');
     }

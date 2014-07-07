@@ -125,7 +125,7 @@ TMCWebClient.exercise.prototype.getName = function () {
 }
 
 TMCWebClient.exercise.prototype.getExerciseName = function() {
-    
+
     /* jshint camelcase: false */
     return this.exercise.exercise_name;
     /* jshint camelcase: true */
@@ -173,9 +173,8 @@ TMCWebClient.exercise.prototype.getFilesFromSource = function () {
 
 TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
 
-    
-    // We want no path to mess this thing
 
+    // We want no path to mess this thing
     var lastSlashIndex = filename.lastIndexOf('/');
 
     if (lastSlashIndex !== -1) {
@@ -184,7 +183,6 @@ TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
     }
 
     // Can determine filename extension
-
     var lastDotIndex = filename.lastIndexOf('.');
 
     if (lastDotIndex !== -1 && lastDotIndex !== 0) {
