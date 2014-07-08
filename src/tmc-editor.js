@@ -14,6 +14,7 @@ TMCWebClient.editor = function (container, exercise) {
         _intervalId,
         _exercise = exercise,
         _filename,
+        _spyware = new TMCWebClient.spyware(exercise),
         _snapshotCache = {};
 
     function configure(editor) {
@@ -76,12 +77,23 @@ TMCWebClient.editor = function (container, exercise) {
         var previous = _exercise.getFile(_filename).asText();
 
         if (_snapshotCache[_filename] === undefined) {
-            _snapshotCache[_filename] = true;
-            TMCWebClient.spyware.add(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, '', previous, true));
+            _spyware.add(new TMCWebClient.snapshot(_exercise, 'insertText', TMCWebClient.snapshot.prototype.generatePatchData(_filename, '', previous, true)));
         }
 
-        TMCWebClient.spyware.add(new TMCWebClient.snapshot(_exercise, e.data.action, _filename, previous, _editor.getValue(), false));
+        _spyware.add(new TMCWebClient.snapshot(_exercise, e.data.action, TMCWebClient.snapshot.prototype.generatePatchData(_filename, previous, _editor.getValue(), false)));
+        _snapshotCache[_filename] = true;
         saveActiveFile();
+    }
+
+    function generateFullSnapshot(file, cause, onlyChanged) {
+
+        if (onlyChanged && _snapshotCache[file] !== true) {
+            return;
+        }
+        if (_snapshotCache[file]) {
+            _snapshotCache[file] = false;
+        }
+        _spyware.add(new TMCWebClient.snapshot(_exercise, 'code_snapshot', _exercise.getSrcZip({compression: 'DEFLATE'}),{cause: cause,file: file}));
     }
 
     function createOutputContainer() {
@@ -99,6 +111,8 @@ TMCWebClient.editor = function (container, exercise) {
         clearInterval(_intervalId);
         saveActiveFile();
 
+        generateFullSnapshot(_filename, 'file_change', true);
+
         processingSubmission(true);
         _output.processing();
 
@@ -113,7 +127,7 @@ TMCWebClient.editor = function (container, exercise) {
             console.log(data);
         });
 
-        TMCWebClient.spyware.submit();
+        _spyware.add(new TMCWebClient.snapshot(_exercise, 'project_action', TMCWebClient.snapshot.prototype.generateBase64Json({command: 'tmc.submit'})));
     }
 
     function submissionPoller(submissionUrl) {
@@ -231,6 +245,8 @@ TMCWebClient.editor = function (container, exercise) {
 
                 // Remove file
                 _exercise.removeFile(id);
+                delete _snapshotCache[_filename];
+                generateFullSnapshot(_filename, 'file_delete');
 
                 // If currently active tab equals deleted file, clear editor
                 if ($('.top .tab-bar li.active', _container).attr('data-id') === id) {
@@ -296,6 +312,7 @@ TMCWebClient.editor = function (container, exercise) {
     function tabClick() {
 
         saveActiveFile();
+        generateFullSnapshot(_filename, 'file_change', true);
         clearEditor();
         changeFile($(this));
     }

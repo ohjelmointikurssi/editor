@@ -161,6 +161,14 @@ TMCWebClient.exercise.prototype.getZip = function (args) {
     return this.zip.generate(args);
 }
 
+TMCWebClient.exercise.prototype.getSrcZip = function (args) {
+    var zip = new JSZip();
+    this.getFilesFromSource().forEach(function(file) {
+        zip.file(file.name, file.asText());
+    });
+    return zip.generate(args);
+}
+
 TMCWebClient.exercise.prototype.getFiles = function () {
 
     return this.zip.files;

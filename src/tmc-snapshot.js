@@ -1,24 +1,17 @@
-TMCWebClient.snapshot = function (exercise, action, filename, oldData, newData, fullDocument) {
+TMCWebClient.snapshot = function (exercise, action, data, metadata) {
 
     this.courseName = exercise.getCourseName();
     this.exerciseName = exercise.getExerciseName();
     this.eventType = this.getEventType(action);
-
-    /* jshint camelcase:false */
-    this.data = btoa(JSON.stringify({
-
-                    file: filename,
-                    patches: this.generatePatch(oldData, newData),
-                    full_document: fullDocument
-
-                }));
-    /* jshint camelcase:true */
-
+    this.data = data;
+    if (metadata !== undefined) {
+        this.metadata = JSON.stringify(metadata);
+    }
     this.happenedAt = Date.now();
     this.systemNanotime = Math.round(window.performance.now());
 }
 
-TMCWebClient.snapshot.prototype.getEventType = function(action) {
+TMCWebClient.snapshot.prototype.getEventType = function (action) {
 
     var actions = {
 
@@ -32,7 +25,26 @@ TMCWebClient.snapshot.prototype.getEventType = function(action) {
     return actions[action] || action;
 }
 
-TMCWebClient.snapshot.prototype.generatePatch = function(oldData, newData) {
+
+TMCWebClient.snapshot.prototype.generatePatchData = function (filename, oldData, newData, fullDocument) {
+
+    /* jshint camelcase:false */
+    return this.generateBase64Json({
+
+                file: filename,
+                patches: this.generatePatch(oldData, newData),
+                full_document: fullDocument
+
+            });
+    /* jshint camelcase:true */
+}
+
+TMCWebClient.snapshot.prototype.generateBase64Json = function (obj) {
+
+    return btoa(JSON.stringify(obj));
+}
+
+TMCWebClient.snapshot.prototype.generatePatch = function (oldData, newData) {
 
     /* jshint camelcase:false */
     var dmp = new diff_match_patch();
