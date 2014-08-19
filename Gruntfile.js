@@ -6,6 +6,12 @@ module.exports = function (grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        clean: {
+
+            build: [ 'dist/', 'coverage/', 'demo/assets/js/tmc-web-client*.js' ]
+
+        },
+
         watch: {
 
             src: {
@@ -154,12 +160,6 @@ module.exports = function (grunt) {
             }
         },
 
-        clean: {
-
-            build: [ 'dist/', 'coverage/', 'demo/assets/js/tmc-web-client*.js' ]
-
-        },
-
         jasmine: {
 
             src: [ 'dist/<%= pkg.name %>-templates.js', 'src/<%= pkg.name %>.js', 'src/**/*.js' ],
@@ -201,5 +201,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', [ 'jshint', 'handlebars', 'jasmine' ]);
     grunt.registerTask('build', [ 'handlebars', 'concat:dist', 'concat:handlebars', 'uglify', 'sass', 'copy' ]);
-    grunt.registerTask('default', [ 'test', 'build' ]);
+    grunt.registerTask('default', [ 'clean', 'test', 'build' ]);
 }
