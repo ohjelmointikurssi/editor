@@ -4,7 +4,7 @@ var TMCWebClient = (function() {
 
     var _module = {
 
-        server: 'http://tmc-kesapojat.jamo.io',
+        server: 'https://tmc.mooc.fi/staging',
         apiVersion: 7
 
     };
