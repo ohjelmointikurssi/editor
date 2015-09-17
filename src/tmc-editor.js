@@ -25,12 +25,12 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setFoldStyle('markbeginend');
 
         // Text
-        editor.setTheme('ace/theme/light');
+        editor.setTheme('ace/theme/twilight');
         editor.setFontSize(13);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
         editor.getSession().setWrapLimitRange(90, 90);
-        editor.getSession().setMode('ace/mode/java');
+        editor.getSession().setMode('ace/mode/python');
     }
 
     function initialise() {
@@ -379,7 +379,8 @@ TMCWebClient.editor = function (container, exercise) {
             'json': 'json',
             'rb':   'ruby',
             'xml':  'xml',
-            'yml':  'yaml'
+            'yml':  'yaml',
+            'py': 'python'
 
         },
 
