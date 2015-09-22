@@ -25,7 +25,7 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setFoldStyle('markbeginend');
 
         // Text
-        editor.setTheme('ace/theme/twilight');
+        editor.setTheme('ace/theme/tomorrow');
         editor.setFontSize(13);
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
@@ -234,6 +234,15 @@ TMCWebClient.editor = function (container, exercise) {
         });
     }
 
+    function createRunHandler() {
+
+        $('.actions .run', _container).first().click(function () {
+            /* jshint ignore:start */
+            setTimeout(runPython(_editor.getValue()), 0);
+            /* jshint ignore:end */
+        });
+    }
+
     function createDeleteFileHandler() {
 
         $('.top .tab-bar li i.delete', _container).each(function (index, element) {
@@ -294,6 +303,7 @@ TMCWebClient.editor = function (container, exercise) {
         createLastSubmissionHandler();
         createNewFileHandler();
         createDeleteFileHandler();
+        createRunHandler();
     }
 
     function show(content) {

@@ -49,27 +49,49 @@
             }
 
         </style>
-
+				<script src="./assets/lib/brython/brython.js"></script>
 	</head>
 
-	<body>
+	<body onload="brython()">
 
         <div id='container'>
 
             <a href="#" class='tmc-exercise-logout' title='Logout'>Logout</a>
 
             <h1>Material</h1>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempus nibh et sem commodo imperdiet. Sed massa ipsum, interdum a enim vel, cursus aliquet orci. Donec mattis dictum tempus. Integer velit diam, malesuada in purus quis, commodo volutpat odio. Integer varius venenatis arcu nec iaculis. Phasellus diam purus, gravida vitae pretium ac, porttitor eget diam. Vivamus commodo ullamcorper lectus eu mollis. Nullam pharetra dictum magna, nec gravida justo tristique eget. Etiam porttitor ipsum quis nisl iaculis, id laoreet lorem accumsan. Morbi a tincidunt leo. Vestibulum condimentum ante massa, non tristique mi rhoncus quis.</p>
-
-            <p>Mauris ut ligula vehicula, elementum libero et, hendrerit eros. Sed ut volutpat risus, ac pharetra augue. Proin eget venenatis erat, eu tempor ante. Maecenas ac molestie dui. Maecenas nec semper arcu. Quisque pretium tortor sit amet metus tempor, quis venenatis turpis sodales. Pellentesque fermentum nisl ut ultrices pulvinar. Ut feugiat orci risus, vel pretium purus consectetur sed. Nulla fermentum nunc nec tincidunt placerat.</p>
-
             <h2>Exercise: Trivial</h2>
 
             <div data-type='tmc-exercise' data-id='2284'></div>
 
-						<button id="run"> ▶ Run</button>
+						<output><code><pre id="python_output"></pre></code></output>
         </div>
+
+        <script type="text/python3">
+						import sys
+						import traceback
+						from browser import document, window
+						class outputRedirector:
+								def write(self, data):
+									# document['python_output'].text += str(data)
+									span = document.createElement('span')
+									span.text = data
+									document['python_output'] <= span
+
+								def flush(self):
+									pass
+
+						sys.stdout = outputRedirector()
+						sys.stderr = outputRedirector()
+
+						def run(code):
+							document['python_output'].text = ''
+							try:
+								exec(code, {})
+							except Exception as exc:
+								traceback.print_exc(file=sys.stderr)
+
+						window.runPython = run
+        </script>
 
         <!-- JS -->
 

@@ -204,6 +204,10 @@ body {
 
         }
 
+        i.run {
+          background-image: url('../images/run.png');
+        }
+
         i:hover {
 
             opacity: 0.7 !important;
@@ -536,4 +540,10 @@ body {
         color: red;
 
     }
+}
+
+.python-output {
+    white-space: pre;
+    display: block;
+    unicode-bidi: embed;
 }

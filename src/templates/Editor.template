@@ -12,6 +12,7 @@
     <section class='actions'>
 
         <i class='new' title='New file'></i>
+        <i class='run' title='Run'></i>
         <i class='output' title='Last submission'></i>
         <i class='submit' title='Submit'></i>
 
