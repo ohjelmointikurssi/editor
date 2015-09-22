@@ -1,0 +1,7 @@
+web:
+  build: .
+  ports:
+    - "9000:8080"
+  volumes:
+    - .:/app
+  command: node web.js
