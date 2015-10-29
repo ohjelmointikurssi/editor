@@ -62,36 +62,10 @@
             <h2>Exercise: Trivial</h2>
 
             <div data-type='tmc-exercise' data-id='2284'></div>
+						<div id="game-area"></div>
 
-						<output><code><pre id="python_output"></pre></code></output>
+						<output><code><pre id="program-output"></pre></code></output>
         </div>
-
-        <script type="text/python3">
-						import sys
-						import traceback
-						from browser import document, window
-						class outputRedirector:
-								def write(self, data):
-									# document['python_output'].text += str(data)
-									span = document.createElement('span')
-									span.text = data
-									document['python_output'] <= span
-
-								def flush(self):
-									pass
-
-						sys.stdout = outputRedirector()
-						sys.stderr = outputRedirector()
-
-						def run(code):
-							document['python_output'].text = ''
-							try:
-								exec(code, {})
-							except Exception as exc:
-								traceback.print_exc(file=sys.stderr)
-
-						window.runPython = run
-        </script>
 
         <!-- JS -->
 
@@ -102,6 +76,9 @@
         <script src='assets/js/vendor/ace/ace.js'></script>
         <script src='assets/js/vendor/google/diff_match_patch.js'></script>
         <script src='assets/js/tmc-web-client.js'></script>
+				<script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.3/phaser.min.js'></script>
+
+				</script>
 
         <script>
 

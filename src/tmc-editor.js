@@ -234,11 +234,33 @@ TMCWebClient.editor = function (container, exercise) {
         });
     }
 
+    /* jshint ignore:start */
+    var marker;
+    /* jshint ignore:end */
+
     function createRunHandler() {
 
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
-            setTimeout(runPython(_editor.getValue()), 0);
+            var code = _editor.getValue();
+            try {
+              eval(code);
+            } catch (e) {
+              var re = /<anonymous>:(\d+):(\d+)/;
+              var parsed = re.exec(e.stack);
+              var line = parsed[1];
+              var char = parsed[2];
+              var message = e.name + " on line " + line + ", character " + char + ": " + e.message + ".";
+
+              $('#program-output').text(message);
+
+              if (marker != undefined) {
+                _editor.getSession().removeMarker(marker);
+              }
+              var Range = require('ace/range').Range;
+              var range = new Range(line - 1, char - 1, line - 1, 1000);
+              marker = _editor.session.addMarker(range, "error-line", "text");
+            }
             /* jshint ignore:end */
         });
     }

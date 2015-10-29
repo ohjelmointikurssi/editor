@@ -115,6 +115,7 @@ body {
 .tmc-exercise {
 
     position: relative;
+    float: left;
     margin: 25px 0;
     width: 800px;
     font-family: 'Helvetica Neue', sans-serif;
@@ -542,8 +543,15 @@ body {
     }
 }
 
-.python-output {
+.program-output {
     white-space: pre;
     display: block;
     unicode-bidi: embed;
+}
+
+.ace_marker-layer {
+  .error-line {
+    background: #ea7d7d !important;
+    position: absolute;
+  }
 }
