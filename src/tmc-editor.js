@@ -242,15 +242,21 @@ TMCWebClient.editor = function (container, exercise) {
 
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
+            $('#game-area').html('');
             var code = _editor.getValue();
             try {
               eval(code);
             } catch (e) {
               var re = /<anonymous>:(\d+):(\d+)/;
               var parsed = re.exec(e.stack);
-              var line = parsed[1];
-              var char = parsed[2];
-              var message = e.name + " on line " + line + ", character " + char + ": " + e.message + ".";
+              var message;
+              if( parsed != null ) {
+                var line = parsed[1];
+                var char = parsed[2];
+                message = e.name + " on line " + line + ", character " + char + ": " + e.message + ".";
+              } else {
+                message = e.stack;
+              }
 
               $('#program-output').text(message);
 
