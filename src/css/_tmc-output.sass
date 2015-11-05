@@ -1,0 +1,71 @@
+.tmc-output
+  position: relative
+  z-index: 4
+  overflow-y: auto
+  margin-top: -250px
+  padding: 0 20px
+  width: 760px
+  height: 250px
+  background-color: white
+  border: 1px solid lightgray
+  font-size: 14px
+  color: $pantone-black
+
+  h1.title
+    margin: 20px 0
+
+  .actions
+    margin-top: 10px
+
+  .progress-bar
+    margin: 20px 0
+    height: 15px
+    width: 100%
+
+    .section-positive
+      background-color: rgb(154, 247, 122)
+      height: 100%
+      float: left
+
+    .section-negative
+      background-color: rgb(250, 130, 130)
+      height: 100%
+      float: right
+
+    .section-positive
+      background-color: rgb(245, 245, 120)
+
+  .results
+    width: 100%
+    div
+      margin-bottom: 20px
+      padding: 0 15px
+      width: 340px
+      border: 1px solid lightgray
+      border-radius: 4px
+    h2
+      font-size: 14px
+    em
+      font-style: normal
+      font-weight: 600
+      color: $pantone-black
+      .positive
+        color: rgb(154, 247, 122)
+      .negative
+        color: rgb(250, 130, 130)
+    ol
+      padding-left: 30px
+    li em
+      font-weight: 500
+    .extended
+      float: none !important
+      width: 728px
+    .active
+      cursor: pointer
+    p
+      font-size: 16px
+      color: #444
+    .test-results
+      float: left
+    .validation-results
+      float: right

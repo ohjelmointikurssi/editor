@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 
             sass: {
 
-                files: 'src/css/*.scss',
+                files: 'src/css/*.sass',
                 tasks: 'sass',
             }
         },
@@ -135,7 +135,7 @@ module.exports = function (grunt) {
 
                 files: {
 
-                    'demo/assets/css/<%= pkg.name %>.css': 'src/css/<%= pkg.name %>.scss'
+                    'demo/assets/css/<%= pkg.name %>.css': 'src/css/<%= pkg.name %>.sass'
 
                 },
 
