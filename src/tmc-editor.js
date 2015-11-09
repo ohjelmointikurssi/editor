@@ -30,7 +30,7 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setTabSize(4);
         editor.getSession().setUseWrapMode(true);
         editor.getSession().setWrapLimitRange(90, 90);
-        editor.getSession().setMode('ace/mode/python');
+        editor.getSession().setMode('ace/mode/javascript');
     }
 
     function initialise() {

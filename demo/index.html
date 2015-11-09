@@ -11,48 +11,12 @@
 
         <style>
 
-            body {
 
-                font-family: 'Arial', sans-serif;
-                font-size: 16px;
-                line-height: 1.4;
-                color: #1d1d1b;
-
-            }
-
-            #container {
-
-                width: 800px;
-                margin: 0 auto;
-
-            }
-
-            .tmc-exercise-logout {
-
-                position: fixed;
-                top: 0;
-                right: 0;
-                margin: 10px;
-
-            }
-
-            a.tmc-exercise-logout {
-
-                color: black;
-
-            }
-
-            a.tmc-exercise-logout:hover {
-
-                text-decoration: none;
-
-            }
 
         </style>
-				<script src="./assets/lib/brython/brython.js"></script>
 	</head>
 
-	<body onload="brython()">
+	<body>
 
         <div id='container'>
 
@@ -61,8 +25,8 @@
             <h1>Material</h1>
             <h2>Exercise: Trivial</h2>
 
-            <div data-type='tmc-exercise' data-id='2285'></div>
-						<div id="game-area"></div>
+            <div class="code-area" data-type='tmc-exercise' data-id='2285'></div>
+						<div id="game-area" class="game-area"></div>
 
 						<output><code><pre id="program-output"></pre></code></output>
         </div>

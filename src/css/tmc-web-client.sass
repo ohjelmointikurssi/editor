@@ -4,11 +4,32 @@ $pantone-black: #1d1d1b
 @import animations
 @import reset
 @import components
+@import editor
 @import tmc-output
 @import overlay
 @import login
+
+body
+  font-family: 'Arial', sans-serif
+  font-size: 16px
+  line-height: 1.4
+  color: #1d1d1b
+
+#container
+  width: 80%
+  margin: 0 auto
 
 .program-output
   white-space: pre
   display: block
   unicode-bidi: embed
+
+.code-area
+  float: left
+
+.game-area
+  float: left
+  background-color: black
+  width: 800px
+  height: 600px
+  margin: 15px
