@@ -243,6 +243,8 @@ TMCWebClient.editor = function (container, exercise) {
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
             $('#game-area').html('');
+            $('.game').removeClass('inactive');
+            $('#background-overlay').addClass('active');
             var code = _editor.getValue();
             try {
               eval(code);
@@ -296,6 +298,15 @@ TMCWebClient.editor = function (container, exercise) {
         });
     }
 
+    function createStopGameHandler() {
+        $('.stop-game').click(function(e) {
+            e.preventDefault();
+            $('#background-overlay').removeClass('active');
+            $('.game').addClass('inactive');
+            // TODO: stop the game
+        });
+    }
+
     function update() {
 
         // Delete navigation bar
@@ -332,6 +343,7 @@ TMCWebClient.editor = function (container, exercise) {
         createNewFileHandler();
         createDeleteFileHandler();
         createRunHandler();
+        createStopGameHandler();
     }
 
     function show(content) {

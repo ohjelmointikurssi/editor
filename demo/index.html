@@ -17,7 +17,7 @@
 	</head>
 
 	<body>
-
+		<div id="background-overlay"></div>
         <div id='container'>
 
             <a href="#" class='tmc-exercise-logout' title='Logout'>Logout</a>
@@ -25,8 +25,13 @@
             <h1>Material</h1>
             <h2>Exercise: Trivial</h2>
 
-            <div class="code-area" data-type='tmc-exercise' data-id='2285'></div>
-						<div id="game-area" class="game-area"></div>
+            <div class="exercise-area">
+							<div class="code-area" data-type='tmc-exercise' data-id='2285'></div>
+							<div class="game inactive">
+								<a class="stop-game" href="#" title="stop-game" class="close">Stop game</a>
+								<div id="game-area" class="game-area"></div>
+							</div>
+						</div>
 
 						<output><code><pre id="program-output"></pre></code></output>
         </div>
