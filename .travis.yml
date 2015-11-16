@@ -1,24 +1,21 @@
 language: node_js
-
+before_install:
+- npm install -g grunt-cli
+- gem install sass
 before_script:
-    - npm install -g grunt-cli
-
+- git config --global user.name "hnbot"
+- git config --global user.email "nygrenh+hnbot@gmail.com"
+script:
+- grunt build
 after_success:
-    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-
-notifications:
-
-    email: false
-
-    irc:
-        channels:
-            - 'ircnet.eversible.com#kesapojat-ci'
-        on_success: change
-        use_notice: true
-        skip_join: true
-        template:
-            - '**'
-            - '%{message}'
-            - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{commit_message}'
-            - 'Build details : %{build_url}'
-            - '**'
+- mkdir cdn
+- cp demo/assets/js/*.js cdn
+- cp demo/assets/css/*.css cdn
+- cd cdn
+- git init
+- git add .
+- git commit -m "Add compiled files to CDN"
+- git push --force "https://hnbot:$GITHUB_API_KEY@github.com/ohjelmointikurssi/cdn" master:gh-pages
+env:
+  global:
+    secure: q7oX6J82QcZj30LUEuWtDPlSO/6yVij+hdFG8CdDM1si6jMXKtLgetgOV5Rfx5LzYOrqb4OvghpnfMSusbMv+XIzPnd9m39SPSatP0a/iDsAdwwCH3LxfCy8uq7RSRt1MQzc25OZEx90JmBAm9qhIghKOV9yn5zjV8Cx9jD9aVpL6yl41qO0YU/f83MogX+WHYxU8jnr/ZyY5T2fHo+zVV6D/k20rsFOoNMoJAtHUTVXxO0uBw1DOPABUvvYpJ7/6Z3vZKmdlKL5rXZx2VmLQo85yyxeg4n3DK5QmnBfPd2zQvJez/rBJDJgR4uQEmnYvUKecHl+9/KVKt2rtpvD8C9JZkYxi3G364YyOCgIgLWTHLXtcC8zmq30yadIGwPZ9LwYTVPqSLFC94tC+hJT/CP0o0zY3EWA5m4gZVOtrJMLs1PJJN7fVq/V149GLNiUuVnsM3TqYAhEZaNrECs0CkJcgXvAu9980N1grpJHeSJlfRe7D844kefuGzfRKUBBECD5oDZp6oftDYrE507pU4zt0jqtFDQB+s4g80HcsR6bhWDu+N1NID6cO6EaOxO6ags6ZWrt2pa12l8iu8jTrUrkp3AkjUSNBwljtqrBVuNyuIe1IfOqRUm4jfOurnbqq1BLQ+ToRBy5UFD1EqLupUdXNhXcy0ROcsGT2wzu71s=
