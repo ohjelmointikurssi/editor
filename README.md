@@ -1,6 +1,6 @@
 # tmc-web-client
 
-[![Build Status](https://travis-ci.org/rage/tmc-web-client.svg?branch=master)](https://travis-ci.org/rage/tmc-web-client/)
+[![Build Status](https://travis-ci.org/ohjelmointikurssi/editor.svg?branch=master)](https://travis-ci.org/ohjelmointikurssi/editor/)
 [![Coverage Status](https://img.shields.io/coveralls/rage/tmc-web-client.svg)](https://coveralls.io/r/rage/tmc-web-client/)
 
 Web client for TMC. Structure: JavaScript + Node.js + Grunt.
