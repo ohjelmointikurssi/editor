@@ -11,6 +11,7 @@ after_success:
 - mkdir cdn
 - cp demo/assets/js/*.js cdn
 - cp demo/assets/css/*.css cdn
+- cp -r demo/assets/images/ cdn/images
 - cd cdn
 - git init
 - git add .
