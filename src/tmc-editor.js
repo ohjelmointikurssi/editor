@@ -40,6 +40,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Add editor container to container
         $(_container).hide();
+
         $(_container).append(editorContainer);
 
         // Create editor
@@ -242,10 +243,10 @@ TMCWebClient.editor = function (container, exercise) {
 
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
-            $('#game-area').html('');
-            $('.game').removeClass('inactive');
+            $('#game-area-' + _exercise.id).html('');
+            $('#game-' +_exercise.id).removeClass('inactive');
             $('#background-overlay').addClass('active');
-            var code = _editor.getValue();
+            var code = _editor.getValue().replace('game-area', 'game-area-' + _exercise.id);
             try {
               eval(code);
             } catch (e) {
@@ -260,7 +261,7 @@ TMCWebClient.editor = function (container, exercise) {
                 message = e.stack;
               }
 
-              $('#program-output').text(message);
+              //$('#program-output').text(message);
 
               if (marker != undefined) {
                 _editor.getSession().removeMarker(marker);
@@ -299,10 +300,10 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function createStopGameHandler() {
-        $('.stop-game').click(function(e) {
+        $('#stop-game-' + _exercise.id).click(function(e) {
             e.preventDefault();
             $('#background-overlay').removeClass('active');
-            $('.game').addClass('inactive');
+            $('#game-' + _exercise.id).addClass('inactive');
             // TODO: stop the game
         });
     }

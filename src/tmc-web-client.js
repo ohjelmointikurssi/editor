@@ -18,9 +18,12 @@ var TMCWebClient = (function() {
 
         containers.each(function (index, container) {
 
-            $(container).addClass('tmc-exercise');
+            var id = $(container).data('id');
+            var exerciseTemplate = Handlebars.templates.Exercise({id: id});
 
-            var exercise = new _module.exercise($(container).data('id'));
+            $(container).replaceWith(exerciseTemplate);
+            container = $("#exercise-" + id + " .tmc-exercise");
+            var exercise = new _module.exercise(id);
 
             exercise.fetch(function() {
 
