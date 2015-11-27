@@ -240,9 +240,15 @@ TMCWebClient.editor = function (container, exercise) {
     /* jshint ignore:end */
 
     function createRunHandler() {
+      var game;
 
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
+            if (typeof game != "undefined") {
+              game.destroy();
+            }
+            //game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });
+
             $('#game-area-' + _exercise.id).html('');
             $('#game-' +_exercise.id).removeClass('inactive');
             $('#background-overlay').addClass('active');
