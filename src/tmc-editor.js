@@ -237,21 +237,22 @@ TMCWebClient.editor = function (container, exercise) {
 
     /* jshint ignore:start */
     var marker;
+    var game;
     /* jshint ignore:end */
 
     function createRunHandler() {
-      var game;
 
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
             if (typeof game != "undefined") {
               game.destroy();
             }
-            //game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });
+            var game_string = "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });"
 
             $('#game-area-' + _exercise.id).html('');
             $('#game-' +_exercise.id).removeClass('inactive');
             $('#background-overlay').addClass('active');
+            
             var code = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
               return o.endsWith('.js') && !o.endsWith('test.js');
             }).sort()
@@ -259,6 +260,7 @@ TMCWebClient.editor = function (container, exercise) {
               return _exercise.getFiles()[o].asText();
             }).join('\n');
             code = code.replace('game-area', 'game-area-' + _exercise.id);
+            code = game_string + code;
             try {
               eval(code);
             } catch (e) {
@@ -316,7 +318,7 @@ TMCWebClient.editor = function (container, exercise) {
             e.preventDefault();
             $('#background-overlay').removeClass('active');
             $('#game-' + _exercise.id).addClass('inactive');
-            // TODO: stop the game
+            game.destroy();
         });
     }
 
