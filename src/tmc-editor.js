@@ -81,7 +81,7 @@ TMCWebClient.editor = function (container, exercise) {
             _spyware.add(new TMCWebClient.snapshot(_exercise, 'insertText', TMCWebClient.snapshot.prototype.generatePatchData(_filename, '', previous, true)));
         }
 
-        _spyware.add(new TMCWebClient.snapshot(_exercise, e.data.action, TMCWebClient.snapshot.prototype.generatePatchData(_filename, previous, _editor.getValue(), false)));
+        _spyware.add(new TMCWebClient.snapshot(_exercise, e.action, TMCWebClient.snapshot.prototype.generatePatchData(_filename, previous, _editor.getValue(), false)));
         _snapshotCache[_filename] = true;
         saveActiveFile();
     }
