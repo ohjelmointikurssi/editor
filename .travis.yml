@@ -1,4 +1,7 @@
 language: node_js
+branches:
+  only:
+    - master
 before_install:
 - npm install -g grunt-cli
 - gem install sass
