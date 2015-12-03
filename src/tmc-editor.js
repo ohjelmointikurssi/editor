@@ -246,7 +246,13 @@ TMCWebClient.editor = function (container, exercise) {
             $('#game-area-' + _exercise.id).html('');
             $('#game-' +_exercise.id).removeClass('inactive');
             $('#background-overlay').addClass('active');
-            var code = _editor.getValue().replace('game-area', 'game-area-' + _exercise.id);
+            var code = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
+              return o.endsWith('.js') && !o.endsWith('test.js');
+            }).sort()
+            .map(function (o) {
+              return _exercise.getFiles()[o].asText();
+            }).join('\n');
+            code = code.replace('game-area', 'game-area-' + _exercise.id);
             try {
               eval(code);
             } catch (e) {
