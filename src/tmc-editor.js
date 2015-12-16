@@ -249,7 +249,7 @@ TMCWebClient.editor = function (container, exercise) {
               game = null;
             }
 
-            var game_string = "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });"
+            var game_string = "(function () { 'use strict'; }()); game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });"
             $('#game-area-' + _exercise.id).html('');
             $('#game-' +_exercise.id).removeClass('inactive');
             $('#background-overlay').addClass('active');
@@ -261,28 +261,12 @@ TMCWebClient.editor = function (container, exercise) {
               return _exercise.getFiles()[o].asText();
             }).join('\n');
             code = game_string + code;
+
             try {
               eval(code);
             } catch (e) {
-              var re = /<anonymous>:(\d+):(\d+)/;
-              var parsed = re.exec(e.stack);
-              var message;
-              if( parsed != null ) {
-                var line = parsed[1];
-                var char = parsed[2];
-                message = e.name + " on line " + line + ", character " + char + ": " + e.message + ".";
-              } else {
-                message = e.stack;
-              }
-
-              //$('#program-output').text(message);
-
-              if (marker != undefined) {
-                _editor.getSession().removeMarker(marker);
-              }
-              var Range = require('ace/range').Range;
-              var range = new Range(line - 1, char - 1, line - 1, 1000);
-              marker = _editor.session.addMarker(range, "error-line", "text");
+              e.showToUser = true;
+              throw e;
             }
             /* jshint ignore:end */
         });
@@ -313,16 +297,30 @@ TMCWebClient.editor = function (container, exercise) {
         });
     }
 
+    function stopGame() {
+        $('#background-overlay').removeClass('active');
+        $('#game-' + _exercise.id).addClass('inactive');
+        if (game != null) {
+            game.destroy();
+            game = null;
+        }
+    }
+
     function createStopGameHandler() {
         $('#stop-game-' + _exercise.id).click(function(e) {
             e.preventDefault();
-            $('#background-overlay').removeClass('active');
-            $('#game-' + _exercise.id).addClass('inactive');
-            if (game != null) {
-              game.destroy();
-              game = null;
-            }
+            stopGame();
         });
+    }
+
+    function createErrorHandler() {
+        window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+          // If the error is from the user's code and not from the libraries
+          if (url === window.location.href || errorObj.showToUser) {
+            stopGame();
+            _output.render({error: errorMsg}, Handlebars.templates.OutputErrorContainer);
+          }
+        }
     }
 
     function update() {
@@ -362,6 +360,7 @@ TMCWebClient.editor = function (container, exercise) {
         createDeleteFileHandler();
         createRunHandler();
         createStopGameHandler();
+        createErrorHandler();
     }
 
     function show(content) {

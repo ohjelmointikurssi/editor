@@ -1,3 +1,6 @@
+<section class='actions'>
+    <i class='close'></i>
+</section>
 <h1 class='title'>Error</h1>
 
-<p class='description'>{{error}} Please check your code for syntax errors.</p>
+<p class='description'>{{error}}. Please check your code for syntax errors.</p>
