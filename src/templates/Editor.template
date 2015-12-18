@@ -10,6 +10,7 @@
     </ul>
 
     <section class='actions'>
-        <i class='run' title='Run'></i>
+      <button class='run' type="button"><img src="//ohjelmointikurssi.github.io/cdn/images/play.svg">Run</button>
+
     </section>
 </div>
