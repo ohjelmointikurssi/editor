@@ -1,20 +1,15 @@
-<div class='top'>
+<div class='exercise-sidebar'>
     <h1 class='name'>{{title}}</h1>
 
     <ul class='tab-bar'>
 
         {{#files}}
-            <li data-id="{{name}}">{{filename name}} <i class='delete' title='Delete file'></i></li>
+            <li data-id="{{name}}">{{filename name}}</li>
         {{/files}}
 
     </ul>
 
     <section class='actions'>
-
-        <i class='new' title='New file'></i>
         <i class='run' title='Run'></i>
-        <i class='output' title='Last submission'></i>
-        <i class='submit' title='Submit'></i>
-
     </section>
 </div>

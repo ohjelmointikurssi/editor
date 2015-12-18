@@ -354,10 +354,6 @@ TMCWebClient.editor = function (container, exercise) {
         // Add click events to tabs
         $('li', _navBar).click(tabClick);
 
-        createSubmitHandler();
-        createLastSubmissionHandler();
-        createNewFileHandler();
-        createDeleteFileHandler();
         createRunHandler();
         createStopGameHandler();
         createErrorHandler();
