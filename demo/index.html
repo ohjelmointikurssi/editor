@@ -25,29 +25,56 @@
             <h1>Material</h1>
 
 						<p>
-							TODO: ohjeet ympäristön käyttöön.
+							(huom. tässä vain ohjeet käyttöön, ei kurssin kuvausta jne)<br>
+							Voit kirjoittaa JavaScript-koodia editoreihin. Tehtävänanto näkyy editorin yläpuolella. Editorin vasemmalla puolella on lista tiedostoista, joista ohjelma koostuu. Klikkaamalla tiedoston nimeä, voit vaihtaa tiedostoa. Vasemmalla on myös run-näppäin, jota painamalla koodisi ajetaan.
 						</p>
 
 
 						<h2>Muuttujat</h2>
 						<p>
-							TODO: T1. Muokkaa pelissä muuttujan arvoa ja näe vaikutus pelissä
+							Alla on koodi yksinkertaiseen peliin. Pelissä on tarkoituksena yrittää osua ylhäältä tippuviin palkkeihin alhaalla olevalla pallolla. Palloa voi liikuttaa nuolinäppäimillä. Kokeile peliä painamalla run-painiketta.
+							<br>
+							<br>
+							<b>Ongelma</b>
+							<br>
+							Peli on tällä hetkellä hankalahko, koska palkit tippuvat nopeasti ja pallo liikkuu hitaasti. Yritetään tehdä pelistä hieman helpompi.
+							<br>
+							<br>
+							<b>Ratkaisu</b>
+							<br>
+							Kuten ehkä jo huomasit, peli koostuu useammasta tiedostosta. Tiedostoa voi vaihtaa painamalla tiedoston nimeä. Mene tiedostoon update.js. Kokeile, mitä käy jos vaihdat riveillä 2 ja 3 olevia numeroita 250 ja 500 joiksikin muiksi numeroiksi ja muutoksen jälkeen painat run-painiketta. Helpottuuko peli, jos vaihdat numeroiden arvot päittäin?
 						</p>
 
             <h2>Tehtävä 1</h2>
-						<div data-type='tmc-exercise' data-id='2286'></div>
+						<div data-type='tmc-exercise' data-id='2287'></div>
 
 
 						<p>
-							TODO: selitä, mitä muuttujat ovat
+							Ohjelmoinnissa käytetään usein muuttujia (englanniksi variable). Muuttujat toimivat samaan tapaan kuin matematiikassa. Matematiikassa voisi olla esimerkiksi yhtälöt x = 3 ja y = x+2, joissa x ja y olisivat muuttujia. Tällöin tietäisimme, että y = 3+2 = 5. Jos taas vaihdettaisiin, että x = 5, tietäisimme että y = 7. Ohjelmoinnissa muuttujat sisältävät tietoa. Edellisessä tehtävässä muutit kahden muuttujan arvoa. Toisessa muuttujassa oli tallennettuna pallon liikkumisnopeus ja toisessa palkkien liikkumisnopeus.
+							<br>
+							<br>
+							Toisin kuin matematiikassa, ohjelmoinnissa muuttujan arvo voi olla myös jotain muuta kuin lukuja, esimerkiksi merkkijonoja (englanniksi string). Merkkijonot ovat mitä tahansa kirjaimista tai merkeistä koostuvia lauseita tai sanoja. Ohjelmoinnissa muuttujien käyttö on hyödyllistä muun muassa siksi, ettei samaa lukuarvoa tarvitse toistaa ohjelmakoodissa aina kun sitä tarvitaan.
+							<br>
+							<br>
+							Ohjelmoinnissa muuttujat pitää luoda eli <i>alustaa</i> (englanniksi initialize) ennen kuin niitä voi käyttää. JavaScriptissä muuttujat alustetaan kirjoittamalla <code>var muuttujanNimi = muuttujanArvo;</code>. Aluksi määritellään, että nyt luodaan uusi muuttuja kirjoittamalla sana 'var' (tulee sanasta variable). Seuraavaksi määritellään muuttujalle nimi. Muuttujan nimessä ei saa olla välilyöntejä, minkä takia muuttujat yleensä nimetään ns. camelCasella. CamelCasessa jokaisen sanan ensimmäinen kirjain kirjoitetaan isolla kirjaimella ja muut pienellä. Yhtäsuuruus-merkillä annetaan muuttujalle arvo, ja itse arvo kirjoitetaan yhtäsuuruus-merkin oikealle puolelle. Jokainen JavaScript-koodirivi pitää vielä lopettaa puolipisteellä. Merkkijonon sisältävän muuttujan voi alustaa kirjoittamalla <code>var merkkijono = "Terve, mitä kuuluu?";</code>. Huomaa, että merkkijono-tyylisiä muuttujia alustaessa pitää käyttää lainausmerkkejä muuttujan arvon ympärillä.
 						</p>
 
 						<p>
-							TODO: T2. Initialisoi muuttuja
+							Harjoitellaan seuraavaksi hiukan muuttujien käyttöä.
+							<br>
+							<br>
+							<b>Ongelma</b>
+							<br>
+							Tässä tehtävässä luodaan aluksi muuttuja <i>etunimi</i>, johon talletetaan merkkijono. Sen jälkeen tulostetaan etunimi näytölle.
+							<br>
+							<br>
+							<b>Ratkaisu</b>
+							<br>
+							Tehtäväpohjassa on valmiiksi kirjoitettu muuttujan <i>etunimi</i> tulostus: <code>console.log(etunimi);</code>. Tehtävänäsi on lisätä tiedoston ensimmäiselle riville muuttujan alustus eli luonti.
 						</p>
 
 						<h2>Tehtävä 2</h2>
-						<div data-type='tmc-exercise' data-id='2286'></div>
+						<div data-type='tmc-exercise' data-id='2288'></div>
 
 
 						<p>

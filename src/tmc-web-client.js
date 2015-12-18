@@ -22,7 +22,7 @@ var TMCWebClient = (function() {
             var exerciseTemplate = Handlebars.templates.Exercise({id: id});
 
             $(container).replaceWith(exerciseTemplate);
-            container = $("#exercise-" + id + " .tmc-exercise");
+            container = $('#exercise-' + id + ' .tmc-exercise');
             var exercise = new _module.exercise(id);
 
             exercise.fetch(function() {

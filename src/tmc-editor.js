@@ -260,7 +260,12 @@ TMCWebClient.editor = function (container, exercise) {
             .map(function (o) {
               return _exercise.getFiles()[o].asText();
             }).join('\n');
-            code = game_string + code;
+
+            // Check if the exercise is a game related exercise
+            var isGame = Object.getOwnPropertyNames(_exercise.getFile('update.js'));
+            if (isGame) {
+              code = game_string + code;
+            }
 
             try {
               eval(code);
@@ -300,10 +305,12 @@ TMCWebClient.editor = function (container, exercise) {
     function stopGame() {
         $('#background-overlay').removeClass('active');
         $('#game-' + _exercise.id).addClass('inactive');
+        /* jshint ignore:start */
         if (game != null) {
             game.destroy();
             game = null;
         }
+        /* jshint ignore:end */
     }
 
     function createStopGameHandler() {
