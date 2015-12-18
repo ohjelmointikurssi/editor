@@ -22,7 +22,7 @@
 
             <a href="#" class='tmc-exercise-logout' title='Logout'>Logout</a>
 
-            <h1>Material</h1>
+            <h1>Materiaali</h1>
 
 						<p>
 							(huom. tässä vain ohjeet käyttöön, ei kurssin kuvausta jne)<br>
@@ -30,11 +30,11 @@
 						</p>
 
 
-						<h2>Muuttujat</h2>
+						<h2>Tehtävä 1</h2>
 						<p>
 							Alla on koodi yksinkertaiseen peliin. Pelissä on tarkoituksena yrittää osua ylhäältä tippuviin palkkeihin alhaalla olevalla pallolla. Palloa voi liikuttaa nuolinäppäimillä. Kokeile peliä painamalla run-painiketta.
-							<br>
-							<br>
+						</p>
+						<p>
 							<b>Ongelma</b>
 							<br>
 							Peli on tällä hetkellä hankalahko, koska palkit tippuvat nopeasti ja pallo liikkuu hitaasti. Yritetään tehdä pelistä hieman helpompi.
@@ -45,10 +45,9 @@
 							Kuten ehkä jo huomasit, peli koostuu useammasta tiedostosta. Tiedostoa voi vaihtaa painamalla tiedoston nimeä. Mene tiedostoon update.js. Kokeile, mitä käy jos vaihdat riveillä 2 ja 3 olevia numeroita 250 ja 500 joiksikin muiksi numeroiksi ja muutoksen jälkeen painat run-painiketta. Helpottuuko peli, jos vaihdat numeroiden arvot päittäin?
 						</p>
 
-            <h2>Tehtävä 1</h2>
 						<div data-type='tmc-exercise' data-id='2287'></div>
 
-
+						<h2>Muuttujat</h2>
 						<p>
 							Ohjelmoinnissa käytetään usein muuttujia (englanniksi variable). Muuttujat toimivat samaan tapaan kuin matematiikassa. Matematiikassa voisi olla esimerkiksi yhtälöt x = 3 ja y = x+2, joissa x ja y olisivat muuttujia. Tällöin tietäisimme, että y = 3+2 = 5. Jos taas vaihdettaisiin, että x = 5, tietäisimme että y = 7. Ohjelmoinnissa muuttujat sisältävät tietoa. Edellisessä tehtävässä muutit kahden muuttujan arvoa. Toisessa muuttujassa oli tallennettuna pallon liikkumisnopeus ja toisessa palkkien liikkumisnopeus.
 							<br>
@@ -59,6 +58,7 @@
 							Ohjelmoinnissa muuttujat pitää luoda eli <i>alustaa</i> (englanniksi initialize) ennen kuin niitä voi käyttää. JavaScriptissä muuttujat alustetaan kirjoittamalla <code>var muuttujanNimi = muuttujanArvo;</code>. Aluksi määritellään, että nyt luodaan uusi muuttuja kirjoittamalla sana 'var' (tulee sanasta variable). Seuraavaksi määritellään muuttujalle nimi. Muuttujan nimessä ei saa olla välilyöntejä, minkä takia muuttujat yleensä nimetään ns. camelCasella. CamelCasessa jokaisen sanan ensimmäinen kirjain kirjoitetaan isolla kirjaimella ja muut pienellä. Yhtäsuuruus-merkillä annetaan muuttujalle arvo, ja itse arvo kirjoitetaan yhtäsuuruus-merkin oikealle puolelle. Jokainen JavaScript-koodirivi pitää vielä lopettaa puolipisteellä. Merkkijonon sisältävän muuttujan voi alustaa kirjoittamalla <code>var merkkijono = "Terve, mitä kuuluu?";</code>. Huomaa, että merkkijono-tyylisiä muuttujia alustaessa pitää käyttää lainausmerkkejä muuttujan arvon ympärillä.
 						</p>
 
+						<h2>Tehtävä 2</h2>
 						<p>
 							Harjoitellaan seuraavaksi hiukan muuttujien käyttöä.
 							<br>
@@ -71,42 +71,79 @@
 							<b>Ratkaisu</b>
 							<br>
 							Tehtäväpohjassa on valmiiksi kirjoitettu muuttujan <i>etunimi</i> tulostus: <code>console.log(etunimi);</code>. Tehtävänäsi on lisätä tiedoston ensimmäiselle riville muuttujan alustus eli luonti.
+							<br>
+							<br>
+							<b>Odotettu vastaus</b>
+							<br>
+							Näytölle pitäisi ilmestyä muutujalle annettu arvo, esim. oma etunimesi.
 						</p>
 
-						<h2>Tehtävä 2</h2>
 						<div data-type='tmc-exercise' data-id='2288'></div>
 
-
+						<h2>Muuttujien operaatiot</h2>
 						<p>
-							TODO: selitä, miten muuttujia käytetään
-						</p>
-
-						<p>
-							TODO: T3. Muuttujien käyttö
+							Muuttujilla on <i>operaatioita</i>. Operaatiot ovat erilaisia toimintoja. Tämä mahdollistaa esimerkiksi muuttujien yhteenlaskun. Lukujen yhteenlasku toimii täysin samalla tavalla kuin matematiikassa. Esimerkki:
+							<br>
+							<code>
+								console.log(5 + 2); // tulostaa luvun 7
+							</code>
+							<br>
+							<br>
+							Ohjelmoidessa voidaan yhteenlaskea myös merkkijonoja. Merkkijonojen yhteenlaskussa merkkijonot ketjutetaan. Esimerkki:
+							<br>
+							<code>
+								console.log("Hei " + ", mitä kuuluu?"); // tulostaa "Hei, mitä kuuluu?"
+							</code>
 						</p>
 
 						<h2>Tehtävä 3</h2>
-						<div data-type='tmc-exercise' data-id='2286'></div>
-
-
 						<p>
-							TODO: selitä muuttujien operaatioita
+							Tehdään seuraavaksi yksinkertainen laskuri.
+							<br>
+							<br>
+							<b>Ongelma</b>
+							<br>
+							Tässä tehtävässä luodaan aluksi kaksi muuttujaa <i>a</i> ja <i>b</i>, joihin talletetaan lukuja. Sen jälkeen tulostetaan lukujen summa näytölle.
+							<br>
+							<br>
+							<b>Ratkaisu</b>
+							<br>
+							Tehtäväpohjassa on tällä kertaa vain kommentit, jotka kertovat mitä jokaisella rivillä pitäisi tehdä. Kirjoita rivit käyttäen hyödyksi yhteenlasku-esimerkkiä ja edellisen tehtävän muuttujan tulostusta.
+							<br>
+							<br>
+							<b>Odotettu vastaus</b>
+							<br>
+							Jos annat luvuille esim. arvot 5 ja 2, pitäisi näytölle tulostua luku 7.
 						</p>
 
-						<p>
-							T4. Muuttujien operaatioita
-						</p>
+						<div data-type='tmc-exercise' data-id='2289'></div>
+
 
 						<h2>Tehtävä 4</h2>
-						<div data-type='tmc-exercise' data-id='2286'></div>
-
-
 						<p>
-							T5. Tee uusi muuttuja peliin, korjaa virheelliset muuttujat (vasen nuoli menee oikealle, oikea vasemmalle) ja näe vaikutus pelissä
+							Tässä tehtävässä pääset muokkaamaan ensimmäisestä tehtävästä tuttua peliä. Pelissä on kuitenkin muutama muuttujiin liittyvä virhe.
+							<br>
+							<br>
+							<b>Ratkaisu</b>
+							<br>
+							Löydä muuttujien virheet ja korjaa ne. Katso tarvittaessa apua ensimmäisestä tehtävästä tai editorin alla olevista vihjeistä.
+							<br>
+							<br>
+							<b>Odotettu vastaus</b>
+							<br>
+							Peli toimii samalla tavalla kuin ensimmäisessä tehtävässä.
 						</p>
 
-						<h2>Tehtävä 5</h2>
-						<div data-type='tmc-exercise' data-id='2286'></div>
+						<div data-type='tmc-exercise' data-id='2290'></div>
+						<p>
+							<b>Vihjeet</b>
+							<br>
+							Kumpikin virhe löytyy tiedostosta update.js.
+							<br>
+							Ensimmäinen virhe on, että palkkien tippumisnopeus on väärä.
+							<br>
+							Toinen virhe on, että pallo liikkuu väärään suuntaan nuolinäppäimistä.
+						</p>
 
         </div>
 

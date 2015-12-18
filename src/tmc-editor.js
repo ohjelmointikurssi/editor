@@ -262,7 +262,9 @@ TMCWebClient.editor = function (container, exercise) {
             }).join('\n');
 
             // Check if the exercise is a game related exercise
-            var isGame = Object.getOwnPropertyNames(_exercise.getFile('update.js'));
+            var isGame = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
+              return o.endsWith('update.js');
+            });
             if (isGame) {
               code = game_string + code;
             }
