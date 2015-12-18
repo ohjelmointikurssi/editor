@@ -12,17 +12,16 @@ TMCWebClient.output = function (container) {
     $(container).append(this.outputContainer);
 }
 
-TMCWebClient.output.prototype.render = function (attributes, template) {
+TMCWebClient.output.prototype.render = function (text, template) {
 
     this.clear();
 
     var self = this,
         _template = template || this.template.output,
-        html = $(_template(attributes));
+        html = $(_template({content: text}));
 
     // Close handler
     html.find('.close').click(function () {
-
         self.close();
     });
 

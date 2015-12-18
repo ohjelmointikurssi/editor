@@ -249,10 +249,8 @@ TMCWebClient.editor = function (container, exercise) {
               game = null;
             }
 
-            var game_string = "(function () { 'use strict'; }()); game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });"
-            $('#game-area-' + _exercise.id).html('');
-            $('#game-' +_exercise.id).removeClass('inactive');
-            $('#background-overlay').addClass('active');
+            var pre = "(function () { 'use strict'; }()); var console={log: function(a){_output.render(a)}};"
+
 
             var code = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
               return o.endsWith('.js') && !o.endsWith('test.js');
@@ -265,13 +263,19 @@ TMCWebClient.editor = function (container, exercise) {
             var isGame = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
               return o.endsWith('update.js');
             });
-            if (isGame) {
-              code = game_string + code;
+            code = pre + code;
+            if (isGame.length !== 0) {
+               code += "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });";
+               $('#game-area-' + _exercise.id).html('');
+               $('#game-' +_exercise.id).removeClass('inactive');
+               $('#background-overlay').addClass('active');
             }
+            code += ""
 
             try {
               eval(code);
             } catch (e) {
+              _output.render(e, Handlebars.templates.OutputErrorContainer);
               e.showToUser = true;
               throw e;
             }
@@ -323,12 +327,14 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function createErrorHandler() {
+      var previousError = window.onerror;
         window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
           // If the error is from the user's code and not from the libraries
           if (url === window.location.href || errorObj.showToUser) {
+            _output.render(errorMsg, Handlebars.templates.OutputErrorContainer);
             stopGame();
-            _output.render({error: errorMsg}, Handlebars.templates.OutputErrorContainer);
           }
+          return previousError(errorMsg, url, lineNumber, column, errorObj);
         }
     }
 

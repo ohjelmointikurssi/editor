@@ -3,4 +3,4 @@
 </section>
 <h1 class='title'>Error</h1>
 
-<p class='description'>{{error}}. Please check your code for syntax errors.</p>
+<p class='description'>{{content}}. Please check your code for syntax errors.</p>
