@@ -1,9 +1,9 @@
 TMCWebClient.editor = function (container, exercise) {
 
+    var Range = ace.require('ace/range').Range;
+
     var _template = {
-
             editor: Handlebars.templates.Editor
-
         },
 
         _container = container,
@@ -35,6 +35,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     function initialise() {
 
+
         // Create container for editor
         var editorContainer = $('<div/>');
 
@@ -49,11 +50,10 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Fetch exercise
         _exercise.fetchZip(function () {
-
-            var files = _exercise.getFilesFromSource(),
-                content = files[0].asText();
-
+          var files = _exercise.getFilesFromSource()
             _filename = files[0].name;
+            createMarkers(_filename);
+            var content = _exercise.getFilteredSource(_filename);
 
             // Render
             render(files);
@@ -67,6 +67,18 @@ TMCWebClient.editor = function (container, exercise) {
         });
 
         createOutputContainer();
+    }
+
+    var _markers = [];
+    function createMarkers(filename) {
+        _markers.forEach(function(marker) {
+            _editor.getSession().removeMarker(marker);
+        });
+        _markers = [];
+        var locked = _exercise.getLockedRegions(filename);
+        locked.forEach(function (limits) {
+            _markers.push(_editor.session.addMarker(new Range(limits[0], 0, limits[1], 900), 'readonly-highlight', 'fullLine'));
+        });
     }
 
     function snapshotHandler(e) {
@@ -407,9 +419,9 @@ TMCWebClient.editor = function (container, exercise) {
 
         // File
         var filename = element.attr('data-id');
-        var content = _exercise.getFile(filename).asText();
+        var content = _exercise.getFilteredSource(filename);
         setFileMode(filename);
-
+        createMarkers(filename);
         show(content);
         _filename = filename;
     }

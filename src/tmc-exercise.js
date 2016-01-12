@@ -206,6 +206,34 @@ TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
     }
 }
 
+TMCWebClient.exercise.prototype.getLockedRegions = function (filename) {
+    var regions = []
+    var input = this.zip.file(filename).asText().split('\n');
+
+    var locks = 0;
+    for(var i = 0; i < input.length; i++) {
+      if(input[i].indexOf('// LOCK') > -1) {
+        for(var j = i; j < input.length; j++) {
+          if(input[j].indexOf('// END LOCK') > -1) {
+              var di = i - locks*2;
+              var dj = j - ((locks) * 2) - 2;
+              regions.push([di, dj]);
+              console.log(di + ' ' + dj);
+              locks++;
+              break;
+          }
+        }
+      }
+    }
+    return regions;
+}
+
+TMCWebClient.exercise.prototype.getFilteredSource = function (filename) {
+    return this.zip.file(filename).asText().split('\n').filter(function (value) {
+        return (value.indexOf('// LOCK') < 0) && (value.indexOf('// END LOCK') < 0);
+    }).join('\n');
+}
+
 TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
 
     this.zip.file(filename, content);
