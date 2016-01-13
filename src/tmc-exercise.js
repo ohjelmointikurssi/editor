@@ -211,7 +211,7 @@ TMCWebClient.exercise.prototype.getLockedRegions = function (filename) {
     var input = this.zip.file(filename).asText().split('\n');
 
     for(var i = 0; i < input.length; i++) {
-      if(input[i].indexOf('// LOCK') > -1) {
+      if(input[i].indexOf('// START LOCK') > -1) {
         for(var j = i; j < input.length; j++) {
           if(input[j].indexOf('// END LOCK') > -1) {
               regions.push([i, j]);
