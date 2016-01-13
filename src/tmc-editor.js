@@ -50,14 +50,13 @@ TMCWebClient.editor = function (container, exercise) {
         _exercise.fetchZip(function () {
           var files = _exercise.getFilesFromSource()
             _filename = files[0].name;
-            createMarkers(_filename);
             var content = _exercise.getFile(_filename).asText();
 
             // Render
             render(files);
             setFileMode(_filename);
             show(content);
-            hideLockMarkers();
+            createMarkers(_filename);
 
             // Set active tab
             $('.tab-bar li', _container).first().addClass('active');
@@ -84,16 +83,16 @@ TMCWebClient.editor = function (container, exercise) {
             _markers.push(_editor.session.addMarker(range, 'readonly-highlight', 'fullLine'));
             _ranges.push(range);
         });
-        hideLockMarkers();
+        hideLockMarkers(filename);
     }
     var _folds = [];
-    function hideLockMarkers() {
+    function hideLockMarkers(filename) {
         _folds.forEach(function(fold) {
             _editor.getSession().removeFold(fold);
         });
         _locked_regions.forEach(function (group) {
             group.forEach(function (lock_line) {
-                if (lock_line === 0 || lock_line == _exercise.getFileLength(_filename) - 1) {
+                if (lock_line === 0 || lock_line == _exercise.getFileLength(filename) - 1) {
                     return;
                 }
                 try {
@@ -495,8 +494,8 @@ TMCWebClient.editor = function (container, exercise) {
         var filename = element.attr('data-id');
         var content = _exercise.getFile(filename).asText();
         setFileMode(filename);
-        createMarkers(filename);
         show(content);
+        createMarkers(filename);
         _filename = filename;
     }
 

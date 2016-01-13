@@ -230,6 +230,10 @@ TMCWebClient.exercise.prototype.getLockedRegions = function (filename) {
 }
 
 TMCWebClient.exercise.prototype.getFileLength = function (filename) {
+    if (filename === undefined) {
+        console.warn('Filename is undefined');
+        return -1;
+    }
     var input = this.zip.file(filename).asText().split('\n');
     return input.length;
 }
