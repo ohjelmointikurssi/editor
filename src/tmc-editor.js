@@ -34,8 +34,6 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     function initialise() {
-
-
         // Create container for editor
         var editorContainer = $('<div/>');
 
@@ -53,12 +51,13 @@ TMCWebClient.editor = function (container, exercise) {
           var files = _exercise.getFilesFromSource()
             _filename = files[0].name;
             createMarkers(_filename);
-            var content = _exercise.getFilteredSource(_filename);
+            var content = _exercise.getFile(_filename).asText();
 
             // Render
             render(files);
             setFileMode(_filename);
             show(content);
+            hideLockMarkers();
 
             // Set active tab
             $('.tab-bar li', _container).first().addClass('active');
@@ -70,14 +69,40 @@ TMCWebClient.editor = function (container, exercise) {
     }
 
     var _markers = [];
+    var _ranges = [];
+    var _rangesNeedupdating = false;
+    var _locked_regions = null;
     function createMarkers(filename) {
         _markers.forEach(function(marker) {
             _editor.getSession().removeMarker(marker);
         });
         _markers = [];
-        var locked = _exercise.getLockedRegions(filename);
-        locked.forEach(function (limits) {
-            _markers.push(_editor.session.addMarker(new Range(limits[0], 0, limits[1], 900), 'readonly-highlight', 'fullLine'));
+        _ranges = [];
+        _locked_regions = _exercise.getLockedRegions(filename);
+        _locked_regions.forEach(function (limits) {
+            var range = new Range(limits[0], 0, limits[1], 900);
+            _markers.push(_editor.session.addMarker(range, 'readonly-highlight', 'fullLine'));
+            _ranges.push(range);
+        });
+        hideLockMarkers();
+    }
+    var _folds = [];
+    function hideLockMarkers() {
+        _folds.forEach(function(fold) {
+            _editor.getSession().removeFold(fold);
+        });
+        _locked_regions.forEach(function (group) {
+            group.forEach(function (lock_line) {
+                if (lock_line === 0 || lock_line == _exercise.getFileLength(_filename) - 1) {
+                    return;
+                }
+                try {
+                    _folds.push(_editor.session.addFold("", new Range(lock_line, 0, lock_line, 900)));
+                } catch(e) {
+                    console.warn('Problems with adding folds');
+                }
+
+            });
         });
     }
 
@@ -384,6 +409,55 @@ TMCWebClient.editor = function (container, exercise) {
         createRunHandler();
         createStopGameHandler();
         createErrorHandler();
+        createKeyboardHandler();
+    }
+
+    function createKeyboardHandler() {
+        _editor.on('input', function() {
+            if (_rangesNeedupdating) {
+                createMarkers(_filename);
+            }
+        });
+        _editor.keyBinding.addKeyboardHandler({
+            handleKeyboard: function(data, hash, key, keyCode, event) {
+                // In case of race condition
+                if (_rangesNeedupdating) {
+                    createMarkers(_filename);
+                }
+                if (hash === -1 || (keyCode <= 40 && keyCode >= 37)) {
+                    return false;
+                }
+                if (editingProtectedArea()) {
+                    return { command: "null", passEvent: false };
+                }
+                if (keyCode === 13 || keyCode === 8 || keyCode === 46) {
+                    _rangesNeedupdating = true;
+                }
+            }
+        });
+        preventEvent('onPaste');
+        preventEvent('onCut');
+    }
+
+    function preventEvent(method_name) {
+        var orig = _editor[method_name];
+        _editor[method_name] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            if (editingProtectedArea()) {
+                return;
+            }
+            return orig.apply(_editor, args);
+        }
+    }
+
+    function editingProtectedArea() {
+        var selection = _editor.getSelectionRange();
+        for (var i = 0; i < _ranges.length; i++) {
+            if (selection.intersects(_ranges[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     function show(content) {
@@ -419,7 +493,7 @@ TMCWebClient.editor = function (container, exercise) {
 
         // File
         var filename = element.attr('data-id');
-        var content = _exercise.getFilteredSource(filename);
+        var content = _exercise.getFile(filename).asText();
         setFileMode(filename);
         createMarkers(filename);
         show(content);

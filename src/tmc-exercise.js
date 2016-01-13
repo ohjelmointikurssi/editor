@@ -210,28 +210,28 @@ TMCWebClient.exercise.prototype.getLockedRegions = function (filename) {
     var regions = []
     var input = this.zip.file(filename).asText().split('\n');
 
-    var locks = 0;
     for(var i = 0; i < input.length; i++) {
       if(input[i].indexOf('// LOCK') > -1) {
         for(var j = i; j < input.length; j++) {
           if(input[j].indexOf('// END LOCK') > -1) {
-              var di = i - locks*2;
-              var dj = j - ((locks) * 2) - 2;
-              regions.push([di, dj]);
-              console.log(di + ' ' + dj);
-              locks++;
+              regions.push([i, j]);
               break;
           }
         }
+      }
+      if (input[i].indexOf('// LOCK FROM BEGINNING') > -1) {
+          regions.push([0, i]);
+      }
+      if (input[i].indexOf('// LOCK TO END') > -1) {
+          regions.push([i, input.length-1]);
       }
     }
     return regions;
 }
 
-TMCWebClient.exercise.prototype.getFilteredSource = function (filename) {
-    return this.zip.file(filename).asText().split('\n').filter(function (value) {
-        return (value.indexOf('// LOCK') < 0) && (value.indexOf('// END LOCK') < 0);
-    }).join('\n');
+TMCWebClient.exercise.prototype.getFileLength = function (filename) {
+    var input = this.zip.file(filename).asText().split('\n');
+    return input.length;
 }
 
 TMCWebClient.exercise.prototype.saveFile = function (filename, content) {
