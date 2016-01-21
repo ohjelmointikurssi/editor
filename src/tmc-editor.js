@@ -276,15 +276,22 @@ TMCWebClient.editor = function (container, exercise) {
     var game = null;
     /* jshint ignore:end */
 
+    var _code;
     function createRunHandler() {
 
         $('.actions .run', _container).first().click(function () {
             /* jshint ignore:start */
+            var gameFrame = document.getElementById("game-frame-" + _exercise.id);
+            gameFrame.src = '';
             if (game != null) {
               game.destroy();
               game = null;
+              // This should kill all the remaining processes
+
+
             }
 
+            //var pre = "(function () { 'use strict'; }()); "
             var pre = "(function () { 'use strict'; }()); var console={log: function(a){_output.render(a)}};"
 
 
@@ -301,22 +308,42 @@ TMCWebClient.editor = function (container, exercise) {
             });
             code = pre + code;
             if (isGame.length !== 0) {
-               code += "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' + _exercise.id, { preload: preload, create: create, update: update });";
+               code += "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" +  _exercise.id + ", { preload: preload, create: create, update: update });";
                $('#game-area-' + _exercise.id).html('');
                $('#game-' +_exercise.id).removeClass('inactive');
-               $('#background-overlay').addClass('active');
+               // $('#background-overlay').addClass('active');
             }
             code += ""
+            var gameTemplate = Handlebars.templates.Game({ id: _exercise.id });
 
-            try {
-              eval(code);
-            } catch (e) {
-              _output.render(e, Handlebars.templates.OutputErrorContainer);
-              e.showToUser = true;
-              throw e;
-            }
+            gameFrame.contentWindow.document.write(gameTemplate);
+            _code = code;
+            waitForGameIframe();
             /* jshint ignore:end */
         });
+
+        // Listens for messages from iframe
+        window.addEventListener('message', function(e) {
+          if (e.data.source === _exercise.id) {
+            if (e.data.ready === true) {
+              _gameFrameReady = true;
+            }
+          }
+        });
+    }
+
+    var _gameFrameReady = false;
+    function waitForGameIframe() {
+      var gameFrame = document.getElementById('game-frame-' + _exercise.id);
+      var url = (window.location != window.parent.location) ? document.referrer: document.location;
+
+      gameFrame.contentWindow.postMessage('ready', '*');
+      if (_gameFrameReady) {
+        gameFrame.contentWindow.postMessage(_code, url);
+        console.info('Sent the code to be executed');
+      } else {
+        window.setTimeout(waitForGameIframe, 100);
+      }
     }
 
     function createDeleteFileHandler() {
@@ -352,6 +379,9 @@ TMCWebClient.editor = function (container, exercise) {
             game.destroy();
             game = null;
         }
+        // This should kill all the remaining processes
+        var gameFrame = document.getElementById("game-frame-" + _exercise.id);
+        gameFrame.src = 'about:blank';
         /* jshint ignore:end */
     }
 

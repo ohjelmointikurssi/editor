@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>sandbox</title>
+  <style type="text/css">
+    body {
+      margin: 0;
+    }
+    .game-area {
+      display: inline-block;
+      background-color: black;
+      width: 800px;
+      height: 600px;
+    }
+
+  </style>
+  <script src="//cdn.jsdelivr.net/phaser/2.4.4/phaser.min.js"></script>
+</head>
+
+<body>
+
+<div class="game active" id="game-{{id}}">
+  <a id="stop-game-{{id}}" href="#" title="stop-game" class="close">Stop game</a>
+  <div id="game-area-{{id}}" class="game-area"></div>
+</div>
+
+<script>
+
+  console.info('Game frame loaded');
+  var url = (window.location != window.parent.location) ? document.referrer: document.location;
+  window.addEventListener('message', function(e) {
+    if (e.data == 'ready') {
+      var ready = typeof Phaser !== 'undefined';
+      var msg = {
+        ready: ready,
+        source: {{id}}
+      }
+      e.source.postMessage(msg, url);
+      return;
+    }
+    console.log('Game frame has received a message');
+    // A dirty workaround
+    Phaser.Device._initialize();
+    console.log(event);
+      try {
+        console.info('Evaluating code...');
+        eval(event.data);
+        // The game does not start for some reason
+        if (!game.isBooted) {
+          game.boot();
+        }
+      } catch (e) {
+        debugger;
+        throw e;
+      }
+    });
+
+</script>
+</body>
+</html>
