@@ -8,12 +8,9 @@
       margin: 0;
     }
     .game-area {
-      display: inline-block;
-      background-color: black;
       width: 800px;
       height: 600px;
     }
-
   </style>
   <script src="//cdn.jsdelivr.net/phaser/2.4.4/phaser.min.js"></script>
 </head>
@@ -21,41 +18,77 @@
 <body>
 
 <div class="game active" id="game-{{id}}">
-  <a id="stop-game-{{id}}" href="#" title="stop-game" class="close">Stop game</a>
+  <a id="stop-game" href="#" title="stop-game" class="close">Stop game</a>
   <div id="game-area-{{id}}" class="game-area"></div>
 </div>
 
 <script>
-
+  var _mainWindow = null;
   console.info('Game frame loaded');
-  var url = (window.location != window.parent.location) ? document.referrer: document.location;
+  //var _url = (window.location != window.parent.location) ? document.referrer: document.location;
+  var _url = '*';
+
+  var sendError = function(message) {
+    var msg = {
+      source: {{id}},
+      error: message
+    }
+    if (_mainWindow) {
+      _mainWindow.postMessage(msg, _url);
+    } else {
+      console.warn("Unable to display a error message because I don't know who the main window is.");
+    }
+  }
+
   window.addEventListener('message', function(e) {
+    if (_mainWindow === null) {
+      _mainWindow = e.source;
+    }
     if (e.data == 'ready') {
       var ready = typeof Phaser !== 'undefined';
       var msg = {
         ready: ready,
         source: {{id}}
       }
-      e.source.postMessage(msg, url);
+      window.s = e.source;
+      e.source.postMessage(msg, _url);
       return;
     }
-    console.log('Game frame has received a message');
-    // A dirty workaround
-    Phaser.Device._initialize();
-    console.log(event);
+    // A dirty workaround to mitigate a missing DOMContentLoaded event.
+    if (Phaser.Device._readyCheck) {
+      Phaser.Device._readyCheck();
+    }
+    var showMessage = function(message) {
+      var msg =  {
+        source: {{id}},
+        message: message
+      }
+      e.source.postMessage(msg, _url);
+    }
       try {
         console.info('Evaluating code...');
-        eval(event.data);
-        // The game does not start for some reason
-        if (!game.isBooted) {
-          game.boot();
-        }
-      } catch (e) {
-        debugger;
-        throw e;
+        eval(e.data);
+      } catch (error) {
+        sendError(error.toString());
       }
     });
+    document.getElementById('stop-game').addEventListener('click', function() {
+      var msg = {
+        source: {{id}},
+        stop: true
+      }
+      if (_mainWindow) {
+        _mainWindow.postMessage(msg, _url);
+      } else {
+        console.warn("Unable to to close the dialog because I don't know who the main window is.");
+      }
 
+    });
+    window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
+      if (url === window.location.href) {
+        sendError(errorMsg)
+      }
+    }
 </script>
 </body>
 </html>

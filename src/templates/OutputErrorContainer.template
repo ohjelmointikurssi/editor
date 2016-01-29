@@ -1,6 +1,10 @@
 <section class='actions'>
-    <i class='close'></i>
+    <i class='close'>x</i>
 </section>
-<h1 class='title'>Error</h1>
+<h1 class='title'>Please check your code for syntax errors.</h1>
 
-<p class='description'>{{content}}. Please check your code for syntax errors.</p>
+<ul>
+  {{#each messages}}
+    <li>{{this}}</li>
+  {{/each}}
+</ul>

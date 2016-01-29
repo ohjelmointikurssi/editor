@@ -31,6 +31,8 @@ TMCWebClient.editor = function (container, exercise) {
         editor.getSession().setUseWrapMode(true);
         editor.getSession().setWrapLimitRange(90, 90);
         editor.getSession().setMode('ace/mode/javascript');
+
+        editor.$blockScrolling = Infinity;
     }
 
     function initialise() {
@@ -273,63 +275,77 @@ TMCWebClient.editor = function (container, exercise) {
 
     /* jshint ignore:start */
     var marker;
-    var game = null;
     /* jshint ignore:end */
+    var _errors = [];
 
     var _code;
     function createRunHandler() {
 
         $('.actions .run', _container).first().click(function () {
-            /* jshint ignore:start */
             var gameFrame = document.getElementById("game-frame-" + _exercise.id);
             gameFrame.src = '';
-            if (game != null) {
-              game.destroy();
-              game = null;
-              // This should kill all the remaining processes
 
-
-            }
-
-            //var pre = "(function () { 'use strict'; }()); "
-            var pre = "(function () { 'use strict'; }()); var console={log: function(a){_output.render(a)}};"
-
-
-            var code = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
-              return o.endsWith('.js') && !o.endsWith('test.js');
-            }).sort()
-            .map(function (o) {
-              return _exercise.getFiles()[o].asText();
-            }).join('\n');
-
-            // Check if the exercise is a game related exercise
-            var isGame = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
-              return o.endsWith('update.js');
-            });
-            code = pre + code;
-            if (isGame.length !== 0) {
-               code += "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" +  _exercise.id + ", { preload: preload, create: create, update: update });";
-               $('#game-area-' + _exercise.id).html('');
-               $('#game-' +_exercise.id).removeClass('inactive');
-               // $('#background-overlay').addClass('active');
-            }
-            code += ""
-            var gameTemplate = Handlebars.templates.Game({ id: _exercise.id });
-
-            gameFrame.contentWindow.document.write(gameTemplate);
-            _code = code;
-            waitForGameIframe();
-            /* jshint ignore:end */
+            // We want to give the iframe an opportunity to reload.
+            setTimeout(runCode, 100);
         });
 
         // Listens for messages from iframe
         window.addEventListener('message', function(e) {
           if (e.data.source === _exercise.id) {
             if (e.data.ready === true) {
+              console.info('Setting the game frame to be ready...');
               _gameFrameReady = true;
+            }
+            if (e.data.message) {
+              _output.render(e.data.message);
+            }
+            if(e.data.error) {
+              stopGame();
+              _errors.push(e.data.error);
+              _output.renderError(_errors);
+            }
+            if (e.data.stop) {
+              stopGame();
             }
           }
         });
+    }
+
+    function runCode() {
+          /* jshint ignore:start */
+          _errors = [];
+          var gameFrame = document.getElementById("game-frame-" + _exercise.id);
+
+          var pre = "(function () { 'use strict'; }()); var console={log: function(a){showMessage(a)}};"
+
+
+          var code = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
+            return o.endsWith('.js') && !o.endsWith('test.js');
+          }).sort()
+          .map(function (o) {
+            return _exercise.getFiles()[o].asText();
+          }).join('\n');
+
+          // Check if the exercise is a game related exercise
+          var isGame = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
+            return o.endsWith('update.js');
+          });
+          code = pre + code;
+          if (isGame.length !== 0) {
+             code += "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" +  _exercise.id + ", { preload: preload, create: create, update: update });";
+             $('#game-area-' + _exercise.id).html('');
+             $('#game-frame-' +_exercise.id).removeClass('inactive');
+             // $('#background-overlay').addClass('active');
+          }
+          code += ""
+          var gameTemplate = Handlebars.templates.Game({ id: _exercise.id });
+
+          gameFrame.contentWindow.document.write(gameTemplate);
+          _code = code;
+          // In case this is not the first run
+          _gameFrameReady = false;
+          waitForGameIframe();
+          /* jshint ignore:end */
     }
 
     var _gameFrameReady = false;
@@ -337,11 +353,12 @@ TMCWebClient.editor = function (container, exercise) {
       var gameFrame = document.getElementById('game-frame-' + _exercise.id);
       var url = (window.location != window.parent.location) ? document.referrer: document.location;
 
-      gameFrame.contentWindow.postMessage('ready', '*');
       if (_gameFrameReady) {
         gameFrame.contentWindow.postMessage(_code, url);
         console.info('Sent the code to be executed');
       } else {
+        console.info('Asking if the frame is ready.')
+        gameFrame.contentWindow.postMessage('ready', '*');
         window.setTimeout(waitForGameIframe, 100);
       }
     }
@@ -373,15 +390,11 @@ TMCWebClient.editor = function (container, exercise) {
 
     function stopGame() {
         $('#background-overlay').removeClass('active');
-        $('#game-' + _exercise.id).addClass('inactive');
+        $('#game-frame-' + _exercise.id).addClass('inactive');
         /* jshint ignore:start */
-        if (game != null) {
-            game.destroy();
-            game = null;
-        }
         // This should kill all the remaining processes
         var gameFrame = document.getElementById("game-frame-" + _exercise.id);
-        gameFrame.src = 'about:blank';
+        gameFrame.src = '';
         /* jshint ignore:end */
     }
 

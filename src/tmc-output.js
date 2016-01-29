@@ -29,6 +29,24 @@ TMCWebClient.output.prototype.render = function (text, template) {
     this.outputContainer.show();
 }
 
+TMCWebClient.output.prototype.renderError = function (errors) {
+
+    this.clear();
+
+    var self = this,
+        _template = Handlebars.templates.OutputErrorContainer,
+        html = $(_template({messages: errors}));
+
+
+    // Close handler
+    html.find('.close').click(function () {
+        self.close();
+    });
+
+    this.outputContainer.append(html);
+    this.outputContainer.show();
+}
+
 TMCWebClient.output.prototype.clear = function () {
 
     this.outputContainer.empty();
