@@ -1,5 +1,5 @@
 <div class="exercise-area" id="exercise-{{id}}">
   <div class="code-area tmc-exercise" data-type='tmc-exercise' data-id='{{id}}'></div>
-  <iframe id="game-frame-{{id}}" class="game inactive">
+  <iframe sandbox="allow-scripts" id="game-frame-{{id}}" class="game inactive">
   </iframe>
 </div>
