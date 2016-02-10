@@ -144,6 +144,11 @@ TMCWebClient.editor = function (container, exercise) {
         $('.actions .submit', _container).first().click(submitOnClickHandler);
     }
 
+    function createShareHandler() {
+
+        $('.actions .share', _container).first().click(shareOnClickHandler);
+    }
+
     function submitOnClickHandler() {
 
         clearInterval(_intervalId);
@@ -155,6 +160,30 @@ TMCWebClient.editor = function (container, exercise) {
         _output.processing();
 
         _exercise.submit(function (data) {
+
+            /* jshint camelcase:false */
+            submissionPoller(data.submission_url);
+            /* jshint camelcase:true */
+        }, function (data) {
+
+            _output.close();
+            console.log(data);
+        });
+
+        _spyware.add(new TMCWebClient.snapshot(_exercise, 'project_action', TMCWebClient.snapshot.prototype.generateBase64Json({command: 'tmc.submit'})));
+    }
+
+    function shareOnClickHandler() {
+
+        clearInterval(_intervalId);
+        saveActiveFile();
+
+        generateFullSnapshot(_filename, 'file_change', true);
+
+        processingSubmission(true);
+        _output.processing();
+
+        _exercise.share(function (data) {
 
             /* jshint camelcase:false */
             submissionPoller(data.submission_url);
@@ -447,6 +476,7 @@ TMCWebClient.editor = function (container, exercise) {
         // Add click events to tabs
         $('li', _navBar).click(tabClick);
 
+        createShareHandler();
         createRunHandler();
         createStopGameHandler();
         createErrorHandler();

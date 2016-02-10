@@ -8,5 +8,6 @@
 
     <section class='actions'>
       <button class='run' type="button"><img src="//ohjelmointikurssi.github.io/cdn/images/play.svg">Run</button>
+      <button class='share' type="button">Share</button>
     </section>
 </div>

@@ -86,6 +86,30 @@ TMCWebClient.exercise.prototype.submit = function (callback, fallback) {
     });
 }
 
+TMCWebClient.exercise.prototype.share = function (callback, fallback) {
+    if (this.zip === undefined) {
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('api_version', TMCWebClient.apiVersion);
+    formData.append('commit', 'Submit');
+    formData.append('submission[file]', this.getZipBlob());
+
+    $.ajax({
+
+        data: formData,
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        url: this.baseUrl + this.id + '/submissions.json?paste=1',
+        beforeSend: TMCWebClient.xhrBasicAuthentication,
+        success: callback,
+        error: fallback
+
+    });
+}
+
 TMCWebClient.exercise.prototype.fetchLastSubmission = function (callback, error, processing) {
     if (this.lastSubmission !== undefined) {
         callback(this.lastSubmission);
