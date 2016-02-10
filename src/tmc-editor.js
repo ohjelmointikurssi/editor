@@ -35,7 +35,7 @@ TMCWebClient.editor = function (container, exercise) {
         editor.$blockScrolling = Infinity;
     }
 
-    function initialise() {
+    function initialize() {
         // Create container for editor
         var editorContainer = $('<div/>');
 
@@ -50,8 +50,8 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Fetch exercise
         _exercise.fetchZip(function () {
-          var files = _exercise.getFilesFromSource()
-            _filename = files[0].name;
+            var files = _exercise.getFilesFromSource();
+            var _filename = files[0].name;
             var content = _exercise.getFile(_filename).asText();
 
             // Render
@@ -65,7 +65,6 @@ TMCWebClient.editor = function (container, exercise) {
 
             _editor.on('change', snapshotHandler);
         });
-
         createOutputContainer();
     }
 
@@ -592,26 +591,21 @@ TMCWebClient.editor = function (container, exercise) {
 
         // Fallback to text
         mode = 'text',
-
         // Get filename extension
         fileExtension = _exercise.getFileExtension(filename);
-
         // Set mode or fallback to text if no mode is specified for the filename extension
         mode = modes[fileExtension] || mode;
-
         _editor.getSession().setMode('ace/mode/' + mode);
     }
 
     function saveActiveFile() {
-
         _exercise.saveFile(_filename, _editor.getValue());
     }
 
     function clearEditor() {
-
         _filename = undefined;
         _editor.setValue('');
     }
 
-    initialise();
+    initialize();
 }

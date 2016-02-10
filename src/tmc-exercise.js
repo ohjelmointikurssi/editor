@@ -24,7 +24,6 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
         },
 
         success: function (exercise) {
-
             self.exercise = exercise;
             callback();
         },
@@ -45,21 +44,25 @@ TMCWebClient.exercise.prototype.downloadZip = function (url, callback) {
     });
 }
 
+TMCWebClient.exercise.prototype.setZip = function (zip) {
+  this.zip = zip;
+  this.getSourcePath();
+}
+
 TMCWebClient.exercise.prototype.fetchZip = function (callback) {
-
+    if (this.zip) {
+      callback();
+      return;
+    }
     var self = this;
-
     this.downloadZip(this.baseUrl + this.id + '.zip', function (zip) {
-
         self.zip = zip;
         self.getSourcePath();
-
         callback();
     });
 }
 
 TMCWebClient.exercise.prototype.submit = function (callback, fallback) {
-
     if (this.zip === undefined) {
         return;
     }
@@ -84,7 +87,6 @@ TMCWebClient.exercise.prototype.submit = function (callback, fallback) {
 }
 
 TMCWebClient.exercise.prototype.fetchLastSubmission = function (callback, error, processing) {
-
     if (this.lastSubmission !== undefined) {
         callback(this.lastSubmission);
         return;
@@ -147,7 +149,7 @@ TMCWebClient.exercise.prototype.getSourcePath = function () {
 
     var name = this.getFilesFromSource()[0].name.split('/');
     name.pop();
-
+    // TODO: This is bad
     return this.sourcePath = name.join('/');
 }
 
@@ -157,7 +159,6 @@ TMCWebClient.exercise.prototype.getZipBlob = function () {
 }
 
 TMCWebClient.exercise.prototype.getZip = function (args) {
-
     return this.zip.generate(args);
 }
 
@@ -169,8 +170,9 @@ TMCWebClient.exercise.prototype.getSrcZip = function (args) {
     return zip.generate(args);
 }
 
-TMCWebClient.exercise.prototype.getFiles = function () {
 
+
+TMCWebClient.exercise.prototype.getFiles = function () {
     return this.zip.files;
 }
 
@@ -180,8 +182,7 @@ TMCWebClient.exercise.prototype.getFile = function (filename) {
 }
 
 TMCWebClient.exercise.prototype.getFilesFromSource = function () {
-
-    return this.zip.file(/\/src(?!\/\.).*/);
+    return this.zip.file(/src(?!\/\.).*/);
 }
 
 TMCWebClient.exercise.prototype.getFileExtension = function(filename) {

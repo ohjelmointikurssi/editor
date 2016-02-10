@@ -12,16 +12,12 @@ TMCWebClient.snapshot = function (exercise, action, data, metadata) {
 }
 
 TMCWebClient.snapshot.prototype.getEventType = function (action) {
-
     var actions = {
-
         insertText: 'text_insert',
         insertLines: 'text_insert',
         removeText: 'text_remove',
         removeLines: 'text_remove'
-
     }
-
     return actions[action] || action;
 }
 

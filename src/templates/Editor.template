@@ -1,16 +1,12 @@
 <div class='exercise-sidebar'>
     <h1 class='name'>{{title}}</h1>
-
     <ul class='tab-bar'>
-
         {{#files}}
             <li data-id="{{name}}">{{filename name}}</li>
         {{/files}}
-
     </ul>
 
     <section class='actions'>
       <button class='run' type="button"><img src="//ohjelmointikurssi.github.io/cdn/images/play.svg">Run</button>
-
     </section>
 </div>
