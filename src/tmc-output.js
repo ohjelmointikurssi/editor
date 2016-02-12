@@ -47,19 +47,20 @@ TMCWebClient.output.prototype.renderError = function (errors) {
     this.outputContainer.show();
 }
 
-TMCWebClient.output.prototype.renderShare = function (shareUrl, template) {
+TMCWebClient.output.prototype.renderShare = function (shareUrl) {
     this.clear();
 
-    var text = "Share URL: " + shareUrl;
-
     var self = this,
-        _template = template || this.template.output,
-        html = $(_template({content: text}));
+        _template = Handlebars.templates.ShareOutputContainer,
+        html = $(_template({link_url: shareUrl}));
 
     // Close handler
     html.find('.close').click(function () {
         self.close();
     });
+
+    // Clipboard copy handler
+    new Clipboard('.copy-btn');
 
     this.outputContainer.append(html);
     this.outputContainer.show();

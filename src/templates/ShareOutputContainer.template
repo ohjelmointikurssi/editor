@@ -1,0 +1,10 @@
+<section class='actions'>
+    <i class='close'>x</i>
+</section>
+
+<p>Link to shared code:</p>
+<input id="shared-code-url" value={{link_url}}>
+
+<button class="copy-btn" data-clipboard-target="#shared-code-url">
+    Kopioi osoite
+</button>

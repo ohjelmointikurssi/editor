@@ -195,6 +195,7 @@ TMCWebClient.editor = function (container, exercise) {
             console.log(data);
         });
 
+        // TODO: What type of snapshot should be sent when sharing a paste
         _spyware.add(new TMCWebClient.snapshot(_exercise, 'project_action', TMCWebClient.snapshot.prototype.generateBase64Json({command: 'tmc.submit'})));
     }
 
