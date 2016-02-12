@@ -175,18 +175,19 @@ TMCWebClient.editor = function (container, exercise) {
 
     function shareOnClickHandler() {
 
-        clearInterval(_intervalId);
         saveActiveFile();
 
         generateFullSnapshot(_filename, 'file_change', true);
 
-        processingSubmission(true);
-        _output.processing();
-
         _exercise.share(function (data) {
 
             /* jshint camelcase:false */
-            submissionPoller(data.submission_url);
+            var urlParts = data.paste_url.split("/");
+            var pasteKey = urlParts[urlParts.length-1];
+            // TODO: Move baseUrl somewhere else
+            var baseUrl = "https://ohjelmointikurssi.github.io/paste.html?key=";
+            var shareUrl = baseUrl + pasteKey;
+            _output.showShare(shareUrl);
             /* jshint camelcase:true */
         }, function (data) {
 

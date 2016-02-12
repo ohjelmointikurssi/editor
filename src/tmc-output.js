@@ -47,6 +47,24 @@ TMCWebClient.output.prototype.renderError = function (errors) {
     this.outputContainer.show();
 }
 
+TMCWebClient.output.prototype.renderShare = function (shareUrl, template) {
+    this.clear();
+
+    var text = "Share URL: " + shareUrl;
+
+    var self = this,
+        _template = template || this.template.output,
+        html = $(_template({content: text}));
+
+    // Close handler
+    html.find('.close').click(function () {
+        self.close();
+    });
+
+    this.outputContainer.append(html);
+    this.outputContainer.show();
+}
+
 TMCWebClient.output.prototype.clear = function () {
 
     this.outputContainer.empty();
@@ -65,6 +83,10 @@ TMCWebClient.output.prototype.close = function () {
 TMCWebClient.output.prototype.processing = function () {
 
     this.render();
+}
+
+TMCWebClient.output.prototype.showShare = function (shareUrl) {
+    this.renderShare(shareUrl);
 }
 
 TMCWebClient.output.prototype.showResults = function (results) {

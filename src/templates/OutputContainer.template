@@ -1,5 +1,5 @@
 <section class='actions'>
-    <i class='close'></i>
+    <i class='close'>x</i>
 </section>
 
 <p>{{content}}</p>
