@@ -51,7 +51,8 @@ TMCWebClient.editor = function (container, exercise) {
         // Fetch exercise
         _exercise.fetchZip(function () {
             var files = _exercise.getFilesFromSource();
-            var _filename = files[0].name;
+
+            _filename = files[0].name;
             var content = _exercise.getFile(_filename).asText();
 
             // Render
@@ -273,33 +274,6 @@ TMCWebClient.editor = function (container, exercise) {
 
                 submissionPoller(submissionUrl);
             });
-        });
-    }
-
-    function createNewFileHandler() {
-
-        $('.actions .new', _container).first().click(function () {
-
-            saveActiveFile();
-            var path = _exercise.getSourcePath();
-            var filename = prompt('Filename:');
-            filename = filename.trim();
-
-            if (!filename || filename.length === 0) {
-                return;
-            }
-
-            clearEditor();
-
-            filename = path + '/' + filename;
-            setFileMode(filename);
-
-            // Save new file
-            _exercise.saveFile(filename, getTemplate(filename));
-
-            // Update navigation bar
-            update();
-            _filename = filename;
         });
     }
 
