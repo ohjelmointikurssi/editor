@@ -64,20 +64,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        jshint: {
-            src: {
-                src: [ 'Gruntfile.js', 'src/**/*.js' ],
-                options: {
-                    jshintrc: 'jshint.json'
-                }
-            },
-            spec: {
-                src: 'spec/**/*.js',
-                options: {
-                    jshintrc: 'spec/jshint.json'
-                }
-            }
-        },
         sass: {
             dist: {
                 files: {
@@ -108,23 +94,6 @@ module.exports = function (grunt) {
                 filter: 'isFile'
             }
         },
-        jasmine: {
-            src: [ 'dist/<%= pkg.name %>-templates.js', 'src/<%= pkg.name %>.js', 'src/**/*.js' ],
-            options: {
-                vendor: [ 'http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.runtime.min.js' ],
-                specs: 'spec/**/*-spec.js',
-                template: require('grunt-template-jasmine-istanbul'),
-                templateOptions: {
-                    coverage: 'coverage/coverage.json',
-                    report: {
-                        type: 'lcov',
-                        options: {
-                            dir: 'coverage/'
-                        }
-                    }
-                }
-            }
-        }
     });
 
     /* Load tasks */
