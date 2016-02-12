@@ -133,16 +133,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-postcss');
 
     /* Register tasks */
 
-    grunt.registerTask('test', [ 'jshint', 'handlebars', 'jasmine' ]);
     grunt.registerTask('build', [ 'handlebars', 'concat:dist', 'concat:handlebars', 'uglify', 'sass', 'postcss', 'copy' ]);
     grunt.registerTask('default', [ 'clean', 'test', 'build' ]);
 }
