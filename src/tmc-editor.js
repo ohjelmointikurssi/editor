@@ -369,6 +369,7 @@ TMCWebClient.editor = function (container, exercise) {
           var gameTemplate = Handlebars.templates.Game({ id: _exercise.id });
 
           gameFrame.contentWindow.document.write(gameTemplate);
+          gameFrame.setAttribute('sandbox', 'allow-scripts')
           _code = code;
           // In case this is not the first run
           _gameFrameReady = false;
