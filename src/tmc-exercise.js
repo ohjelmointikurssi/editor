@@ -232,7 +232,8 @@ TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
 }
 
 TMCWebClient.exercise.prototype.getLockedRegions = function (filename) {
-    var regions = []
+    var regions = [];
+
     var input = this.zip.file(filename).asText().split('\n');
 
     for(var i = 0; i < input.length; i++) {

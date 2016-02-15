@@ -12,7 +12,6 @@
       height: 600px;
     }
   </style>
-  <script src="//cdn.jsdelivr.net/phaser/2.4.4/phaser.min.js"></script>
 </head>
 
 <body>
@@ -21,6 +20,8 @@
   <a id="stop-game" href="#" title="stop-game" class="close">Stop game</a>
   <div id="game-area-{{id}}" class="game-area"></div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/phaser/2.4.4/phaser.js"></script>
 
 <script>
   var _mainWindow = null;
@@ -40,18 +41,22 @@
     }
   }
 
+  var _messageCount = 0;
   window.addEventListener('message', function(e) {
     if (_mainWindow === null) {
       _mainWindow = e.source;
     }
     if (e.data == 'ready') {
       var ready = typeof Phaser !== 'undefined';
+      if (_messageCount > 200) {
+        ready = true;
+      }
       var msg = {
         ready: ready,
         source: {{id}}
       }
-      window.s = e.source;
       e.source.postMessage(msg, _url);
+      _messageCount++;
       return;
     }
     // A dirty workaround to mitigate a missing DOMContentLoaded event.

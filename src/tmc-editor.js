@@ -342,10 +342,8 @@ TMCWebClient.editor = function (container, exercise) {
              // $('#background-overlay').addClass('active');
           }
           code += ""
-          var gameTemplate = Handlebars.templates.Game({ id: _exercise.id });
-
-          gameFrame.contentWindow.document.write(gameTemplate);
-          gameFrame.setAttribute('sandbox', 'allow-scripts')
+          var gameTemplate = Handlebars.templates.Game({ id: _exercise.id, code: code });
+          gameFrame.src = 'data:text/html;charset=utf-8,' + encodeURI(gameTemplate);
           _code = code;
           // In case this is not the first run
           _gameFrameReady = false;
@@ -356,13 +354,13 @@ TMCWebClient.editor = function (container, exercise) {
     var _gameFrameReady = false;
     function waitForGameIframe() {
       var gameFrame = document.getElementById('game-frame-' + _exercise.id);
-      var url = (window.location != window.parent.location) ? document.referrer: document.location;
+      // var url = (window.location != window.parent.location) ? document.referrer: document.location;
 
       if (_gameFrameReady) {
-        gameFrame.contentWindow.postMessage(_code, url);
+        gameFrame.contentWindow.postMessage(_code, '*');
         console.info('Sent the code to be executed');
       } else {
-        console.info('Asking if the frame is ready.')
+        console.info('Asking if the frame is ready.');
         gameFrame.contentWindow.postMessage('ready', '*');
         window.setTimeout(waitForGameIframe, 100);
       }
