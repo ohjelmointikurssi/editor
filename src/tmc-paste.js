@@ -22,10 +22,9 @@ TMCWebClient.paste.prototype.fetch = function fetchPaste(callback) {
       var solutionParts = paste.solution_url.split('/');
       var exerciseId = parseInt(solutionParts[solutionParts.length - 2]);
       self.exercise = new TMCWebClient.exercise(exerciseId);
-      self.exercise.fetch(function(paste) {
-
+      self.exercise.fetch(function() {
+        callback();
       });
-      callback();
     },
     error: function fetchError() {
       console.error('Could not download paste');
@@ -36,9 +35,9 @@ TMCWebClient.paste.prototype.fetch = function fetchPaste(callback) {
 
 // TODO: change file source
 TMCWebClient.paste.prototype.getZip = function () {
-    var zip = new JSZip();
-    this.data.files.forEach(function(file) {
-        zip.file(file.path, file.contents);
-    });
-    return zip;
-}
+  var zip = new JSZip();
+  this.data.files.forEach(function(file) {
+    zip.file(file.path, file.contents);
+  });
+  return zip;
+};
