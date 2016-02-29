@@ -107,6 +107,19 @@ TMCWebClient.editor = function (container, exercise) {
     _output = new TMCWebClient.output(_container);
   }
 
+  function createResetHandler() {
+    $('.actions .reset', _container).click(function() {
+      _exercise.reset();
+      _files = _exercise.getFilesFromSource();
+
+      _filename = _files[0].name;
+      var content = _exercise.getFile(_filename).asText();
+      _editor.setValue(content);
+      createMarkers(_filename);
+      _editor.moveCursorTo(0, 0);
+    });
+  }
+
   function createShareHandler() {
     $('.actions .share', _container).first().click(shareOnClickHandler);
   }
@@ -257,6 +270,7 @@ TMCWebClient.editor = function (container, exercise) {
     $('li', _navBar).click(tabClick);
 
     createShareHandler();
+    createResetHandler();
     createRunHandler();
     createStopGameHandler();
     createErrorHandler();

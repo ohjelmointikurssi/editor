@@ -37,6 +37,7 @@ TMCWebClient.exercise.prototype.downloadZip = function (url, callback) {
 TMCWebClient.exercise.prototype.setZip = function (zip) {
   this.zip = zip;
   this.getSourcePath();
+  this.storeOriginalZip(zip);
 };
 
 TMCWebClient.exercise.prototype.fetchZip = function (callback) {
@@ -48,8 +49,27 @@ TMCWebClient.exercise.prototype.fetchZip = function (callback) {
   this.downloadZip(this.baseUrl + this.id + '.zip', function (zip) {
     self.zip = zip;
     self.getSourcePath();
+    self.storeOriginalZip(zip);
     callback();
   });
+};
+
+TMCWebClient.exercise.prototype.storeOriginalZip = function (zip) {
+  var newZip = new JSZip();
+  zip.file(/.*/).forEach(function(file) {
+    newZip.file(file.name, file.asText());
+  });
+  this.originalZip = newZip;
+};
+
+TMCWebClient.exercise.prototype.reset = function () {
+  var newZip = new JSZip();
+  this.originalZip.file(/.*/).forEach(function(file) {
+    newZip.file(file.name, file.asText());
+  });
+  this.zip = newZip;
+  this.sourcePath = null;
+  this.getSourcePath();
 };
 
 TMCWebClient.exercise.prototype.submit = function (callback, fallback) {
