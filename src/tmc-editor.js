@@ -128,6 +128,7 @@ TMCWebClient.editor = function (container, exercise) {
 
   function shareOnClickHandler() {
     var button = $('.actions .share i', _container);
+    button.parent().prop("disabled", true);
     var text = button.parent().find('.button-text');
     var originalText = text.text();
     text.text('Sharing...');
@@ -143,13 +144,14 @@ TMCWebClient.editor = function (container, exercise) {
       var shareUrl = baseUrl + pasteKey;
       _output.showShare(shareUrl);
       button.removeClass('fa-spin');
+      button.parent().prop("disabled", false);
       text.text(originalText);
     }, function (data) {
       _output.close();
       console.log(data);
     });
 
-    var data = TMCWebClient.snapshot.prototype.generateBase64Json({ command: 'tmc.paste' });
+    var data = TMCWebClient.snapshot.prototype.generateBase64Json({ command: 'tmc-web-client.share' });
     _spyware.add(new TMCWebClient.snapshot(_exercise, 'project_action', data));
   }
   var _errors = [];
