@@ -117,6 +117,8 @@ TMCWebClient.editor = function (container, exercise) {
       _editor.setValue(content);
       createMarkers(_filename);
       _editor.moveCursorTo(0, 0);
+      $('.tab-bar li', _container).removeClass('active');
+      $('.tab-bar li', _container).first().addClass('active');
     });
   }
 
