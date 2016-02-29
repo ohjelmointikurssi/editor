@@ -127,6 +127,11 @@ TMCWebClient.editor = function (container, exercise) {
   }
 
   function shareOnClickHandler() {
+    var button = $('.actions .share i', _container);
+    var text = button.parent().find('.button-text');
+    var originalText = text.text();
+    text.text('Sharing...');
+    button.addClass('fa-spin');
     saveActiveFile();
     generateFullSnapshot(_filename, 'file_change', true);
 
@@ -137,6 +142,8 @@ TMCWebClient.editor = function (container, exercise) {
       var baseUrl = 'https://ohjelmointikurssi.github.io/paste.html?key=';
       var shareUrl = baseUrl + pasteKey;
       _output.showShare(shareUrl);
+      button.removeClass('fa-spin');
+      text.text(originalText);
     }, function (data) {
       _output.close();
       console.log(data);
