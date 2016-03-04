@@ -140,7 +140,7 @@ TMCWebClient.editor = function (container, exercise) {
       var urlParts = data.paste_url.split('/');
       var pasteKey = urlParts[urlParts.length - 1];
       // TODO: Move baseUrl somewhere else
-      var baseUrl = 'https://ohjelmointikurssi.github.io/paste.html?key=';
+      var baseUrl = 'https://ohjelmointikurssi.github.io/paste/?key=';
       var shareUrl = baseUrl + pasteKey;
       _output.showShare(shareUrl);
       button.removeClass('fa-spin');
