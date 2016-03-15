@@ -207,7 +207,7 @@ TMCWebClient.editor = function (container, exercise) {
     });
     code = pre + code;
     if (isGame.length !== 0) {
-      code += "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" + _exercise.id + ', { preload: preload, create: create, update: update });';
+      code = "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" + _exercise.id + ', { preload: preload, create: create, update: update });' + code;
       $('#game-area-' + _exercise.id).html('');
       $('#game-frame-' + _exercise.id).removeClass('inactive');
       // $('#background-overlay').addClass('active');
