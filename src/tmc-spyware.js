@@ -15,11 +15,10 @@ TMCWebClient.spyware.prototype.submit = function () {
   if (old.length === 0) {
     return;
   }
-
   // TODO: Get a real server
   $.post('http://gzip.josalmi.fi/', {
     // TODO: Get this url from courses.json
-    url: 'http://hy.spyware.testmycode.net',
+    url: 'http://staging.spyware.testmycode.net',
     data: JSON.stringify(old),
     username: TMCWebClient.session.getUsername(),
     password: TMCWebClient.session.getPassword(),
