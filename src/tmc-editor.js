@@ -40,7 +40,7 @@ TMCWebClient.editor = function (container, exercise) {
     });
     _lockedRegions.forEach(function (group) {
       group.forEach(function (lockLine) {
-        if (lockLine === 0 || lockLine === _exercise.getFileLength(filename) - 1) {
+        if (lockLine === 0) {
           return;
         }
         try {
