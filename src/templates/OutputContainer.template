@@ -2,5 +2,9 @@
     <i class='fa fa-close close'></i>
 </section>
 <div class="output-content">
-    <p>{{content}}</p>
+  <ul class="program-output">
+    {{#each lines}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ul>
 </div>

@@ -8,7 +8,6 @@ $output-height: 250px
   font-size: 14px
   color: $pantone-black
   transition: transform 0.3s
-  overflow: hidden
 
   &.hidden
     transform: translateY($output-height)
@@ -95,6 +94,12 @@ $actions-color: #000
   &:hover
     color: lighten($actions-color, 50%)
 
-
+$output-padding: 30px
 .output-content
-  padding: 30px
+  padding: $output-padding
+  height: $output-height
+
+.program-output
+  list-style-type: none
+  overflow: auto
+  height: $output-height - ($output-padding * 2)

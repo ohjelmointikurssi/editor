@@ -16,7 +16,7 @@ TMCWebClient.output.prototype.render = function (text, template) {
 
   var self = this;
   var _template = template || this.template.output;
-  var html = $(_template({ content: text }));
+  var html = $(_template({ lines: text }));
 
   // Close handler
   html.find('.close').click(function () {

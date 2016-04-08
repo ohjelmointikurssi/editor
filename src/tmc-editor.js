@@ -156,6 +156,7 @@ TMCWebClient.editor = function (container, exercise) {
   }
   var _errors = [];
 
+  var _messages = [];
   var _code;
   function createRunHandler() {
     $('.actions .run', _container).first().click(function () {
@@ -174,7 +175,8 @@ TMCWebClient.editor = function (container, exercise) {
           _gameFrameReady = true;
         }
         if (e.data.message) {
-          _output.render(e.data.message);
+          _messages.push(e.data.message);
+          _output.render(_messages);
         }
         if (e.data.error) {
           stopGame();
@@ -189,6 +191,7 @@ TMCWebClient.editor = function (container, exercise) {
   }
 
   function runCode() {
+    _messages = [];
     _errors = [];
     var gameFrame = document.getElementById('game-frame-' + _exercise.id);
     // TODO: All this should be its own template
