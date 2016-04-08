@@ -131,7 +131,7 @@ TMCWebClient.editor = function (container, exercise) {
     button.parent().prop("disabled", true);
     var text = button.parent().find('.button-text');
     var originalText = text.text();
-    text.text('Sharing...');
+    text.text('Jaetaan...');
     button.addClass('fa-spin');
     saveActiveFile();
     generateFullSnapshot(_filename, 'file_change', true);
