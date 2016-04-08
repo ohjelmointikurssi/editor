@@ -17,7 +17,7 @@
 <body>
 
 <div class="game active" id="game-{{id}}">
-  <a id="stop-game" href="#" title="stop-game" class="close">Stop game</a>
+  <a id="stop-game" href="#" title="stop-game" class="close">Pysäytä</a>
   <div id="game-area-{{id}}" class="game-area"></div>
 </div>
 

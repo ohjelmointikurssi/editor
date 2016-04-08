@@ -210,7 +210,8 @@ TMCWebClient.editor = function (container, exercise) {
       code = "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" + _exercise.id + ', { preload: preload, create: create, update: update });' + code;
       $('#game-area-' + _exercise.id).html('');
       $('#game-frame-' + _exercise.id).removeClass('inactive');
-      // $('#background-overlay').addClass('active');
+      $('#background-overlay').addClass('active');
+      $('body').addClass('overlay-open');
     }
     code += '';
     var gameTemplate = Handlebars.templates.Game({ id: _exercise.id, code: code });
@@ -238,6 +239,7 @@ TMCWebClient.editor = function (container, exercise) {
 
   function stopGame() {
     $('#background-overlay').removeClass('active');
+    $('body').removeClass('overlay-open');
     $('#game-frame-' + _exercise.id).addClass('inactive');
     // This should kill all the remaining processes
     var gameFrame = document.getElementById('game-frame-' + _exercise.id);

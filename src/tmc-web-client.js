@@ -9,6 +9,7 @@ var TMCWebClient = (function() {
   }
 
   function initialiseEditors(containers) {
+    addBackgroundOverlay();
     containers.each(function (index, container) {
       var id = $(container).data('id');
       var exerciseTemplate = Handlebars.templates.Exercise({ id: id });
@@ -30,6 +31,13 @@ var TMCWebClient = (function() {
     $('body').find('.tmc-exercise-logout').first().click(TMCWebClient.session.logout);
   }
 
+  function addBackgroundOverlay() {
+    var body = document.querySelector("body");
+    var overlay = document.createElement('div');
+    overlay.id = "background-overlay";
+    body.appendChild(overlay);
+  }
+
   _module.initialise = function () {
     _module.session.login(function() {
       initialiseEditors(findExerciseContainers());
@@ -38,6 +46,7 @@ var TMCWebClient = (function() {
   };
 
   _module.initializePaste = function () {
+    addBackgroundOverlay();
     _module.session.login(function() {
       // init paste
       var container = $('#tmc-paste');
