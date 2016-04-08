@@ -26,14 +26,16 @@ body
   unicode-bidi: embed
 
 .code-area
-  float: left
   display: inline-block
   text-align: left
-  position: relative
+  max-width: 1200px
 
 .exercise-area
-  margin: 0 auto
-  clear: both
+  transition: all 5s
+  max-width: 2200px
+  margin: auto
+  display: flex
+  justify-content: center
   &::after
     clear: both
     content: ""

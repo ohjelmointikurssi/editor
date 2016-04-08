@@ -1,3 +1,8 @@
+$tab-background: #34495e
+$button-background: #fff
+$button-border-background: #ecf0f1
+$active-tab-background: #3498db
+
 .tmc-exercise
   position: relative
   margin-right: 10px
@@ -13,21 +18,29 @@
     max-width: 150px
     max-height: 20px
     text-overflow: ellipsis
-    color: #555
+    color: white
   a
     color: #4c657d
   a:hover
     color: #7fa8d1
   .actions
+    margin: 25px 0
     button
       font-weight: bold
       width: 125px
+      height: 40px
       padding: 10px 15px
-      margin: 10px 0
+      margin: 15px auto
       display: flex
       align-items: center
       justify-content: center
-      background-color: white
+      background-color: $button-background
+      transition: background-color 0.3s
+      border: 0
+      color: black
+      border-radius: 3px
+      &:hover
+        background-color: darken($button-background, 15%)
     .button-text
       padding-left: 5px
       img
@@ -42,15 +55,19 @@
     padding: 0
     width: 550px
     font-size: 14px
-    color: #3071a9
+    color: #fff
     white-space: nowrap
     li
       display: block
       max-width: 200px
       padding: 10px 15px
+      margin: 5px
       text-overflow: ellipsis
       cursor: pointer
       user-select: none
+      border-radius: 10px 0px 0 10px
+      background-color: $tab-background
+      transition: all 0.3s
       i.delete
         font-style: normal
         cursor: pointer
@@ -59,10 +76,16 @@
         padding: 0 0 0 10px
       i.delete::after
         content: "x"
+      &:hover
+        background-color: lighten($tab-background, 15%)
     li.active
-      border: 1px solid lightgray
-      border-radius: 10px 0px 0 10px
-      color: #555
+      background-color: $active-tab-background
+      font-weight: bold
+      color: #fff
+      margin: 2px
+      transform: scale(1.1)
+      &:hover
+        background-color: lighten($active-tab-background, 5%)
 
 iframe
   width: 800px
