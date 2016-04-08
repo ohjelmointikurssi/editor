@@ -26,6 +26,7 @@ $active-tab-background: #3498db
   .actions
     margin: 25px 0
     button
+      font-size: 0.85em
       font-weight: bold
       width: 125px
       height: 40px
@@ -41,6 +42,12 @@ $active-tab-background: #3498db
       border-radius: 3px
       &:hover
         background-color: darken($button-background, 15%)
+      &.reset
+        color: #f44336
+      &.run
+        color: #2e7b32
+      &.share
+        color: #34719a
     .button-text
       padding-left: 5px
       img
@@ -86,6 +93,9 @@ $active-tab-background: #3498db
       transform: scale(1.1)
       &:hover
         background-color: lighten($active-tab-background, 5%)
+
+.button-separator
+  opacity: 0
 
 iframe
   width: 800px
