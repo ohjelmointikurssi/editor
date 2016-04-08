@@ -1,5 +1,6 @@
-<section class='actions'>
-    <i class='close'>x</i>
+<section class='output-actions'>
+    <i class='fa fa-close close'></i>
 </section>
-
-<p>{{content}}</p>
+<div class="output-content">
+    <p>{{content}}</p>
+</div>

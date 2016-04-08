@@ -1,10 +1,12 @@
-<section class='actions'>
-    <i class='close'>x</i>
+<section class='output-actions'>
+  <i class='fa fa-close close'></i>
 </section>
 
-<p>Link to shared code:</p>
-<input id="shared-code-url" value={{link_url}}>
+<div class="output-content">
+  <p>Linkki jaettuun koodiin:</p>
+  <input id="shared-code-url" value={{link_url}}>
 
-<button class="copy-btn" data-clipboard-target="#shared-code-url">
-    Kopioi osoite
-</button>
+  <button class="copy-btn" data-clipboard-target="#shared-code-url">
+      Kopioi osoite
+  </button>
+</div>

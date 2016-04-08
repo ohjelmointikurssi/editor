@@ -5,8 +5,10 @@ TMCWebClient.output = function (container) {
   };
 
   // Create container for submission results
-  this.outputContainer = $('<div/>').addClass('tmc-output').hide();
-  $(container).append(this.outputContainer);
+  this.outputContainer = $('<div/>').addClass('tmc-output').addClass('hidden');
+  var wrapper = $('<div/>').addClass('tmc-output-wrapper');
+  wrapper.append(this.outputContainer);
+  $(container).append(wrapper);
 };
 
 TMCWebClient.output.prototype.render = function (text, template) {
@@ -22,7 +24,7 @@ TMCWebClient.output.prototype.render = function (text, template) {
   });
 
   this.outputContainer.append(html);
-  this.outputContainer.show();
+  this.outputContainer.removeClass('hidden');
 };
 
 TMCWebClient.output.prototype.renderError = function (errors) {
@@ -39,7 +41,7 @@ TMCWebClient.output.prototype.renderError = function (errors) {
   });
 
   this.outputContainer.append(html);
-  this.outputContainer.show();
+  this.outputContainer.removeClass('hidden');
 };
 
 TMCWebClient.output.prototype.renderShare = function (shareUrl) {
@@ -60,7 +62,7 @@ TMCWebClient.output.prototype.renderShare = function (shareUrl) {
   /* eslint-enable no-new */
 
   this.outputContainer.append(html);
-  this.outputContainer.show();
+  this.outputContainer.removeClass('hidden');
 };
 
 TMCWebClient.output.prototype.clear = function () {
@@ -72,7 +74,7 @@ TMCWebClient.output.prototype.visible = function () {
 };
 
 TMCWebClient.output.prototype.close = function () {
-  this.outputContainer.hide();
+  this.outputContainer.addClass('hidden');
 };
 
 TMCWebClient.output.prototype.processing = function () {

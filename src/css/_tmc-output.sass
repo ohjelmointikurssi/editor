@@ -1,18 +1,17 @@
+$output-height: 250px
+
 .tmc-output
-  position: absolute
-  bottom: 0
-  left: 0
-  width: 100%
-  z-index: 4
-  overflow-y: auto
-  margin-top: -250px
-  padding: 0 20px
-  width: 760px
-  height: 250px
+  height: $output-height
   background-color: white
+  box-sizing: border-box
   border: 1px solid lightgray
   font-size: 14px
   color: $pantone-black
+  transition: transform 0.3s
+  overflow: hidden
+
+  &.hidden
+    transform: translateY($output-height)
 
   h1.title
     margin: 20px 0
@@ -73,5 +72,29 @@
     .validation-results
       float: right
 
+.tmc-output-wrapper
+  overflow: hidden
+  position: absolute
+  bottom: 0
+  left: 0
+  width: 100%
+  z-index: 4
+  height: $output-height
+  border-bottom-left-radius: 5px
+
 #shared-code-url
   width: 100%
+
+$actions-color: #000
+.output-actions
+  padding: 3px 5px
+  color: $actions-color
+  float: right
+  transition: color 0.3s
+  font-size: 1.3em
+  &:hover
+    color: lighten($actions-color, 50%)
+
+
+.output-content
+  padding: 30px
