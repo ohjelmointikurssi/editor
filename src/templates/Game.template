@@ -64,6 +64,9 @@
       Phaser.Device._readyCheck();
     }
     var showMessage = function(message) {
+      if (message.constructor === Array) {
+        message = JSON.stringify(message, null, ' ');
+      }
       var msg =  {
         source: {{id}},
         message: message
