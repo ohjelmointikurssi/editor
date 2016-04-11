@@ -4,9 +4,10 @@
 
 <div class="output-content">
   <p>Linkki jaettuun koodiin:</p>
-  <input id="shared-code-url" value={{link_url}}>
-
-  <button class="copy-btn" data-clipboard-target="#shared-code-url">
-      Kopioi osoite
-  </button>
+  <div class="shared-code-url-area">
+    <input id="shared-code-url" value={{link_url}}>
+    <button class="copy-btn" data-clipboard-target="#shared-code-url">
+        Kopioi osoite
+    </button>
+  </div>
 </div>

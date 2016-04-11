@@ -1,0 +1,29 @@
+$share-field-border-radius: 5px
+$share-field-border-color: #676767
+$copy-button-color: #2195D5
+$copy-button-text-color: #fff
+
+.shared-code-url-area
+  display: flex
+  height: 25px
+
+  button
+    width: 150px
+    border: 1px solid $share-field-border-color
+    background-color: $copy-button-color
+    border-left: 0
+    color: $copy-button-text-color
+    font-weight: bold
+    border-top-right-radius: $share-field-border-radius
+    border-bottom-right-radius: $share-field-border-radius
+    transition: all 0.3s
+
+    &:hover
+      background-color: darken($copy-button-color, 10%)
+      color: darken($copy-button-text-color, 10%)
+
+  input
+    border: 1px solid $share-field-border-color
+    border-bottom-left-radius: $share-field-border-radius
+    border-top-left-radius: $share-field-border-radius
+    padding: 0 5px
