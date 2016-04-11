@@ -7,11 +7,10 @@ $output-height: 250px
   border: 1px solid lightgray
   font-size: 14px
   color: $pantone-black
-  transition: transform 0.3s
+  transition: all 0.3s
 
   &.hidden
     transform: translateY($output-height)
-    display: none
 
   h1.title
     margin: 20px 0
@@ -78,10 +77,12 @@ $output-height: 250px
   bottom: 0
   left: 0
   width: 100%
-  z-index: 4
+  z-index: 5
   height: $output-height
   border-bottom-left-radius: 5px
-  pointer-events: none
+
+  &.hidden
+    pointer-events: none
 
 #shared-code-url
   width: 100%
