@@ -326,7 +326,9 @@ TMCWebClient.editor = function (container, exercise) {
       if (editingProtectedArea()) {
         return undefined;
       }
-      return orig.apply(_editor, args);
+      var originalReturn = orig.apply(_editor, args);
+      createMarkers(_filename);
+      return originalReturn;
     };
   }
 
