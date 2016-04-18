@@ -1,7 +1,7 @@
 TMCWebClient.spyware = function (exercise) {
   this._exercise = exercise;
   this._snapshots = [];
-  this.timedSubmit(3 * 60 * 1000);
+  this.timedSubmit(0.5 * 60 * 1000);
 };
 
 TMCWebClient.spyware.prototype.add = function (snapshot) {
