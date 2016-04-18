@@ -42,11 +42,11 @@
   }
 
   var _messageCount = 0;
-  window.addEventListener('message', function(e) {
+  window.addEventListener('message', function(_event) {
     if (_mainWindow === null) {
-      _mainWindow = e.source;
+      _mainWindow = _event.source;
     }
-    if (e.data == 'ready') {
+    if (_event.data == 'ready') {
       var ready = typeof Phaser !== 'undefined';
       if (_messageCount > 200) {
         ready = true;
@@ -55,7 +55,7 @@
         ready: ready,
         source: {{id}}
       }
-      e.source.postMessage(msg, _url);
+      _event.source.postMessage(msg, _url);
       _messageCount++;
       return;
     }
@@ -71,11 +71,11 @@
         source: {{id}},
         message: message
       }
-      e.source.postMessage(msg, _url);
+      _event.source.postMessage(msg, _url);
     }
       try {
         console.info('Evaluating code...');
-        eval(e.data);
+        eval(_event.data);
       } catch (error) {
         sendError(error.toString());
       }
