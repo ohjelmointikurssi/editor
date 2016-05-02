@@ -24,6 +24,44 @@ TMCWebClient.exercise.prototype.fetch = function (callback) {
   });
 };
 
+TMCWebClient.exercise.prototype.localStorageKey = function () {
+  if (this.exercise === undefined) {
+    throw("Cannot determine local storage key without exercise metadata");
+  }
+  var courseName = this.exercise.course_name;
+  var exerciseName = this.exercise.exercise_name;
+  return courseName + "-" + exerciseName;
+}
+
+TMCWebClient.exercise.prototype.storeCodeToLocalStorage = function () {
+  var self = this;
+  if (this.exercise === undefined) {
+    throw("Cannot use local storage without exercise metadata");
+  }
+  var currentFiles = {};
+  Object.getOwnPropertyNames(this.getFiles()).filter(function (o) {
+    return o.endsWith('.js') && !o.endsWith('test.js');
+  }).sort()
+  .forEach(function (o) {
+    currentFiles[o] = self.zip.files[o].asText();
+  });
+  localStorage[this.localStorageKey()] = JSON.stringify(currentFiles);
+}
+
+TMCWebClient.exercise.prototype.restoreCodeFromLocalStorage = function () {
+  var self = this;
+  if (this.exercise === undefined) {
+    throw("Cannot use local storage without exercise metadata");
+  }
+  if (!localStorage[this.localStorageKey()]) {
+    return;
+  }
+  localStorageFiles = JSON.parse(localStorage[this.localStorageKey()]);
+  Object.getOwnPropertyNames(localStorageFiles).forEach(function (filename) {
+    self.zip.file(filename, localStorageFiles[filename]);
+  });
+}
+
 TMCWebClient.exercise.prototype.downloadZip = function (url, callback) {
   JSZipUtils.getBinaryContent(url, function (error, data) {
     if (error) {
@@ -45,11 +83,17 @@ TMCWebClient.exercise.prototype.fetchZip = function (callback) {
     callback();
     return;
   }
+  var localStorageValue = localStorage[this.localStorageKey()];
+  if (localStorageValue !== undefined) {
+
+  }
   var self = this;
   this.downloadZip(this.baseUrl + this.id + '.zip', function (zip) {
     self.zip = zip;
     self.getSourcePath();
     self.storeOriginalZip(zip);
+    self.restoreCodeFromLocalStorage();
+    self.storeCodeToLocalStorage();
     callback();
   });
 };

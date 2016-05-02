@@ -90,6 +90,10 @@ TMCWebClient.editor = function (container, exercise) {
     saveActiveFile();
   }
 
+  function saveToLocalStorageHandler() {
+    _exercise.storeCodeToLocalStorage();
+  }
+
   function generateFullSnapshot(file, cause, onlyChanged) {
     if (onlyChanged && _snapshotCache[file] !== true) {
       return;
@@ -445,6 +449,7 @@ TMCWebClient.editor = function (container, exercise) {
       $('.tab-bar li', _container).first().addClass('active');
 
       _editor.on('change', snapshotHandler);
+      _editor.on('change', saveToLocalStorageHandler);
     });
     createOutputContainer();
   }
