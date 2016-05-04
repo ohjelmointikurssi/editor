@@ -158,7 +158,7 @@ TMCWebClient.editor = function (container, exercise) {
     var data = TMCWebClient.snapshot.prototype.generateBase64Json({ command: 'tmc-web-client.share' });
     _spyware.add(new TMCWebClient.snapshot(_exercise, 'project_action', data));
   }
-  var _errors = [];
+  var _errors = new Set();
 
   var _messages = [];
   var _code;
@@ -184,7 +184,7 @@ TMCWebClient.editor = function (container, exercise) {
         }
         if (e.data.error) {
           stopGame();
-          _errors.push(e.data.error);
+          _errors.add(e.data.error);
           _output.renderError(_errors);
         }
         if (e.data.stop) {
@@ -196,10 +196,8 @@ TMCWebClient.editor = function (container, exercise) {
 
   function runCode() {
     _messages = [];
-    _errors = [];
-    var gameFrame = document.getElementById('game-frame-' + _exercise.id);
-    // TODO: All this should be its own template
-    var pre = "(function () { 'use strict'; }()); var console={log: function(a){showMessage(a)}};";
+    _errors = new Set();
+    var gameFrame = document.getElementById('game-frame-' + _exercise.id)
 
     var code = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
       return o.endsWith('.js') && !o.endsWith('test.js');
@@ -209,21 +207,23 @@ TMCWebClient.editor = function (container, exercise) {
     }).join('\n');
 
     // Check if the exercise is a game related exercise
-    var isGame = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
+    var gameFiles = Object.getOwnPropertyNames(_exercise.getFiles()).filter(function (o) {
       return o.endsWith('update.js');
     });
-    code = pre + code;
-    if (isGame.length !== 0) {
-      code = "game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-' +" + _exercise.id + ', { preload: preload, create: create, update: update });' + code;
+
+    var isGame = gameFiles.length > 0;
+
+    if (isGame) {
       $('#game-area-' + _exercise.id).html('');
       $('#game-frame-' + _exercise.id).removeClass('inactive');
       $('#background-overlay').addClass('active');
       $('body').addClass('overlay-open');
     }
-    code += '';
+
+    var codeTemplate = Handlebars.templates.Code({ code: code, exerciseId: _exercise.id, isGame: isGame})
     var gameTemplate = Handlebars.templates.Game({ id: _exercise.id, code: code });
     gameFrame.src = 'data:text/html;charset=utf-8,' + encodeURI(gameTemplate);
-    _code = code;
+    _code = codeTemplate;
     // In case this is not the first run
     _gameFrameReady = false;
     waitForGameIframe();

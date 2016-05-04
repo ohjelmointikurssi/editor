@@ -33,7 +33,7 @@ TMCWebClient.output.prototype.renderError = function (errors) {
 
   var self = this;
   var _template = Handlebars.templates.OutputErrorContainer;
-  var html = $(_template({ messages: errors }));
+  var html = $(_template({ messages: Array.from(errors) }));
 
 
   // Close handler
@@ -114,7 +114,6 @@ TMCWebClient.output.prototype.showError = function (results) {
   var attributes = {
     error: results.error,
   };
-
   this.render(attributes, this.template.error);
 };
 

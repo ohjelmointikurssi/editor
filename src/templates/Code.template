@@ -1,0 +1,24 @@
+(function () { 'use strict'; }());
+var console = { log: function(a){ showMessage(a) } };
+{{#if isGame}}
+  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-area-{{ exerciseId }}' , { preload: preload, create: create, update: update, render: render });
+{{/if}}
+
+{{{ code }}}
+
+{{#if isGame}}
+  Function.prototype.oldCall = Function.prototype.call;
+  var phaserMethods = [preload, create, update, render];
+  phaserMethods.forEach(function(f) {
+    if (typeof f === "function") {
+      f.call = function() {
+        try {
+          this.oldCall(...arguments);
+        } catch (e) {
+          sendError(e.toLocaleString());
+          throw e;
+        }
+      }
+    }
+  })
+{{/if}}
