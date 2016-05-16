@@ -434,7 +434,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     // Fetch exercise
     _exercise.fetchZip(function () {
-      var files = _exercise.getFilesFromSource();
+      var files = _exercise.getFilesFromSource().filter(function(o) { return !o.name.endsWith(".hidden.js") });
 
       _filename = files[0].name;
       var content = _exercise.getFile(_filename).asText();
