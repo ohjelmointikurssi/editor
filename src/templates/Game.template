@@ -63,7 +63,9 @@
     if (Phaser.Device._readyCheck) {
       Phaser.Device._readyCheck();
     }
+    var programHasCommunicated = false;
     var showMessage = function(message) {
+      programHasCommunicated = true;
       if (message.constructor === Array) {
         message = JSON.stringify(message, null, ' ');
       }
@@ -73,13 +75,17 @@
       }
       _event.source.postMessage(msg, _url);
     }
-      try {
-        console.info('Evaluating code...');
-        eval(_event.data);
-      } catch (error) {
-        sendError(error.toString());
-      }
-    });
+
+    try {
+      console.info('Evaluating code...');
+      eval(_event.data);
+    } catch (error) {
+      sendError(error.toString());
+    }
+    if (!{{isGame}} && !programHasCommunicated) {
+      showMessage("Ohjelma ei tulostanut mitään.");
+    }
+  });
     document.getElementById('stop-game').addEventListener('click', function() {
       var msg = {
         source: {{id}},
@@ -94,6 +100,7 @@
     });
     window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
       if (url === window.location.href) {
+        programHasCommunicated = true;
         sendError(errorMsg)
       }
     }

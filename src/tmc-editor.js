@@ -219,9 +219,9 @@ TMCWebClient.editor = function (container, exercise) {
       $('#background-overlay').addClass('active');
       $('body').addClass('overlay-open');
     }
-
     var codeTemplate = Handlebars.templates.Code({ code: code, exerciseId: _exercise.id, isGame: isGame})
-    var gameTemplate = Handlebars.templates.Game({ id: _exercise.id, code: code });
+
+    var gameTemplate = Handlebars.templates.Game({ id: _exercise.id, code: code, isGame: isGame.toString() });
     gameFrame.src = 'data:text/html;charset=utf-8,' + encodeURI(gameTemplate);
     _code = codeTemplate;
     // In case this is not the first run
