@@ -247,6 +247,10 @@ TMCWebClient.exercise.prototype.getFilesFromSource = function () {
   return this.zip.file(/src(?!\/\.).*/);
 };
 
+TMCWebClient.exercise.prototype.getVisibleFilesFromSource = function () {
+  return this.getFilesFromSource().filter(function(o) { return !o.name.endsWith(".hidden.js") });
+};
+
 TMCWebClient.exercise.prototype.getFileExtension = function(filename) {
   // We want no path to mess this thing
   var lastSlashIndex = filename.lastIndexOf('/');

@@ -114,7 +114,7 @@ TMCWebClient.editor = function (container, exercise) {
   function createResetHandler() {
     $('.actions .reset', _container).click(function() {
       _exercise.reset();
-      _files = _exercise.getFilesFromSource();
+      _files = _exercise.getVisibleFilesFromSource();
 
       _filename = _files[0].name;
       var content = _exercise.getFile(_filename).asText();
@@ -434,7 +434,7 @@ TMCWebClient.editor = function (container, exercise) {
 
     // Fetch exercise
     _exercise.fetchZip(function () {
-      var files = _exercise.getFilesFromSource().filter(function(o) { return !o.name.endsWith(".hidden.js") });
+      var files = _exercise.getVisibleFilesFromSource();
 
       _filename = files[0].name;
       var content = _exercise.getFile(_filename).asText();
