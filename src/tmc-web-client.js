@@ -1,88 +1,83 @@
-var TMCWebClient = (function() {
-  var _module = {
-    server: 'https://tmc.mooc.fi/staging',
-    apiVersion: 7,
-  };
+require('!css!sass!./css/tmc-web-client.sass');
 
-  function findExerciseContainers() {
+import $ from 'jquery';
+import Exercise from './exercise.js';
+import Editor from './editor.js';
+import Session from './session.js';
+import Paste from './paste.js';
+import ExerciseTemplate from './templates/Exercise.template';
+
+export default class TMCWebClient {
+  findExerciseContainers() {
     return $('[data-type="tmc-exercise"]');
   }
 
-  function initialiseEditors(containers) {
-    addBackgroundOverlay();
-    containers.each(function (index, container) {
-      var id = $(container).data('id');
-      var exerciseTemplate = Handlebars.templates.Exercise({ id: id });
+  initializeEditors(containers) {
+    this.addBackgroundOverlay();
+    containers.each((index, container) => {
+      const id = $(container).data('id');
+      const exerciseTemplate = ExerciseTemplate({ id });
 
       $(container).replaceWith(exerciseTemplate);
-      var editorContainer = $('#exercise-' + id + ' .tmc-exercise');
-      var exercise = new _module.exercise(id);
+      const editorContainer = $(`#exercise-${id} .tmc-exercise`);
+      const exercise = new Exercise(id);
 
-      exercise.fetch(function() {
+      exercise.fetch(() => {
         // Create editor
         /* eslint-disable no-unused-vars */
-        var editor = new _module.editor(editorContainer, exercise);
+        const editor = new Editor(editorContainer, exercise);
         /* eslint-enable no-unused-vars */
       });
     });
   }
 
-  function initialiseLogoutHandler() {
-    $('body').find('.tmc-exercise-logout').first().click(TMCWebClient.session.logout);
+  initializeLogoutHandler() {
+    $('body')
+      .find('.tmc-exercise-logout')
+      .first()
+      .click(Session.logout);
   }
 
-  function addBackgroundOverlay() {
-    var body = document.querySelector("body");
-    var overlay = document.createElement('div');
-    overlay.id = "background-overlay";
+  addBackgroundOverlay() {
+    const body = document.querySelector('body');
+    const overlay = document.createElement('div');
+    overlay.id = 'background-overlay';
     body.appendChild(overlay);
   }
 
-  _module.initialise = function () {
-    _module.session.login(function() {
-      initialiseEditors(findExerciseContainers());
-      initialiseLogoutHandler();
+  initialize() {
+    Session.login(() => {
+      this.initializeEditors(this.findExerciseContainers());
+      this.initializeLogoutHandler();
     });
-  };
+  }
 
-  _module.initializePaste = function () {
-    addBackgroundOverlay();
-    _module.session.login(function() {
+  initializePaste() {
+    this.addBackgroundOverlay();
+    Session.login(() => {
       // init paste
-      var container = $('#tmc-paste');
-      var paramParts = window.location.search.split('=');
+      let container = $('#tmc-paste');
+      const paramParts = window.location.search.split('=');
       if (paramParts.length !== 2) {
         console.error('Unable to parse url parameters.');
         return;
       }
-      var pasteKey = paramParts[1];
-      var paste = new _module.paste(pasteKey);
-      paste.fetch(function() {
-        var zip = paste.getZip();
-        var exercise = paste.exercise;
-        exercise.fetch(function() {
+      const pasteKey = paramParts[1];
+      const paste = new Paste(pasteKey);
+      paste.fetch(() => {
+        const zip = paste.getZip();
+        const exercise = paste.exercise;
+        exercise.fetch(() => {
           exercise.setZip(zip);
-          var exerciseTemplate = Handlebars.templates.Exercise({ id: exercise.id });
+          const exerciseTemplate = ExerciseTemplate({ id: exercise.id });
           $(container).append(exerciseTemplate).children();
-          container = $('#exercise-' + exercise.id + ' .tmc-exercise');
+          container = $(`#exercise-${exercise.id} .tmc-exercise`);
           /* eslint-disable no-unused-vars */
-          var editor = new _module.editor(container, exercise);
+          const editor = new Editor(container, exercise);
           /* eslint-enable no-unused-vars */
         });
       });
-      initialiseLogoutHandler();
+      this.initializeLogoutHandler();
     });
-  };
-
-  _module.getAuthenticationToken = function () {
-    var username = _module.session.getUsername();
-    var password = _module.session.getPassword();
-    return btoa(encodeURIComponent(username) + ':' + encodeURIComponent(password));
-  };
-
-  _module.xhrBasicAuthentication = function (xhr) {
-    xhr.setRequestHeader('Authorization', 'Basic ' + TMCWebClient.getAuthenticationToken());
-  };
-
-  return _module;
-})();
+  }
+}

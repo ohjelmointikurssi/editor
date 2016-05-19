@@ -1,27 +1,9 @@
 {
-  "extends": "airbnb/legacy",
-  "globals": {
-    "TMCWebClient": true,
-    "$": true,
-    "Handlebars": true,
-    "JSZip": true,
-    "Clipboard": true,
-    "JSZipUtils": true,
-    "ace": true
-  },
+  "extends": "airbnb",
   "env": {
     "browser": true
   },
-  "rules": {
-    "vars-on-top": 0,
-    "no-console": 0,
-    "wrap-iife": 0,
-    "func-names": 0,
-    "new-cap": 0,
-    "space-before-function-paren": 0,
-    "radix": 0,
-    "guard-for-in": 0,
-    "no-use-before-define": 0,
-    "max-len": 1
+  "settings": {
+      "import/resolver": "webpack"
   }
 }
