@@ -168,7 +168,7 @@ export default class Editor {
   }
 
   createShareHandler() {
-    $('.actions .share', this.container).first().click(this.shareOnClickHandler);
+    $('.actions .share', this.container).first().click(this.shareOnClickHandler.bind(this));
   }
 
   shareOnClickHandler() {
@@ -277,16 +277,13 @@ export default class Editor {
   stopGame() {
     $('#background-overlay').removeClass('active');
     $('body').removeClass('overlay-open');
-    $(`game-frame-${this.exercise.id}`).addClass('inactive');
+    $(`#game-frame-${this.exercise.id}`).addClass('inactive');
     // This should kill all the remaining processes
     this.gameFrame.src = '';
   }
 
   createStopGameHandler() {
-    $(`#stop-game-${this.exercise.id}`).click((e) => {
-      e.preventDefault();
-      this.stopGame();
-    });
+    $(`#stop-game-${this.exercise.id}`).click(this.stopGame.bind(this));
   }
 
   createErrorHandler() {
