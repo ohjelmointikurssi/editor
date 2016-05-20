@@ -4,9 +4,9 @@ import Spyware from './spyware.js';
 import $ from 'jquery';
 import Snapshot from './snapshot.js';
 import Output from './output.js';
+import Execution from './execution.js';
 import EditorTemplate from './templates/Editor.template';
-import CodeTemplate from './templates/Code.template';
-import GameTemplate from './templates/Game.template';
+
 import OutputErrorContainerTemplate from './templates/OutputErrorContainer.template';
 
 export default class Editor {
@@ -21,10 +21,6 @@ export default class Editor {
     this.lockedRegions = null;
     this.ranges = [];
     this.rangesNeedupdating = false;
-    this.errors = new Set();
-    this.messages = [];
-    this.gameFrameReady = false;
-    this.gameFrame = document.getElementById(`game-frame-${exercise.id}`);
 
     // Create container for editor
     const editorContainer = $('<div/>');
@@ -36,9 +32,12 @@ export default class Editor {
 
     // Create editor
     this.editor = Ace.edit(editorContainer.get(0));
-    this.configure(this.editor);
 
-    // Fetch exercise
+    this.configure(this.editor);
+    this.createOutputContainer();
+  }
+
+  start(){
     this.exercise.fetchZip(() => {
       const files = this.exercise.getVisibleFilesFromSource();
 
@@ -57,7 +56,6 @@ export default class Editor {
       this.editor.on('change', this.snapshotHandler.bind(this));
       this.editor.on('change', this.saveToLocalStorageHandler.bind(this));
     });
-    this.createOutputContainer();
   }
 
   configure(editor) {
@@ -201,101 +199,9 @@ export default class Editor {
 
   createRunHandler() {
     $('.actions .run', this.container).first().click(() => {
-      this.gameFrame.src = '';
-
-      // We want to give the iframe an opportunity to reload.
-      setTimeout(this.runCode.bind(this), 100);
+      const execution = new Execution(this.exercise.id, this.exercise.getFiles(), this.output);
+      execution.run();
     });
-
-    // Listens for messages from iframe
-    window.addEventListener('message', (e) => {
-      if (e.data.source === this.exercise.id) {
-        if (e.data.ready === true) {
-          console.info('Setting the game frame to be ready...');
-          this.gameFrameReady = true;
-        }
-        if (e.data.message) {
-          this.messages.push(e.data.message);
-          this.output.render(this.messages);
-        }
-        if (e.data.error) {
-          this.stopGame();
-          this.errors.add(e.data.error);
-          this.output.renderError(this.errors);
-        }
-        if (e.data.stop) {
-          this.stopGame();
-        }
-      }
-    });
-  }
-
-  // We must pass self because Babel is buggy
-  runCode() {
-    this.messages = [];
-    this.errors = new Set();
-
-    const code = Object.getOwnPropertyNames(this.exercise.getFiles())
-      .filter(o => o.endsWith('.js') && !o.endsWith('test.js'))
-      .sort()
-      .map(o => this.exercise.getFiles()[o].asText())
-      .join('\n');
-
-    // Check if the exercise is a game related exercise
-    const gameFiles = Object.getOwnPropertyNames(this.exercise.getFiles())
-      .filter(o => o.endsWith('update.js') || o.endsWith('update.hidden.js'));
-
-    const isGame = gameFiles.length > 0;
-
-    if (isGame) {
-      $(`#game-area-${this.exercise.id}`).html('');
-      $(`#game-frame-${this.exercise.id}`).removeClass('inactive');
-      $('#background-overlay').addClass('active');
-      $('body').addClass('overlay-open');
-    }
-    const codeTemplate = CodeTemplate({ code, exerciseId: this.exercise.id, isGame });
-
-    const gameTemplate = GameTemplate({ id: this.exercise.id, code, isGame: isGame.toString() });
-    this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplate)}`;
-    this.code = codeTemplate;
-    // In case this is not the first run
-    this.gameFrameReady = false;
-    this.waitForGameIframe();
-  }
-
-  waitForGameIframe() {
-    if (this.gameFrameReady) {
-      this.gameFrame.contentWindow.postMessage(this.code, '*');
-      console.info('Sent the code to be executed');
-    } else {
-      console.info('Asking if the frame is ready.');
-      this.gameFrame.contentWindow.postMessage('ready', '*');
-      window.setTimeout(this.waitForGameIframe.bind(this), 100, self);
-    }
-  }
-
-  stopGame() {
-    $('#background-overlay').removeClass('active');
-    $('body').removeClass('overlay-open');
-    $(`#game-frame-${this.exercise.id}`).addClass('inactive');
-    // This should kill all the remaining processes
-    this.gameFrame.src = '';
-  }
-
-  createStopGameHandler() {
-    $(`#stop-game-${this.exercise.id}`).click(this.stopGame.bind(this));
-  }
-
-  createErrorHandler() {
-    const previousError = window.onerror;
-    window.onerror = (errorMsg, url, lineNumber, column, errorObj) => {
-      // If the error is from the user's code and not from the libraries
-      if (url === window.location.href || errorObj.showToUser) {
-        this.output.render(errorMsg, OutputErrorContainerTemplate);
-        this.stopGame();
-      }
-      return previousError(errorMsg, url, lineNumber, column, errorObj);
-    };
   }
 
   render(files) {
@@ -321,8 +227,6 @@ export default class Editor {
     this.createShareHandler();
     this.createResetHandler();
     this.createRunHandler();
-    this.createStopGameHandler();
-    this.createErrorHandler();
     this.createKeyboardHandler();
   }
 

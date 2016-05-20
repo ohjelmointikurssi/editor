@@ -19,14 +19,12 @@ export default class WebClient {
       const exerciseTemplate = ExerciseTemplate({ id });
 
       $(container).replaceWith(exerciseTemplate);
-      const editorContainer = $(`#exercise-${id} .tmc-exercise`);
+      const editorContainer = $(`#exercise-${id}`).find(`.tmc-exercise`);
       const exercise = new Exercise(id);
 
       exercise.fetch(() => {
-        // Create editor
-        /* eslint-disable no-unused-vars */
         const editor = new Editor(editorContainer, exercise);
-        /* eslint-enable no-unused-vars */
+        editor.start();
       });
     });
   }
@@ -71,10 +69,9 @@ export default class WebClient {
           exercise.setZip(zip);
           const exerciseTemplate = ExerciseTemplate({ id: exercise.id });
           $(container).append(exerciseTemplate).children();
-          container = $(`#exercise-${exercise.id} .tmc-exercise`);
-          /* eslint-disable no-unused-vars */
+          container = $(`#exercise-${exercise.id}`).find(`.tmc-exercise`);
           const editor = new Editor(container, exercise);
-          /* eslint-enable no-unused-vars */
+          editor.start();
         });
       });
       this.initializeLogoutHandler();

@@ -37,9 +37,7 @@ export default class Output {
   renderError(errors) {
     this.clear();
 
-    const newTemplate = OutputContainerTemplate;
-    const html = $(newTemplate({ messages: Array.from(errors) }));
-
+    const html = $(OutputErrorContainerTemplate({ messages: Array.from(errors) }));
 
     // Close handler
     html.find('.close').click(() => {
