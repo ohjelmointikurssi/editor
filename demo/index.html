@@ -1,79 +1,43 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
+<head>
+  <meta charset='UTF-8' />
+  <title>Demo</title>
+  <link rel='stylesheet' href='assets/tmc-web-client.css' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
 
-		<meta charset='UTF-8' />
-		<title>Demo</title>
-
-        <!-- CSS -->
-        <link rel='stylesheet' href='assets/css/tmc-web-client.css' />
-				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-
-        <style>
-
-
-
-        </style>
-	</head>
-
-	<body>
-        <div id='container'>
-
-            <a href="#" class='tmc-exercise-logout' title='Logout'>Logout</a>
-
-            <h1>Materiaali</h1>
-
-						<p>
-							(huom. tässä vain ohjeet käyttöön, ei kurssin kuvausta jne)<br>
-							Voit kirjoittaa JavaScript-koodia editoreihin. Tehtävänanto näkyy editorin yläpuolella. Editorin vasemmalla puolella on lista tiedostoista, joista ohjelma koostuu. Klikkaamalla tiedoston nimeä, voit vaihtaa tiedostoa. Vasemmalla on myös run-näppäin, jota painamalla koodisi ajetaan.
-						</p>
-
-
-						<h2>Tehtävä 1</h2>
-						<p>
-							Alla on koodi yksinkertaiseen peliin. Pelissä on tarkoituksena yrittää osua ylhäältä tippuviin palkkeihin alhaalla olevalla pallolla. Palloa voi liikuttaa nuolinäppäimillä. Kokeile peliä painamalla run-painiketta.
-						</p>
-						<p>
-							<b>Ongelma</b>
-							<br>
-							Peli on tällä hetkellä hankalahko, koska palkit tippuvat nopeasti ja pallo liikkuu hitaasti. Yritetään tehdä pelistä hieman helpompi.
-							<br>
-							<br>
-							<b>Ratkaisu</b>
-							<br>
-							Kuten ehkä jo huomasit, peli koostuu useammasta tiedostosta. Tiedostoa voi vaihtaa painamalla tiedoston nimeä. Mene tiedostoon update.js. Kokeile, mitä käy jos vaihdat riveillä 2 ja 3 olevia numeroita 250 ja 500 joiksikin muiksi numeroiksi ja muutoksen jälkeen painat run-painiketta. Helpottuuko peli, jos vaihdat numeroiden arvot päittäin?
-						</p>
-
-						<div class="code-area" data-type='tmc-exercise' data-id='2286'></div>
-
-
-						<p>blaa</p>
-
-						<div class="code-area" data-type='tmc-exercise' data-id='2288'></div>
-
-						<p>
-							Kaikki toimii! Miksi asian laita on näin, on jätetty harjoituksesksi lukijalle.
-        </div>
-
-        <!-- JS -->
-
-        <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-        <script src='//cdnjs.cloudflare.com/ajax/libs/jszip/2.2.2/jszip.js'></script>
-        <script src='//stuk.github.io/jszip-utils/dist/jszip-utils.js'></script>
-        <script src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.runtime.min.js'></script>
-        <script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js'></script>
-        <script src='//cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js'></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.5/clipboard.min.js"></script>
-        <script src='assets/js/tmc-web-client.js'></script>
-
-        <script>
-            $(document).ready(function() {
-              TMCWebClient.initialize();
-            });
-        </script>
-
-	</body>
+<body>
+  <div id='container'> <a href="#" class='tmc-exercise-logout' title='Logout'>Logout</a>
+    <h1>Materiaali</h1>
+    <p> (huom. tässä vain ohjeet käyttöön, ei kurssin kuvausta jne)
+      <br> Voit kirjoittaa JavaScript-koodia editoreihin. Tehtävänanto näkyy editorin yläpuolella. Editorin vasemmalla puolella on lista tiedostoista, joista ohjelma koostuu. Klikkaamalla tiedoston nimeä, voit vaihtaa tiedostoa. Vasemmalla on myös run-näppäin, jota painamalla koodisi ajetaan. </p>
+    <h2>Tehtävä 1</h2>
+    <p> Alla on koodi yksinkertaiseen peliin. Pelissä on tarkoituksena yrittää osua ylhäältä tippuviin palkkeihin alhaalla olevalla pallolla. Palloa voi liikuttaa nuolinäppäimillä. Kokeile peliä painamalla run-painiketta. </p>
+    <p> <b>Ongelma</b>
+      <br> Peli on tällä hetkellä hankalahko, koska palkit tippuvat nopeasti ja pallo liikkuu hitaasti. Yritetään tehdä pelistä hieman helpompi.
+      <br>
+      <br> <b>Ratkaisu</b>
+      <br> Kuten ehkä jo huomasit, peli koostuu useammasta tiedostosta. Tiedostoa voi vaihtaa painamalla tiedoston nimeä. Mene tiedostoon update.js. Kokeile, mitä käy jos vaihdat riveillä 2 ja 3 olevia numeroita 250 ja 500 joiksikin muiksi numeroiksi ja muutoksen
+      jälkeen painat run-painiketta. Helpottuuko peli, jos vaihdat numeroiden arvot päittäin? </p>
+    <div class="code-area" data-type='tmc-exercise' data-id='2286'></div>
+    <p>blaa</p>
+    <div class="code-area" data-type='tmc-exercise' data-id='2288'></div>
+    <p> Kaikki toimii! Miksi asian laita on näin, on jätetty harjoitukseksi lukijalle.</div>
+  <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jszip/2.2.2/jszip.js'></script>
+  <script src='//stuk.github.io/jszip-utils/dist/jszip-utils.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.runtime.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js'></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.5/clipboard.min.js"></script>
+  <script src='assets/tmc-web-client.js'></script>
+  <script>
+    $(document).ready(function () {
+      TMCWebClient.initialize();
+    });
+  </script>
+</body>
 
 </html>

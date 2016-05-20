@@ -1,4 +1,4 @@
-require('!css!sass!./css/tmc-web-client.sass');
+require('./css/tmc-web-client.sass');
 
 import $ from 'jquery';
 import Exercise from './exercise.js';
