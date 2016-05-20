@@ -99,7 +99,7 @@ export default class Output {
       return this.showError(results);
     }
 
-    const attributes = {
+    const attr = {
       status: results.status,
       passed: results.all_tests_passed,
       tests: results.test_cases,
@@ -109,17 +109,17 @@ export default class Output {
 
     };
 
-    this.render(attributes);
+    this.render(attr);
 
     this.createResultHandlers(attributes.ratio, attributes.validations);
     return undefined;
   }
 
   showError(results) {
-    const attributes = {
+    const attr = {
       error: results.error,
     };
-    this.render(attributes, this.template.error);
+    this.render(attr, this.template.error);
   }
 
   calculateProgress(tests) {

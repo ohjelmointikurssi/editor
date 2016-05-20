@@ -1,9 +1,9 @@
 <div class='exercise-sidebar'>
     <h1 class='name'>{{title}}</h1>
     <ul class='tab-bar'>
-        {{#files}}
-            <li data-id="{{name}}">{{filename name}}</li>
-        {{/files}}
+        {{#each files}}
+            <li data-id="{{this.path}}">{{this.name}}</li>
+        {{/each}}
     </ul>
 
     <section class='actions'>

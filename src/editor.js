@@ -24,6 +24,7 @@ export default class Editor {
     this.errors = new Set();
     this.messages = [];
     this.gameFrameReady = false;
+    this.gameFrame = document.getElementById(`game-frame-${exercise.id}`);
 
     // Create container for editor
     const editorContainer = $('<div/>');
@@ -53,8 +54,8 @@ export default class Editor {
       // Set active tab
       $('.tab-bar li', this.container).first().addClass('active');
 
-      this.editor.on('change', this.snapshotHandler);
-      this.editor.on('change', this.saveToLocalStorageHandler);
+      this.editor.on('change', this.snapshotHandler.bind(this));
+      this.editor.on('change', this.saveToLocalStorageHandler.bind(this));
     });
     this.createOutputContainer();
   }
@@ -200,11 +201,10 @@ export default class Editor {
 
   createRunHandler() {
     $('.actions .run', this.container).first().click(() => {
-      const gameFrame = document.getElementById(`game-frame-${this.exercise.id}`);
-      gameFrame.src = '';
+      this.gameFrame.src = '';
 
       // We want to give the iframe an opportunity to reload.
-      setTimeout(this.runCode, 100);
+      setTimeout(this.runCode.bind(this), 100);
     });
 
     // Listens for messages from iframe
@@ -230,10 +230,10 @@ export default class Editor {
     });
   }
 
+  // We must pass self because Babel is buggy
   runCode() {
     this.messages = [];
     this.errors = new Set();
-    const gameFrame = document.getElementById(`game-frame-${this.exercise.id}`);
 
     const code = Object.getOwnPropertyNames(this.exercise.getFiles())
       .filter(o => o.endsWith('.js') && !o.endsWith('test.js'))
@@ -256,7 +256,7 @@ export default class Editor {
     const codeTemplate = CodeTemplate({ code, exerciseId: this.exercise.id, isGame });
 
     const gameTemplate = GameTemplate({ id: this.exercise.id, code, isGame: isGame.toString() });
-    gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplate)}`;
+    this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplate)}`;
     this.code = codeTemplate;
     // In case this is not the first run
     this.gameFrameReady = false;
@@ -264,15 +264,13 @@ export default class Editor {
   }
 
   waitForGameIframe() {
-    const gameFrame = document.getElementById(`game-frame-${this.exercise.id}`);
-
     if (this.gameFrameReady) {
-      gameFrame.contentWindow.postMessage(this.code, '*');
+      this.gameFrame.contentWindow.postMessage(this.code, '*');
       console.info('Sent the code to be executed');
     } else {
       console.info('Asking if the frame is ready.');
-      gameFrame.contentWindow.postMessage('ready', '*');
-      window.setTimeout(this.waitForGameIframe, 100);
+      this.gameFrame.contentWindow.postMessage('ready', '*');
+      window.setTimeout(this.waitForGameIframe.bind(this), 100, self);
     }
   }
 
@@ -281,8 +279,7 @@ export default class Editor {
     $('body').removeClass('overlay-open');
     $(`game-frame-${this.exercise.id}`).addClass('inactive');
     // This should kill all the remaining processes
-    const gameFrame = document.getElementById(`game-frame-${this.exercise.id}`);
-    gameFrame.src = '';
+    this.gameFrame.src = '';
   }
 
   createStopGameHandler() {
@@ -305,20 +302,24 @@ export default class Editor {
   }
 
   render(files) {
-    const attributes = {
+    const attr = {
       title: this.exercise.getName(),
-      files,
+      files: files.map((f) => {
+        const name = f.name.split('/').pop();
+        const path = f.name;
+        return {name, path};
+      }),
     };
 
     // Render editor
-    $(this.container).prepend(EditorTemplate(attributes));
+    $(this.container).prepend(EditorTemplate(attr));
 
     this.navBar = $('.tab-bar', this.container).first();
 
     this.offsetLeftFix = $('li', this.navBar)[0].offsetLeft;
 
     // Add click events to tabs
-    $('li', this.navBar).click(this.tabClick);
+    $('li', this.navBar).click(this.tabClick.bind(this));
 
     this.createShareHandler();
     this.createResetHandler();
@@ -390,11 +391,11 @@ export default class Editor {
     this.editor.getSession().setScrollTop(0);
   }
 
-  tabClick() {
+  tabClick(event) {
     this.saveActiveFile();
     this.generateFullSnapshot(this.filename, 'file_change', true);
     this.clearEditor();
-    this.changeFile($(this));
+    this.changeFile($(event.toElement));
   }
 
   changeFile(element) {
@@ -402,7 +403,7 @@ export default class Editor {
     $('.tab-bar li', this.container).removeClass('active');
     // Set active tab
     element.addClass('active');
-    this.scrollToTab(element);
+    // this.scrollToTab(element);
 
     // File
     const filename = element.attr('data-id');

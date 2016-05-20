@@ -21,6 +21,7 @@ const config = {
     "clipboard": "Clipboard",
     "ace": "ace"
   },
+  devtool: "#inline-source-map",
   module: {
     loaders: [
       {

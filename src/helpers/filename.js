@@ -1,4 +1,3 @@
-Handlebars.registerHelper('filename', function(name) {
-
-    return name.split('/').pop();
-});
+function filename(name) {
+  return name.split('/').pop();
+}

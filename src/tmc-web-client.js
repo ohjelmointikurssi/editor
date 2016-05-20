@@ -7,12 +7,12 @@ import Session from './session.js';
 import Paste from './paste.js';
 import ExerciseTemplate from './templates/Exercise.template';
 
-export default class TMCWebClient {
-  findExerciseContainers() {
+export default class WebClient {
+  static findExerciseContainers() {
     return $('[data-type="tmc-exercise"]');
   }
 
-  initializeEditors(containers) {
+  static initializeEditors(containers) {
     this.addBackgroundOverlay();
     containers.each((index, container) => {
       const id = $(container).data('id');
@@ -31,28 +31,28 @@ export default class TMCWebClient {
     });
   }
 
-  initializeLogoutHandler() {
+  static initializeLogoutHandler() {
     $('body')
       .find('.tmc-exercise-logout')
       .first()
       .click(Session.logout);
   }
 
-  addBackgroundOverlay() {
+  static addBackgroundOverlay() {
     const body = document.querySelector('body');
     const overlay = document.createElement('div');
     overlay.id = 'background-overlay';
     body.appendChild(overlay);
   }
 
-  initialize() {
+  static initialize() {
     Session.login(() => {
       this.initializeEditors(this.findExerciseContainers());
       this.initializeLogoutHandler();
     });
   }
 
-  initializePaste() {
+  static initializePaste() {
     this.addBackgroundOverlay();
     Session.login(() => {
       // init paste
@@ -81,3 +81,5 @@ export default class TMCWebClient {
     });
   }
 }
+
+window.TMCWebClient = WebClient;

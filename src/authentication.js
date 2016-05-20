@@ -1,7 +1,9 @@
+import Session from './session.js';
+
 export default class Authentication {
   static getAuthenticationToken() {
-    const username = Authentication.session.getUsername();
-    const password = Authentication.session.getPassword();
+    const username = Session.getUsername();
+    const password = Session.getPassword();
     return btoa(`${encodeURIComponent(username)}:${encodeURIComponent(password)}`);
   }
 

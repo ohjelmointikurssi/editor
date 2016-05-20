@@ -14,3 +14,4 @@ demo/assets/js/*
 dist/
 node_modules/
 nbproject/private/
+npm-debug.log
