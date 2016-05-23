@@ -28,8 +28,10 @@
   console.info('Game frame loaded');
   //var _url = (window.location != window.parent.location) ? document.referrer: document.location;
   var _url = '*';
+  var programHasCommunicated = false;
 
   var sendError = function(message) {
+    programHasCommunicated = true;
     var msg = {
       source: {{id}},
       error: message
@@ -63,7 +65,7 @@
     if (Phaser.Device._readyCheck) {
       Phaser.Device._readyCheck();
     }
-    var programHasCommunicated = false;
+
     var showMessage = function(message) {
       programHasCommunicated = true;
       if (message.constructor === Array) {
