@@ -5,6 +5,7 @@ import $ from 'jquery';
 import Snapshot from './snapshot.js';
 import Output from './output.js';
 import Execution from './execution.js';
+import Share from './share.js';
 import EditorTemplate from './templates/Editor.template';
 
 import OutputErrorContainerTemplate from './templates/OutputErrorContainer.template';
@@ -165,38 +166,6 @@ export default class Editor {
     });
   }
 
-  createShareHandler() {
-    $('.actions .share', this.container).first().click(this.shareOnClickHandler.bind(this));
-  }
-
-  shareOnClickHandler() {
-    const button = $('.actions .share i', this.container);
-    button.parent().prop('disabled', true);
-    const text = button.parent().find('.button-text');
-    const originalText = text.text();
-    text.text('Jaetaan...');
-    button.addClass('fa-spin');
-    this.saveActiveFile();
-    this.generateFullSnapshot(this.filename, 'file_change', true);
-
-    this.exercise.share((data) => {
-      const urlParts = data.paste_url.split('/');
-      const pasteKey = urlParts[urlParts.length - 1];
-      // TODO: Move baseUrl somewhere else
-      const baseUrl = 'https://ohjelmointikurssi.github.io/paste/?key=';
-      const shareUrl = baseUrl + pasteKey;
-      this.output.showShare(shareUrl);
-      button.removeClass('fa-spin');
-      button.parent().prop('disabled', false);
-      text.text(originalText);
-    }, () => {
-      this.output.close();
-    });
-
-    const data = Snapshot.prototype.generateBase64Json({ command: 'tmc-web-client.share' });
-    this.spyware.add(new Snapshot(this.exercise, 'project_action', data));
-  }
-
   createRunHandler() {
     $('.actions .run', this.container).first().click(() => {
       const execution = new Execution(this.exercise.id, this.exercise.getFiles(), this.output);
@@ -224,7 +193,8 @@ export default class Editor {
     // Add click events to tabs
     $('li', this.navBar).click(this.tabClick.bind(this));
 
-    this.createShareHandler();
+    const share = new Share();
+    share.handleClicks();
     this.createResetHandler();
     this.createRunHandler();
     this.createKeyboardHandler();

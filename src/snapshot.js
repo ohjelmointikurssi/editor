@@ -22,14 +22,14 @@ export default class Snapshot {
   }
 
   generatePatchData(name, oldData, newData, document) {
-    return this.generateBase64Json({
+    return Snapshot.generateBase64Json({
       file: name,
       patches: this.generatePatch(oldData, newData),
       full_document: document,
     });
   }
 
-  generateBase64Json(obj) {
+  static generateBase64Json(obj) {
     return btoa(JSON.stringify(obj));
   }
 
