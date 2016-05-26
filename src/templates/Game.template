@@ -32,6 +32,9 @@
 
   var sendError = function(message) {
     programHasCommunicated = true;
+    if (message === NaN) {
+      message = "Ei ole numero";
+    }
     var msg = {
       source: {{id}},
       error: message
