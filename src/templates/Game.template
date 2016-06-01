@@ -46,6 +46,18 @@
     }
   }
 
+  function _stopGame() {
+    var msg = {
+      source: {{id}},
+      stop: true
+    }
+    if (_mainWindow) {
+      _mainWindow.postMessage(msg, _url);
+    } else {
+      console.warn("Unable to to close the dialog because I don't know who the main window is.");
+    }
+  }
+
   var _messageCount = 0;
   window.addEventListener('message', function(_event) {
     if (_mainWindow === null) {
@@ -91,18 +103,8 @@
       showMessage("Ohjelma ei tulostanut mitään.");
     }
   });
-    document.getElementById('stop-game').addEventListener('click', function() {
-      var msg = {
-        source: {{id}},
-        stop: true
-      }
-      if (_mainWindow) {
-        _mainWindow.postMessage(msg, _url);
-      } else {
-        console.warn("Unable to to close the dialog because I don't know who the main window is.");
-      }
 
-    });
+    document.getElementById('stop-game').addEventListener('click', _stopGame);
     window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
       if (url === window.location.href) {
         programHasCommunicated = true;
