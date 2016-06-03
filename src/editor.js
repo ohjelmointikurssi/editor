@@ -72,6 +72,7 @@ export default class Editor {
     editor.getSession().setUseWrapMode(true);
     editor.getSession().setWrapLimitRange(90, 90);
     editor.getSession().setMode('ace/mode/javascript');
+    editor.getSession().setOption('useWorker', false);
 
     /* eslint-disable no-param-reassign */
     editor.$blockScrolling = Infinity;
