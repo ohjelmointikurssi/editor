@@ -4,23 +4,24 @@ branches:
   only:
     - master
 before_install:
-- npm install -g grunt-cli
-- gem install sass
+  - npm install -g grunt-cli
+  - gem install sass
 before_script:
-- git config --global user.name "hnbot"
-- git config --global user.email "nygrenh+hnbot@gmail.com"
+  - git config --global user.name "hnbot"
+  - git config --global user.email "nygrenh+hnbot@gmail.com"
 script:
-- grunt build
+  - npm run lint src/
+  - grunt build
 after_success:
-- mkdir cdn
-- cp demo/assets/js/*.js cdn
-- cp demo/assets/css/*.css cdn
-- cp -r demo/assets/images/ cdn/images
-- cd cdn
-- git init
-- git add .
-- git commit -m "Add compiled files to CDN"
-- git push --force "https://hnbot:$GITHUB_API_KEY@github.com/ohjelmointikurssi/cdn" master:gh-pages 2>&1 | sed "s/$GITHUB_API_KEY/<confidential>/g"
+  - mkdir cdn
+  - cp demo/assets/js/*.js cdn
+  - cp demo/assets/css/*.css cdn
+  - cp -r demo/assets/images/ cdn/images
+  - cd cdn
+  - git init
+  - git add .
+  - git commit -m "Add compiled files to CDN"
+  - git push --force "https://hnbot:$GITHUB_API_KEY@github.com/ohjelmointikurssi/cdn" master:gh-pages 2>&1 | sed "s/$GITHUB_API_KEY/<confidential>/g"
 env:
   global:
     secure: "pvK8LO9FrvsuhsQExT4g5+DRSBq31BKKmBMYoXJjogg8TPQLwmCObjJ0Q+W+6OBQkcrM7tsJWJHokxN7ai1Xpw+BrWEpd01yEWokns2A0r2+fioPvClrw6PZ0vjmUtDsLJrk2gltano0Mk+LXdiIv/IFe+qc9YYmiayBv0+nB9REHOFozj1DHTdq16VGCOYgjTm5bAlzq5YVJ3ZbQAffay16Dt5iiwKmNdum5cJ2e8wlVSo7Iyq9Wa/RJ23WVT5BsF3RDM//IvCbV40yHp4DbMcp1zBrTXcJ9SvW6Lp8UWLm1am4XsuPzHhPWcJgdeb6RUfq8nxHPUm0UH8KBmjytPnxqgHY9XWUe5i8daACVR+iews3Y7ZuZpm2KbYaO7JSkx6gTfTB6/dwoDnm4fv28yC/dYecRXB1K0S/l+/rcv10p9QoCSKzaIBnwedfamj36PgBPCsVHjFcthYqPbXDVnRSZG8h3BMHOchiF1CA8dzWeCftWtrriDmlAHdeBioPC9TB5lEmcSruDS2r42XXfxOvigcZgRlTrQtsV22YTSe9NcCn7VijDQwfUtOiYnFwkNDzK+WHv5MlZdOxN27Fiquc96MBqaEGIHeogOJ9MqKBhPAPCRDFl1G6m9aY45beQibGtrKX7+OBb/7plLBf4DTX3B4mwiGT8zGuS+p5W0Q="
