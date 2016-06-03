@@ -6,9 +6,7 @@ import Snapshot from './snapshot.js';
 import Output from './output.js';
 import Execution from './execution.js';
 import Share from './share.js';
-import EditorTemplate from './templates/Editor.template';
-
-import OutputErrorContainerTemplate from './templates/OutputErrorContainer.template';
+import editorTemplate from './templates/Editor.template';
 
 export default class Editor {
   constructor(container, exercise) {
@@ -38,7 +36,7 @@ export default class Editor {
     this.createOutputContainer();
   }
 
-  start(){
+  start() {
     this.exercise.fetchZip(() => {
       const files = this.exercise.getVisibleFilesFromSource();
 
@@ -180,12 +178,12 @@ export default class Editor {
       files: files.map((f) => {
         const name = f.name.split('/').pop();
         const path = f.name;
-        return {name, path};
+        return { name, path };
       }),
     };
 
     // Render editor
-    $(this.container).prepend(EditorTemplate(attr));
+    $(this.container).prepend(editorTemplate(attr));
 
     this.navBar = $('.tab-bar', this.container).first();
 

@@ -1,7 +1,9 @@
 import Snapshot from './snapshot.js';
+import $ from 'jquery';
 
 export default class Share {
   constructor(container) {
+    this.container = container;
     this.button = $('.actions .share', this.container).first();
     this.baseUrl = 'https://ohjelmointikurssi.github.io/paste/?key=';
   }

@@ -1,5 +1,6 @@
-import CodeTemplate from './templates/Code.template';
-import GameTemplate from './templates/Game.template';
+import codeTemplate from './templates/Code.template';
+import gameTemplate from './templates/Game.template';
+import $ from 'jquery';
 
 export default class Execution {
   constructor(id, files, output) {
@@ -29,8 +30,8 @@ export default class Execution {
       $('body').addClass('overlay-open');
     }
 
-    const gameTemplate = GameTemplate({ id: this.id, code: this.code, isGame: this.isGame.toString() });
-    this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplate)}`;
+    const gameTemplateString = gameTemplate({ id: this.id, code: this.code, isGame: this.isGame.toString() });
+    this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplateString)}`;
     this.createStopGameHandler();
     this.waitForGameIframe();
   }
@@ -47,7 +48,7 @@ export default class Execution {
   }
 
   createStopGameHandler() {
-    $(`#stop-game-${this.id}`).click(function(e) {
+    $(`#stop-game-${this.id}`).click((e) => {
       e.preventDefault();
       this.stopGame();
     });
@@ -69,7 +70,7 @@ export default class Execution {
       .map(o => files[o].asText())
       .join('\n');
 
-    return CodeTemplate({ code, exerciseId: this.id, isGame: this.isGame });
+    return codeTemplate({ code, exerciseId: this.id, isGame: this.isGame });
   }
 
   startIframeListener() {
@@ -92,13 +93,13 @@ export default class Execution {
           this.stopGame();
         }
       }
-    }).bind(this);
+    });
     window.addEventListener('message', this.iframeListener);
   }
 
   stopIframeListener() {
     if (this.iframeListener === undefined) {
-      throw new Error("There is no iframe listener.");
+      throw new Error('There is no iframe listener.');
     }
     window.removeEventListener('message', this.iframeListener);
   }

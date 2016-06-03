@@ -5,5 +5,9 @@
   },
   "settings": {
       "import/resolver": "webpack"
+  },
+  "rules": {
+      no-console: ["error", { allow: ["warn", "error", "info"] }],
+      max-len: ["error", { "code": 128 }]
   }
 }

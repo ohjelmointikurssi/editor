@@ -5,7 +5,7 @@ import Exercise from './exercise.js';
 import Editor from './editor.js';
 import Session from './session.js';
 import Paste from './paste.js';
-import ExerciseTemplate from './templates/Exercise.template';
+import exerciseTemplate from './templates/Exercise.template';
 
 export default class WebClient {
   static findExerciseContainers() {
@@ -16,10 +16,10 @@ export default class WebClient {
     this.addBackgroundOverlay();
     containers.each((index, container) => {
       const id = $(container).data('id');
-      const exerciseTemplate = ExerciseTemplate({ id });
+      const exerciseString = exerciseTemplate({ id });
 
-      $(container).replaceWith(exerciseTemplate);
-      const editorContainer = $(`#exercise-${id}`).find(`.tmc-exercise`);
+      $(container).replaceWith(exerciseString);
+      const editorContainer = $(`#exercise-${id}`).find('.tmc-exercise');
       const exercise = new Exercise(id);
 
       exercise.fetch(() => {
@@ -67,9 +67,9 @@ export default class WebClient {
         const exercise = paste.exercise;
         exercise.fetch(() => {
           exercise.setZip(zip);
-          const exerciseTemplate = ExerciseTemplate({ id: exercise.id });
-          $(container).append(exerciseTemplate).children();
-          container = $(`#exercise-${exercise.id}`).find(`.tmc-exercise`);
+          const exerciseString = exerciseTemplate({ id: exercise.id });
+          $(container).append(exerciseString).children();
+          container = $(`#exercise-${exercise.id}`).find('.tmc-exercise');
           const editor = new Editor(container, exercise);
           editor.start();
         });

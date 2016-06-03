@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Constants from './constants.js';
-import LoginTemplate from './templates/Login.template';
+import loginTemplate from './templates/Login.template';
 
 export default class Session {
   static logout() {
@@ -18,7 +18,7 @@ export default class Session {
       return;
     }
 
-    const form = $(LoginTemplate({ username: localStorage.username }));
+    const form = $(loginTemplate({ username: localStorage.username }));
     const status = $('.status', form);
 
     $('form', form).submit(() => {

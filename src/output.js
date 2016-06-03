@@ -1,14 +1,14 @@
 import $ from 'jquery';
 import Clipboard from 'clipboard';
 import OutputContainerTemplate from './templates/OutputContainer.template';
-import ShareOutputContainerTemplate from './templates/ShareOutputContainer.template';
-import OutputErrorContainerTemplate from './templates/OutputErrorContainer.template';
+import shareOutputContainerTemplate from './templates/ShareOutputContainer.template';
+import outputErrorContainerTemplate from './templates/OutputErrorContainer.template';
 
 export default class Output {
   constructor(container) {
     this.template = {
       output: OutputContainerTemplate,
-      error: OutputErrorContainerTemplate,
+      error: outputErrorContainerTemplate,
     };
 
     // Create container for submission results
@@ -37,7 +37,7 @@ export default class Output {
   renderError(errors) {
     this.clear();
 
-    const html = $(OutputErrorContainerTemplate({ messages: Array.from(errors) }));
+    const html = $(outputErrorContainerTemplate({ messages: Array.from(errors) }));
 
     // Close handler
     html.find('.close').click(() => {
@@ -52,7 +52,7 @@ export default class Output {
   renderShare(shareUrl) {
     this.clear();
 
-    const newTemplate = ShareOutputContainerTemplate;
+    const newTemplate = shareOutputContainerTemplate;
     const html = $(newTemplate({ link_url: shareUrl }));
 
     // Close handler
@@ -109,7 +109,7 @@ export default class Output {
 
     this.render(attr);
 
-    this.createResultHandlers(attributes.ratio, attributes.validations);
+    this.createResultHandlers(attr.ratio, attr.validations);
     return undefined;
   }
 
@@ -164,6 +164,7 @@ export default class Output {
   }
 
   buildValidations(validations, validationMessages) {
+    /* eslint-disable */
     for (const key in validationMessages) {
       const validation = {};
 
@@ -184,6 +185,7 @@ export default class Output {
 
       validations.results.push(validation);
     }
+    /* eslint-enable */
   }
 
   createResultHandlers(tests, validations) {
