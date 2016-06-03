@@ -2,8 +2,12 @@ import Snapshot from './snapshot.js';
 import $ from 'jquery';
 
 export default class Share {
-  constructor(container) {
+  constructor(container, editor, exercise, spyware, output) {
+    this.editor = editor;
+    this.exercise = exercise;
+    this.spyware = spyware;
     this.container = container;
+    this.output = output;
     this.button = $('.actions .share', this.container).first();
     this.baseUrl = 'https://ohjelmointikurssi.github.io/paste/?key=';
   }
@@ -19,8 +23,8 @@ export default class Share {
     const originalText = text.text();
     text.text('Jaetaan...');
     button.addClass('fa-spin');
-    this.saveActiveFile();
-    this.generateFullSnapshot(this.filename, 'file_change', true);
+    this.editor.saveActiveFile();
+    this.editor.generateFullSnapshot(this.filename, 'file_change', true);
 
     this.exercise.share((data) => {
       const urlParts = data.paste_url.split('/');

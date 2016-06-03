@@ -192,7 +192,7 @@ export default class Editor {
     // Add click events to tabs
     $('li', this.navBar).click(this.tabClick.bind(this));
 
-    const share = new Share();
+    const share = new Share(this.container, this, this.exercise, this.spyware, this.output);
     share.handleClicks();
     this.createResetHandler();
     this.createRunHandler();
