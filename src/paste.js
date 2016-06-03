@@ -10,31 +10,34 @@ export default class Paste {
     this.id = id;
   }
 
-  fetch(callback) {
-    if (this.exercise !== undefined) {
-      callback();
-      return;
-    }
+  fetch() {
+    return new Promise((resolve, reject) => {
+      if (this.exercise !== undefined) {
+        resolve();
+        return;
+      }
 
-    $.ajax({
-      beforeSend: Authentication.xhrBasicAuthentication,
-      data: {
-        api_version: Constants.apiVersion,
-        include_files: 1,
-      },
-      success: (paste) => {
-        this.data = paste;
-        const solutionParts = paste.solution_url.split('/');
-        const exerciseId = parseInt(solutionParts[solutionParts.length - 2], 10);
-        this.exercise = new Exercise(exerciseId);
-        this.exercise.fetch(() => {
-          callback();
-        });
-      },
-      error: () => {
-        console.error('Could not download paste');
-      },
-      url: `${this.baseUrl}${this.id}.json`,
+      $.ajax({
+        beforeSend: Authentication.xhrBasicAuthentication,
+        data: {
+          api_version: Constants.apiVersion,
+          include_files: 1,
+        },
+        success: (paste) => {
+          this.data = paste;
+          const solutionParts = paste.solution_url.split('/');
+          const exerciseId = parseInt(solutionParts[solutionParts.length - 2], 10);
+          this.exercise = new Exercise(exerciseId);
+          this.exercise.fetch(() => {
+            resolve();
+          });
+        },
+        error: () => {
+          console.error('Could not download paste');
+          reject();
+        },
+        url: `${this.baseUrl}${this.id}.json`,
+      });
     });
   }
 

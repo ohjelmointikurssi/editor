@@ -36,25 +36,24 @@ export default class Editor {
     this.createOutputContainer();
   }
 
-  start() {
-    this.exercise.fetchZip(() => {
-      const files = this.exercise.getVisibleFilesFromSource();
+  async start() {
+    await this.exercise.fetchZip();
+    const files = this.exercise.getVisibleFilesFromSource();
 
-      this.filename = files[0].name;
-      const content = this.exercise.getFile(this.filename).asText();
+    this.filename = files[0].name;
+    const content = this.exercise.getFile(this.filename).asText();
 
-      // Render
-      this.render(files);
-      this.setFileMode(this.filename);
-      this.show(content);
-      this.createMarkers(this.filename);
+    // Render
+    this.render(files);
+    this.setFileMode(this.filename);
+    this.show(content);
+    this.createMarkers(this.filename);
 
-      // Set active tab
-      $('.tab-bar li', this.container).first().addClass('active');
+    // Set active tab
+    $('.tab-bar li', this.container).first().addClass('active');
 
-      this.editor.on('change', this.snapshotHandler.bind(this));
-      this.editor.on('change', this.saveToLocalStorageHandler.bind(this));
-    });
+    this.editor.on('change', this.snapshotHandler.bind(this));
+    this.editor.on('change', this.saveToLocalStorageHandler.bind(this));
   }
 
   configure(editor) {

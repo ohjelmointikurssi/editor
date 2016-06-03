@@ -10,23 +10,24 @@ export default class Exercise {
     this.id = id;
   }
 
-  fetch(callback) {
-    if (this.exercise !== undefined) {
-      callback();
-      return;
-    }
+  fetch() {
+    return new Promise((resolve, reject) => {
+      if (this.exercise !== undefined) {
+        resolve();
+        return;
+      }
 
-
-    $.ajax({
-      beforeSend: Authentication.xhrBasicAuthentication,
-      data: {
-        api_version: Constants.apiVersion,
-      },
-      success: (exercise) => {
-        this.exercise = exercise;
-        callback();
-      },
-      url: `${this.baseUrl}${this.id}.json`,
+      $.ajax({
+        beforeSend: Authentication.xhrBasicAuthentication,
+        data: {
+          api_version: Constants.apiVersion,
+        },
+        success: (exercise) => {
+          this.exercise = exercise;
+          resolve();
+        },
+        url: `${this.baseUrl}${this.id}.json`,
+      });
     });
   }
 
@@ -66,13 +67,20 @@ export default class Exercise {
     });
   }
 
-  downloadZip(url, callback) {
-    JSZipUtils.getBinaryContent(url, (error, data) => {
-      if (error) {
-        throw new Error(error);
-      }
-
-      callback(new JSZip(data));
+  downloadZip(url) {
+    return new Promise((resolve, reject) => {
+      JSZipUtils.getBinaryContent(url, (error, data) => {
+        if (error) {
+          throw new Error(error);
+        }
+        const zip = new JSZip(data);
+        this.zip = zip;
+        this.getSourcePath();
+        this.storeOriginalZip(zip);
+        this.restoreCodeFromLocalStorage();
+        this.storeCodeToLocalStorage();
+        resolve();
+      });
     });
   }
 
@@ -82,20 +90,16 @@ export default class Exercise {
     this.storeOriginalZip(zip);
   }
 
-  fetchZip(callback) {
-    if (this.zip) {
-      callback();
-      return;
-    }
+  async fetchZip() {
+    return new Promise(async function(resolve, reject) {
+      if (this.zip) {
+        resolve();
+        return;
+      }
 
-    this.downloadZip(`${this.baseUrl}${this.id}.zip`, (zip) => {
-      this.zip = zip;
-      this.getSourcePath();
-      this.storeOriginalZip(zip);
-      this.restoreCodeFromLocalStorage();
-      this.storeCodeToLocalStorage();
-      callback();
-    });
+      await this.downloadZip(`${this.baseUrl}${this.id}.zip`);
+      resolve();
+    }.bind(this));
   }
 
   storeOriginalZip(zip) {
@@ -157,35 +161,6 @@ export default class Exercise {
       beforeSend: Authentication.xhrBasicAuthentication,
       success: callback,
       error: fallback,
-    });
-  }
-
-  fetchLastSubmission(callback, error, processing) {
-    if (this.lastSubmission !== undefined) {
-      callback(this.lastSubmission);
-      return;
-    }
-
-    if (this.exercise.submissions.length === 0) {
-      error();
-      return;
-    }
-
-    const id = this.exercise.submissions[0].id;
-    const url = `${Constants.server}/submissions/${id}.json?api_version=${Constants.apiVersion}`;
-
-    $.ajax({
-      url,
-      beforeSend: Authentication.xhrBasicAuthentication,
-
-      success: (data) => {
-        if (data.status === 'processing') {
-          processing(url);
-          return;
-        }
-        this.lastSubmission = data;
-        callback(this.lastSubmission);
-      },
     });
   }
 
@@ -305,9 +280,5 @@ export default class Exercise {
 
   removeFile(filename) {
     this.zip.remove(filename);
-  }
-
-  setLastSubmission(lastSubmission) {
-    this.lastSubmission = lastSubmission;
   }
 }
