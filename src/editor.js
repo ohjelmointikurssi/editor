@@ -7,6 +7,7 @@ import Output from './output.js';
 import Execution from './execution.js';
 import Share from './share.js';
 import editorTemplate from './templates/Editor.template';
+import TestRun from './tester/test_run.js';
 
 export default class Editor {
   constructor(container, exercise) {
@@ -38,7 +39,12 @@ export default class Editor {
 
   async start() {
     await this.exercise.fetchZip();
-    const files = this.exercise.getVisibleFilesFromSource();
+    let files;
+    if (localStorage.getItem('showall') === 'true') {
+      files = this.exercise.getAllFilesFromSource();
+    } else {
+      files = this.exercise.getVisibleFilesFromSource();
+    }
 
     this.filename = files[0].name;
     const content = this.exercise.getFile(this.filename).asText();
@@ -87,9 +93,7 @@ export default class Editor {
         }
         try {
           this.folds.push(this.editor.session.addFold('', new Range(lockLine, 0, lockLine, 900)));
-        } catch (e) {
-          console.warn('Problems with adding folds');
-        }
+        } catch (e) {}
       });
     });
   }
@@ -171,6 +175,13 @@ export default class Editor {
     });
   }
 
+  createTestHandler() {
+    $('.actions .test', this.container).first().click(() => {
+      const test_run = new TestRun(this.exercise.getFiles());
+      test_run.start();
+    });
+  }
+
   render(files) {
     const attr = {
       title: this.exercise.getName(),
@@ -195,6 +206,7 @@ export default class Editor {
     share.handleClicks();
     this.createResetHandler();
     this.createRunHandler();
+    this.createTestHandler();
     this.createKeyboardHandler();
   }
 

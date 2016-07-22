@@ -27,6 +27,7 @@ const config = {
           test: /\.(scss|sass)$/,
           loader: ExtractTextPlugin.extract('style', ['css-loader', 'postcss-loader', 'sass-loader'])
       },
+      { test: /\.raw$/, loader: "raw" },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,

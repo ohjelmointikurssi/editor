@@ -45,8 +45,12 @@ export default class Exercise {
       throw new Error('Cannot use local storage without exercise metadata');
     }
     const currentFiles = {};
-    Object.getOwnPropertyNames(this.getFiles())
-      .filter(o => o.endsWith('.js') && !o.endsWith('test.js'))
+    let filenames = Object.getOwnPropertyNames(this.getFiles())
+      .filter(o => o.endsWith('.js'));
+    if (localStorage.getItem('showall') !== 'true') {
+      filenames = filenames.filter(o => !o.endsWith('test.js'));
+    }
+    filenames
       .sort()
       .forEach((o) => {
         currentFiles[o] = this.zip.files[o].asText();
@@ -214,8 +218,16 @@ export default class Exercise {
     return this.zip.file(filename);
   }
 
+  getAllFilesFromSource() {
+    return this.zip.file(/.*\.js$/);
+  }
+
   getFilesFromSource() {
     return this.zip.file(/src(?!\/\.).*/);
+  }
+
+  getTestFilesFromSource() {
+    return this.zip.file(/test(?!\/\.).*/);
   }
 
   getVisibleFilesFromSource() {

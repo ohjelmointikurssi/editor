@@ -1,0 +1,115 @@
+var files;
+
+// Helpers for importing code
+function fileContents(path) {
+  return files[path];
+}
+
+function importingFile(path) {
+  return () => {
+    eval(fileContents(path));
+  };
+}
+
+function setupEnvironment(mocha, chai) {
+  const assert = chai.assert;
+
+  mocha.setup('bdd');
+
+  // Make chai to output student-friendly messages
+  chai.use(function(chai, utils) {
+    var Assertion = chai.Assertion;
+    Assertion.overwriteMethod('throw', function(_super) {
+      return function betterThrow (_, message) {
+        try {
+          var flag = utils.flag;
+          _super.apply(this, arguments);
+        } catch (e) {
+          if (message === undefined) {
+            throw e;
+          }
+          this.assert(flag(this, 'negate'), message, message, e.expected, e.actual);
+        }
+      }
+    });
+
+    Assertion.overwriteMethod('equal', function(_super) {
+      return function betterEqual (_, message) {
+        try {
+          var flag = utils.flag;
+          _super.apply(this, [arguments[0]]);
+        } catch (e) {
+          if (message === undefined) {
+            throw e;
+          }
+          this.assert(flag(this, 'negate'), message, message, e.expected, e.actual);
+        }
+      }
+    });
+
+    Assertion.overwriteMethod('match', function(_super) {
+      return function betterMatch (_, message) {
+        try {
+          var flag = utils.flag;
+          _super.apply(this, [arguments[0]]);
+        } catch (e) {
+          if (message === undefined) {
+            throw e;
+          }
+          this.assert(flag(this, 'negate'), message, message, e.expected, e.actual);
+        }
+      }
+    });
+  });
+}
+
+function runTests(_testSource, mocha, chai) {
+  const expect = chai.expect;
+  eval(_testSource);
+  mocha.run()
+  .on('pass', function(test) {
+    var pass = {
+      result: test.state,
+      title: test.title,
+    }
+    passed.push(pass);
+  })
+  .on('fail', function(test, error) {
+    var fail = {
+      result: test.state,
+      timedOut: test.timedOut,
+      title: test.title,
+      error: error.message
+    }
+    failed.push(fail);
+  })
+  .on('end', function() {
+    var result = {
+      status: 'complete',
+      passed,
+      failed,
+    };
+    postMessage(result);
+  });
+}
+
+var passed = [];
+var failed = [];
+
+onmessage = function(event) {
+  var message = event.data;
+  const url = message.url;
+  importScripts(url + '/assets/mocha.min.js');
+  importScripts( url + '/assets/chai.min.js');
+
+  setupEnvironment(mocha, chai);
+
+  // Dont't try to write test results to the document
+  mocha.reporter(function(){})
+
+  var testSource = message.testSource;
+  files = message.files;
+  runTests(testSource, mocha, chai);
+}
+
+postMessage({ status: 'ready'});
