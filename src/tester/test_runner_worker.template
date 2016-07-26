@@ -60,6 +60,20 @@ function setupEnvironment(mocha, chai) {
         }
       }
     });
+
+    // Overwriting 'a' or 'an' breaks too many things
+    Assertion.addMethod('type', function(type, message) {
+        try {
+          var flag = utils.flag;
+          var obj = flag(this, 'object');
+          new Assertion(obj).to.be.a(type);
+        } catch (e) {
+          if (message === undefined) {
+            throw e;
+          }
+          this.assert(flag(this, 'negate'), message, message, e.expected, e.actual);
+        }
+    });
   });
 }
 
@@ -101,6 +115,7 @@ onmessage = function(event) {
   const url = message.url;
   importScripts(url + '/assets/mocha.min.js');
   importScripts( url + '/assets/chai.min.js');
+  importScripts( url + '/assets/sinon.min.js');
 
   setupEnvironment(mocha, chai);
 

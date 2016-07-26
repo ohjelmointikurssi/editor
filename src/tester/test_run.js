@@ -62,7 +62,7 @@ export default class TestRun {
       console.info('Failed tests: ');
     }
     this.failed.forEach((failure) => {
-      console.info(`>> Title: %c${failure.title}%c, error: %c${failure.error}%c.`, 'color: blue', 'color: black', 'color: red', 'color: black');
+      console.info(`>> Title: %c${failure.title}%c, error: %c${failure.error}%c`, 'color: blue', 'color: black', 'color: red', 'color: black');
     });
   }
 }
