@@ -113,9 +113,9 @@ var failed = [];
 onmessage = function(event) {
   var message = event.data;
   const url = message.url;
-  importScripts(url + '/assets/mocha.min.js');
-  importScripts( url + '/assets/chai.min.js');
-  importScripts( url + '/assets/sinon.min.js');
+  importScripts(url + '/js/mocha.min.js');
+  importScripts( url + '/js/chai.min.js');
+  importScripts( url + '/js/sinon.min.js');
 
   setupEnvironment(mocha, chai);
 

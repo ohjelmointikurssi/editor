@@ -10,6 +10,7 @@ _SpecRunner.html
 coverage/
 demo/assets/*.css
 demo/assets/*.js
+demo/js
 !demo/assets/js/vendor/
 dist/
 node_modules/
