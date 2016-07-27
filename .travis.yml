@@ -10,7 +10,6 @@ before_script:
   - git config --global user.name "hnbot"
   - git config --global user.email "nygrenh+hnbot@gmail.com"
 script:
-  - npm run lint src/
   - webpack
 after_success:
   - mkdir cdn
