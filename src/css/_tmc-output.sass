@@ -97,12 +97,34 @@ $actions-color: #000
   &:hover
     color: lighten($actions-color, 50%)
 
-$output-padding: 30px
+
 .output-content
-  padding: $output-padding
-  height: $output-height
+  height: $output-height - 37px
+  display: flex
+  flex-direction: column
 
 .program-output
   list-style-type: none
   overflow: auto
-  height: $output-height - ($output-padding * 2)
+  max-height: $output-height - (30px * 2)
+  flex: 1
+
+.magic-hint
+  min-width: 200px
+  margin: 5px 0px
+  border-top: 1px solid lightgray
+  padding: 10px
+  text-align: center
+
+  .fa
+    font-weight: bold
+    font-size: 30px
+    padding-right: 15px
+    vertical-align: middle
+
+.output-title
+  padding: 0 10px
+  line-height: 45px
+  h2
+    font-size: 25px !important
+    font-weight: bold !important

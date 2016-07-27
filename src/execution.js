@@ -1,3 +1,4 @@
+import TestRun from './tester/test_run.js';
 import codeTemplate from './templates/Code.template';
 import gameTemplate from './templates/Game.template';
 import $ from 'jquery';
@@ -10,12 +11,13 @@ export default class Execution {
     this.errors = new Set();
     this.gameFrameReady = false;
     this.gameFrame = document.getElementById(`game-frame-${id}`);
-
+    this.files = files;
     this.isGame = Execution.determineIsGame(files);
     this.code = this.concatenateFilesToCode(files);
   }
 
   run() {
+    this.output.clearMetadata();
     this.gameFrame.src = '';
     // We want to give the iframe an opportunity to reload.
     setTimeout(this.doRun.bind(this), 100);
@@ -88,10 +90,15 @@ export default class Execution {
           this.stopGame();
           this.errors.add(e.data.error);
           this.output.renderError(this.errors);
+          this.onEvaluationDone();
         }
         if (e.data.stop) {
           this.stopGame();
         }
+        if (e.data.evaluationDone) {
+          this.onEvaluationDone();
+        }
+        console.log(e.data)
       }
     });
     window.addEventListener('message', this.iframeListener);
@@ -104,6 +111,17 @@ export default class Execution {
     window.removeEventListener('message', this.iframeListener);
   }
 
+  async onEvaluationDone() {
+    console.info('Evaluation done.')
+    const test_run = new TestRun(this.files);
+    const results = await test_run.run();
+    const failed = results.failed;
+    if (failed.length > 0) {
+      this.output.addHint(failed[0].error);
+    } else {
+      this.output.addPassed();
+    }
+  }
 
   static determineIsGame(files) {
     const gameFiles = Object.getOwnPropertyNames(files)

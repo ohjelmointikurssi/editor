@@ -1,10 +1,23 @@
 <section class='output-actions'>
     <i class='fa fa-close close'></i>
 </section>
-<div class="output-content">
-  <ul class="program-output">
+<div class="output-title">
+  <h2>{{title}}
+  {{#if passed}}
+    <span class='passed'>(läpi)</span>
+  {{else}}
+    <span class='failed'>(ei läpi)</span>
+  {{/if}}
+  </h2>
+</div>
+<div class='output-content'>
+  <ul class='program-output'>
     {{#each lines}}
       <li>{{this}}</li>
     {{/each}}
   </ul>
+  {{#if hint}}
+    <div class='magic-hint'><i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+{{hint}}</div>
+  {{/if}}
 </div>

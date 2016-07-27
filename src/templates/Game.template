@@ -46,6 +46,19 @@
     }
   }
 
+  function evaluationDone() {
+    var msg = {
+      source: {{id}},
+      evaluationDone: true,
+    }
+
+    if (_mainWindow) {
+      _mainWindow.postMessage(msg, _url);
+    } else {
+      console.warn("Unable to send a message because I don't know the main window.");
+    }
+  }
+
   function _stopGame() {
     var msg = {
       source: {{id}},
@@ -102,6 +115,7 @@
     if (!{{isGame}} && !programHasCommunicated) {
       showMessage("Ohjelma ei tulostanut mitään.");
     }
+    evaluationDone();
   });
 
     document.getElementById('stop-game').addEventListener('click', _stopGame);

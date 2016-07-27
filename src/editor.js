@@ -178,7 +178,7 @@ export default class Editor {
   createTestHandler() {
     $('.actions .test', this.container).first().click(() => {
       const test_run = new TestRun(this.exercise.getFiles());
-      test_run.start();
+      test_run.run();
     });
   }
 
