@@ -4,20 +4,21 @@ branches:
   only:
     - master
 before_install:
-  - npm install -g grunt-cli
+  - npm install -g webpack uglifyjs
   - gem install sass
 before_script:
   - git config --global user.name "hnbot"
   - git config --global user.email "nygrenh+hnbot@gmail.com"
 script:
   - npm run lint src/
-  - grunt build
+  - webpack
 after_success:
   - mkdir cdn
-  - cp demo/assets/js/*.js cdn
-  - cp demo/assets/css/*.css cdn
+  - cp demo/assets/*.js cdn
+  - cp demo/assets/*.css cdn
   - cp -r demo/assets/images/ cdn/images
   - cd cdn
+  - uglifyjs tmc-web-client.js > tmc-web-client.min.js
   - git init
   - git add .
   - git commit -m "Add compiled files to CDN"
