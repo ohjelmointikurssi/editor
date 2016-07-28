@@ -293,4 +293,17 @@ export default class Exercise {
   removeFile(filename) {
     this.zip.remove(filename);
   }
+
+  isCompleted() {
+    const completionKey = `complete-${this.localStorageKey()}`;
+    return localStorage['complete'] === 'true';
+  }
+
+  setComplete() {
+    const completionKey = `complete-${this.localStorageKey()}`;
+    localStorage['complete'] = 'true';
+    const exerciseContainer = document.getElementById(`exercise-${this.id}`);
+    const completionIndicator = exerciseContainer.querySelector('.completion-status');
+    completionIndicator.className += ' completed';
+  }
 }

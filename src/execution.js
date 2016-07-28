@@ -4,16 +4,17 @@ import gameTemplate from './templates/Game.template';
 import $ from 'jquery';
 
 export default class Execution {
-  constructor(id, files, output) {
-    this.id = id;
+  constructor(exercise, output) {
+    this.exercise = exercise;
+    this.id = this.exercise.id,
     this.output = output;
     this.messages = [];
     this.errors = new Set();
     this.gameFrameReady = false;
-    this.gameFrame = document.getElementById(`game-frame-${id}`);
-    this.files = files;
-    this.isGame = Execution.determineIsGame(files);
-    this.code = this.concatenateFilesToCode(files);
+    this.gameFrame = document.getElementById(`game-frame-${this.id}`);
+    this.files = this.exercise.getFiles();
+    this.isGame = Execution.determineIsGame(this.files);
+    this.code = this.concatenateFilesToCode(this.files);
   }
 
   run() {
@@ -120,6 +121,7 @@ export default class Execution {
       this.output.addHint(failed[0].error);
     } else {
       this.output.addPassed();
+      this.exercise.setComplete();
     }
   }
 

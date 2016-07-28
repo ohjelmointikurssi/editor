@@ -7,7 +7,7 @@ $active-tab-background: #3498db
   position: relative
   margin-right: 10px
   font-family: 'Helvetica Neue', sans-serif
-  h1, h2
+  h1, h2, .completion-status
     margin: 0
     font-size: 16px
     font-weight: 500
@@ -15,10 +15,24 @@ $active-tab-background: #3498db
     font-weight: bold
     overflow: hidden
     margin: 15px
+    margin-right: 5px
     max-width: 150px
     max-height: 20px
     text-overflow: ellipsis
     color: white
+  i.completion-status
+    color: #f39c12
+    line-height: 23px !important
+    position: relative
+    bottom: -2px
+    margin-right: 10px
+    &.completed
+      color: #27ae60
+  .exercise-title-container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    line-height: 23px !important
   a
     color: #4c657d
   a:hover

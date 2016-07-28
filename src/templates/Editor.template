@@ -1,5 +1,8 @@
 <div class='exercise-sidebar'>
-    <h1 class='name'>{{title}}</h1>
+    <div class='exercise-title-container'>
+      <h1 class='name'>{{title}}</h1>
+      <i class="fa fa-circle completion-status{{#if completed}} completed{{/if}}" aria-hidden="true"></i>
+    </div>
     <ul class='tab-bar'>
         {{#each files}}
             <li data-id="{{this.path}}">{{this.name}}</li>

@@ -170,7 +170,7 @@ export default class Editor {
 
   createRunHandler() {
     $('.actions .run', this.container).first().click(() => {
-      const execution = new Execution(this.exercise.id, this.exercise.getFiles(), this.output);
+      const execution = new Execution(this.exercise, this.output);
       execution.run();
     });
   }
@@ -190,6 +190,7 @@ export default class Editor {
         const path = f.name;
         return { name, path };
       }),
+      completed: this.exercise.isCompleted(),
     };
 
     // Render editor
