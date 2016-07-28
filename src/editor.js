@@ -7,7 +7,6 @@ import Output from './output.js';
 import Execution from './execution.js';
 import Share from './share.js';
 import editorTemplate from './templates/Editor.template';
-import TestRun from './tester/test_run.js';
 
 export default class Editor {
   constructor(container, exercise) {
@@ -175,13 +174,6 @@ export default class Editor {
     });
   }
 
-  createTestHandler() {
-    $('.actions .test', this.container).first().click(() => {
-      const test_run = new TestRun(this.exercise.getFiles());
-      test_run.run();
-    });
-  }
-
   render(files) {
     const attr = {
       title: this.exercise.getName(),
@@ -207,7 +199,6 @@ export default class Editor {
     share.handleClicks();
     this.createResetHandler();
     this.createRunHandler();
-    this.createTestHandler();
     this.createKeyboardHandler();
   }
 

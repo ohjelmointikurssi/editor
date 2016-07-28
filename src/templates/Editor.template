@@ -11,7 +11,6 @@
 
     <section class='actions'>
       <button class='run' type="button"><i class="fa fa-play"></i><span class='button-text'>Käynnistä</span></button>
-      <button class='test' type="button"><i class="fa fa-refresh"></i><span class='button-text'>Testaa</span></button>
       <button class='reset' type="button"><i class="fa fa-undo"></i><span class='button-text'>Nollaa</span></button>
     </section>
     <hr class="button-separator">
