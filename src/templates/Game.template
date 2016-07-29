@@ -96,6 +96,9 @@
 
     var showMessage = function(message) {
       programHasCommunicated = true;
+      if (message === undefined) {
+        message = "ei määritelty";
+      }
       if (message.constructor === Array) {
         message = JSON.stringify(message, null, ' ');
       }
