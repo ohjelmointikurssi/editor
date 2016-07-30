@@ -33,7 +33,7 @@ export default class Execution {
       $('body').addClass('overlay-open');
     }
 
-    const gameTemplateString = gameTemplate({ id: this.id, code: this.code, isGame: this.isGame.toString() });
+    const gameTemplateString = gameTemplate({ id: this.id, code: this.code, isGame: this.isGame });
     this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplateString)}`;
     this.createStopGameHandler();
     this.waitForGameIframe();
@@ -99,7 +99,6 @@ export default class Execution {
         if (e.data.evaluationDone) {
           this.onEvaluationDone();
         }
-        console.log(e.data)
       }
     });
     window.addEventListener('message', this.iframeListener);

@@ -12,122 +12,140 @@
       height: 600px;
     }
   </style>
-</head>
 
-<body>
+  {{#if isGame}}
+    <script src="https://cdn.jsdelivr.net/phaser/2.4.4/phaser.js" crossorigin="anonymous"></script>
+  {{/if}}
 
-<div class="game active" id="game-{{id}}">
-  <a id="stop-game" href="#" title="stop-game" class="close">Pysäytä</a>
-  <div id="game-area-{{id}}" class="game-area"></div>
-</div>
+  <script>
+    {{#if isGame}}
+      var isGame = true;
+    {{else}}
+      var isGame = false;
+    {{/if}}
+    console.info('Game frame loaded');
+    //var _url = (window.location != window.parent.location) ? document.referrer: document.location;
+    var _url = '*';
+    var programHasCommunicated = false;
 
-<script src="https://cdn.jsdelivr.net/phaser/2.4.4/phaser.js" crossorigin="anonymous"></script>
-
-<script>
-  var _mainWindow = null;
-  console.info('Game frame loaded');
-  //var _url = (window.location != window.parent.location) ? document.referrer: document.location;
-  var _url = '*';
-  var programHasCommunicated = false;
-
-  var sendError = function(message) {
-    programHasCommunicated = true;
-    if (message === NaN) {
-      message = "Ei ole numero";
-    }
-    var msg = {
-      source: {{id}},
-      error: message
-    }
-    if (_mainWindow) {
-      _mainWindow.postMessage(msg, _url);
-    } else {
-      console.warn("Unable to display a error message because I don't know who the main window is.");
-    }
-  }
-
-  function evaluationDone() {
-    var msg = {
-      source: {{id}},
-      evaluationDone: true,
-    }
-
-    if (_mainWindow) {
-      _mainWindow.postMessage(msg, _url);
-    } else {
-      console.warn("Unable to send a message because I don't know the main window.");
-    }
-  }
-
-  function _stopGame() {
-    var msg = {
-      source: {{id}},
-      stop: true
-    }
-    if (_mainWindow) {
-      _mainWindow.postMessage(msg, _url);
-    } else {
-      console.warn("Unable to to close the dialog because I don't know who the main window is.");
-    }
-  }
-
-  var _messageCount = 0;
-  window.addEventListener('message', function(_event) {
-    if (_mainWindow === null) {
-      _mainWindow = _event.source;
-    }
-    if (_event.data == 'ready') {
-      var ready = typeof Phaser !== 'undefined';
-      if (_messageCount > 200) {
-        ready = true;
+    var sendError = function(message) {
+      programHasCommunicated = true;
+      if (message === NaN) {
+        message = "Ei ole numero";
       }
       var msg = {
-        ready: ready,
-        source: {{id}}
-      }
-      _event.source.postMessage(msg, _url);
-      _messageCount++;
-      return;
-    }
-    // A dirty workaround to mitigate a missing DOMContentLoaded event.
-    if (Phaser.Device._readyCheck) {
-      Phaser.Device._readyCheck();
-    }
-
-    var showMessage = function(message) {
-      programHasCommunicated = true;
-      if (message === undefined) {
-        message = "ei määritelty";
-      }
-      if (message.constructor === Array) {
-        message = JSON.stringify(message, null, ' ');
-      }
-      var msg =  {
         source: {{id}},
-        message: message
+        error: message
       }
-      _event.source.postMessage(msg, _url);
+      if (window.parent) {
+        window.parent.postMessage(msg, _url);
+      } else {
+        console.warn("Unable to display a error message because I don't know who the main window is.");
+      }
     }
 
-    try {
-      console.info('Evaluating code...');
-      eval(_event.data);
-    } catch (error) {
-      sendError(error.toString());
-    }
-    if (!{{isGame}} && !programHasCommunicated) {
-      showMessage("Ohjelma ei tulostanut mitään.");
-    }
-    evaluationDone();
-  });
+    function evaluationDone() {
+      var msg = {
+        source: {{id}},
+        evaluationDone: true,
+      }
 
-    document.getElementById('stop-game').addEventListener('click', _stopGame);
+      if (window.parent) {
+        window.parent.postMessage(msg, _url);
+      } else {
+        console.warn("Unable to send a message because I don't know the main window.");
+      }
+    }
+
+    function _stopGame() {
+      var msg = {
+        source: {{id}},
+        stop: true
+      }
+      if (window.parent) {
+        window.parent.postMessage(msg, _url);
+      } else {
+        console.warn("Unable to to close the dialog because I don't know who the main window is.");
+      }
+    }
+
+    var _messageCount = 0;
+    window.addEventListener('message', function(_event) {
+      if (_event.data == 'ready') {
+        {{#if isGame}}
+          var ready = typeof Phaser !== 'undefined';
+        {{else}}
+          var ready = true;
+        {{/if}}
+        if (_messageCount > 200) {
+          ready = true;
+        }
+        var msg = {
+          ready: ready,
+          source: {{id}}
+        }
+        window.parent.postMessage(msg, _url);
+        _messageCount++;
+        return;
+      }
+      {{#if isGame}}
+        // A dirty workaround to mitigate a missing DOMContentLoaded event.
+        if (Phaser.Device._readyCheck) {
+          Phaser.Device._readyCheck();
+        }
+      {{/if}}
+
+      var showMessage = function(message) {
+        programHasCommunicated = true;
+        if (message === undefined) {
+          message = "ei määritelty";
+        }
+        if (message.constructor === Array) {
+          message = JSON.stringify(message, null, ' ');
+        }
+        var msg =  {
+          source: {{id}},
+          message: message
+        }
+        window.parent.postMessage(msg, _url);
+      }
+
+      try {
+        console.info('Evaluating code...');
+        eval(_event.data);
+      } catch (error) {
+        sendError(error.toString());
+      }
+      if (!{{isGame}} && !programHasCommunicated) {
+        showMessage("Ohjelma ei tulostanut mitään.");
+      }
+      evaluationDone();
+    });
+
+    function stopGameHandler() {
+      if (document.getElementById('stop-game')) {
+        document.getElementById('stop-game').addEventListener('click', _stopGame);
+      } else {
+        window.setTimeout(stopGameHandler, 100);
+      }
+    }
+
+
     window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
       if (url === window.location.href) {
         programHasCommunicated = true;
         sendError(errorMsg)
       }
     }
-</script>
+  </script>
+</head>
+
+<body>
+
+  <div class="game active" id="game-{{id}}">
+    <a id="stop-game" href="#" title="stop-game" class="close">Pysäytä</a>
+    <div id="game-area-{{id}}" class="game-area"></div>
+  </div>
+
 </body>
 </html>
