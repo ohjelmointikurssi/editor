@@ -28,7 +28,7 @@ export default class Execution {
     this.startIframeListener();
     if (this.isGame) {
       $(`#game-area-${this.id}`).html('');
-      $(`#game-frame-${this.id}`).removeClass('inactive');
+      $(`#game-${this.id}`).addClass('active');
       $('#background-overlay').addClass('active');
       $('body').addClass('overlay-open');
     }
@@ -60,7 +60,7 @@ export default class Execution {
   stopGame() {
     $('#background-overlay').removeClass('active');
     $('body').removeClass('overlay-open');
-    $(`#game-frame-${this.id}`).addClass('inactive');
+    $(`#game-${this.id}`).removeClass('active');
     this.stopIframeListener();
     // This should kill all the remaining processes
     this.gameFrame.src = '';
