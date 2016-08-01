@@ -296,12 +296,12 @@ export default class Exercise {
 
   isCompleted() {
     const completionKey = `complete-${this.localStorageKey()}`;
-    return localStorage['complete'] === 'true';
+    return localStorage[completionKey] === 'true';
   }
 
   setComplete() {
     const completionKey = `complete-${this.localStorageKey()}`;
-    localStorage['complete'] = 'true';
+    localStorage[completionKey] = 'true';
     const exerciseContainer = document.getElementById(`exercise-${this.id}`);
     const completionIndicator = exerciseContainer.querySelector('.completion-status');
     completionIndicator.className += ' completed';
