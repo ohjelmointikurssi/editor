@@ -10,11 +10,11 @@
     </ul>
 
     <section class='actions'>
-      <button class='run' type="button"><i class="fa fa-play"></i><span class='button-text'>Käynnistä</span></button>
-      <button class='reset' type="button"><i class="fa fa-undo"></i><span class='button-text'>Nollaa</span></button>
+      <div class='run button'><i class="fa fa-play"></i><span class='button-text'>Käynnistä</span></div>
+      <div class='reset button'><i class="fa fa-undo"></i><span class='button-text'>Nollaa</span></div>
     </section>
     <hr class="button-separator">
     <section class='actions'>
-      <button class='share' type="button"><i class="fa fa-share-alt"></i><span class='button-text'>Jaa</span></button>
+      <div class='share button'><i class="fa fa-share-alt"></i><span class='button-text'>Jaa</span></div>
     </section>
 </div>
