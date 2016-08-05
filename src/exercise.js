@@ -173,6 +173,15 @@ export default class Exercise {
     return exerciseName.substring(exerciseName.lastIndexOf('.') + 1);
   }
 
+  getShortName() {
+    let title = this.getName();
+    let index = title.indexOf('-');
+    if (index >= 0) {
+      title = title.substring(index + 1);
+    }
+    return title;
+  }
+
   getExerciseName() {
     return this.exercise.exercise_name;
   }

@@ -176,7 +176,7 @@ export default class Editor {
 
   render(files) {
     const attr = {
-      title: this.exercise.getName(),
+      title: this.exercise.getShortName(),
       files: files.map((f) => {
         const name = f.name.split('/').pop();
         const path = f.name;
