@@ -3,11 +3,6 @@
 </section>
 <div class="output-title">
   <h2>{{title}}
-  {{#if passed}}
-    <span class='passed'>(läpi)</span>
-  {{else}}
-    <span class='failed'>(ei läpi)</span>
-  {{/if}}
   </h2>
 </div>
 <div class='output-content'>
@@ -17,7 +12,7 @@
     {{/each}}
   </ul>
   {{#if hint}}
-    <div class='magic-hint'><i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+    <div class='magic-hint'><i class="fa {{#if passed}}fa-thumbs-o-up{{else}}fa-lightbulb-o{{/if}}" aria-hidden="true"></i>
 {{hint}}</div>
   {{/if}}
 </div>

@@ -120,9 +120,6 @@ export default class Execution {
     if (failed.length > 0) {
       this.output.addHint(failed[0].error, this.isGame);
     } else {
-      if (!this.isGame) {
-        this.output.addPassed();
-      }
       this.exercise.setComplete();
       this.output.addCompleteMessage(this.isGame);
     }

@@ -67,17 +67,16 @@ export default class Output {
   }
 
   addCompleteMessage(isGame) {
+    this.passed = true;
     if (isGame) {
       const hintIcon = '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>';
       window.setTimeout(() => {
         this.hintContainer.innerHTML = hintIcon + 'Tehtävä meni läpi.';
       }, 5000);
+    } else {
+      this.hint = 'Tehtävä meni läpi.'
+      this._render(this.templateOptions);
     }
-  }
-
-  addPassed() {
-    this.passed = true;
-    this._render(this.templateOptions);
   }
 
   renderShare(shareUrl) {
