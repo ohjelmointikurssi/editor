@@ -43,6 +43,35 @@ body
   display: none !important
   &.active
     display: block !important
+  .game-dialog-title
+    font-size: 20px
+    font-weight: bold
+    font-family: sans-serif
+    padding-bottom: 3px
+    display: block
+  .close
+    $close-color: #e74c3c
+    color: $close-color
+    transition: color .3s
+    position: absolute
+    right: 5px
+    top: 2px
+    font-size: 25px
+    &:hover
+      color: darken($close-color, 20%)
+  .game-hint
+    font-size: 18px
+    text-align: center
+    min-width: 200px
+    display: block
+    height: 15px
+    line-height: 30px
+    .fa
+      font-weight: bold
+      font-size: 30px
+      padding-right: 15px
+      vertical-align: middle
+
 
 .game-area
   display: inline-block
@@ -60,6 +89,7 @@ body
   .game
     background-color: white
     padding: 20px 30px
+    padding-top: 10px
     display: block
     position: fixed
     top: 50%

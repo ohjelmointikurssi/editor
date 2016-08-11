@@ -1,8 +1,12 @@
 <div class="exercise-area" id="exercise-{{id}}">
   <div class="code-area tmc-exercise" data-type='tmc-exercise' data-id='{{id}}'></div>
   <div class="game" id="game-{{id}}">
-    <a id="stop-game-{{id}}" href="#" title="stop-game" class="close">Pysäytä</a>
+    <span class="game-dialog-title">Tehtävän peli</span>
+    <a id="stop-game-{{id}}" href="#" title="stop-game" class="close">
+      <i class="fa fa-times-circle" aria-hidden="true"></i>
+    </a>
     <iframe sandbox="allow-scripts" id="game-frame-{{id}}" class="game-sandbox">
     </iframe>
+    <span class="game-hint"></span>
   </div>
 </div>

@@ -4,12 +4,16 @@ import OutputContainerTemplate from './templates/OutputContainer.template';
 import shareOutputContainerTemplate from './templates/ShareOutputContainer.template';
 
 export default class Output {
-  constructor(container) {
+  constructor(container, id) {
+    this.id = id;
     // Create container for submission results
     this.outputContainer = $('<div/>').addClass('tmc-output').addClass('hidden');
     this.wrapper = $('<div/>').addClass('tmc-output-wrapper').addClass('hidden');
     this.wrapper.append(this.outputContainer);
     $(container).append(this.wrapper);
+
+    var gameArea = document.getElementById(`game-${this.id}`);
+    this.hintContainer = gameArea.querySelector('.game-hint');
   }
 
   render(text) {
@@ -45,9 +49,30 @@ export default class Output {
     this.outputContainer.removeClass('hidden');
   }
 
-  addHint(hint) {
+  _renderGameHint() {
+    // We don't want to show the hint right away
+    const hintIcon = '<i class="fa fa-lightbulb-o" aria-hidden="true"></i>';
+    window.setTimeout(() => {
+      this.hintContainer.innerHTML = hintIcon + this.hint;
+    }, 5000);
+  }
+
+  addHint(hint, isGame) {
     this.hint = hint;
-    this._render(this.templateOptions);
+    if (isGame) {
+      this._renderGameHint();
+    } else {
+      this._render(this.templateOptions);
+    }
+  }
+
+  addCompleteMessage(isGame) {
+    if (isGame) {
+      const hintIcon = '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>';
+      window.setTimeout(() => {
+        this.hintContainer.innerHTML = hintIcon + 'Tehtävä meni läpi.';
+      }, 5000);
+    }
   }
 
   addPassed() {
@@ -78,6 +103,7 @@ export default class Output {
 
   clear() {
     this.outputContainer.empty();
+    this.hintContainer.textContent = '';
   }
 
   clearMetadata() {

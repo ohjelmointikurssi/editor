@@ -149,7 +149,7 @@ export default class Editor {
   }
 
   createOutputContainer() {
-    this.output = new Output(this.container);
+    this.output = new Output(this.container, this.exercise.id);
   }
 
   createResetHandler() {

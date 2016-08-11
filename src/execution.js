@@ -19,6 +19,7 @@ export default class Execution {
 
   run() {
     this.output.clearMetadata();
+    this.output.clear();
     this.gameFrame.src = '';
     // We want to give the iframe an opportunity to reload.
     setTimeout(this.doRun.bind(this), 100);
@@ -117,10 +118,13 @@ export default class Execution {
     const results = await test_run.run();
     const failed = results.failed;
     if (failed.length > 0) {
-      this.output.addHint(failed[0].error);
+      this.output.addHint(failed[0].error, this.isGame);
     } else {
-      this.output.addPassed();
+      if (!this.isGame) {
+        this.output.addPassed();
+      }
       this.exercise.setComplete();
+      this.output.addCompleteMessage(this.isGame);
     }
   }
 
