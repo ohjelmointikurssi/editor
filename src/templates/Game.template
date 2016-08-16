@@ -101,7 +101,7 @@
           message = "ei määritelty";
         }
         if (message.constructor === Array) {
-          message = JSON.stringify(message, null, ' ').replace(/\n/g, '');
+          message = JSON.stringify(message, null, ' ').replace(/\n/g, '').replace('[ ', '[');
         }
         var msg =  {
           source: {{id}},
