@@ -12,6 +12,9 @@ export default class Exercise {
 
   fetch() {
     return new Promise((resolve, reject) => {
+      // For now, we have no need for metadata
+      resolve();
+      return;
       if (this.exercise !== undefined) {
         resolve();
         return;
@@ -32,18 +35,12 @@ export default class Exercise {
   }
 
   localStorageKey() {
-    if (this.exercise === undefined) {
-      throw new Error('Cannot determine local storage key without exercise metadata');
-    }
-    const courseName = this.exercise.course_name;
-    const exerciseName = this.exercise.exercise_name;
+    const courseName = 'tmc-javascript-course';
+    const exerciseName = this.id;
     return `${courseName}-${exerciseName}`;
   }
 
   storeCodeToLocalStorage() {
-    if (this.exercise === undefined) {
-      throw new Error('Cannot use local storage without exercise metadata');
-    }
     const currentFiles = {};
     let filenames = Object.getOwnPropertyNames(this.getFiles())
       .filter(o => o.endsWith('.js'));
@@ -59,9 +56,6 @@ export default class Exercise {
   }
 
   restoreCodeFromLocalStorage() {
-    if (this.exercise === undefined) {
-      throw new Error('Cannot use local storage without exercise metadata');
-    }
     if (!localStorage[this.localStorageKey()]) {
       return;
     }
@@ -169,8 +163,7 @@ export default class Exercise {
   }
 
   getName() {
-    const exerciseName = this.exercise.exercise_name;
-    return exerciseName.substring(exerciseName.lastIndexOf('.') + 1);
+    return this.getFilesFromSource()[0].name.split('/')[1];
   }
 
   getShortName() {
@@ -183,11 +176,12 @@ export default class Exercise {
   }
 
   getExerciseName() {
-    return this.exercise.exercise_name;
+    const nameParts = this.getFilesFromSource()[0].name.split('/');
+    return nameParts[0] + nameParts[1];
   }
 
   getCourseName() {
-    return this.exercise.course_name;
+    return 'javascript-course';
   }
 
   getSourcePath() {

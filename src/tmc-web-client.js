@@ -26,13 +26,6 @@ export default class WebClient {
     editor.start();
   }
 
-  static initializeLogoutHandler() {
-    $('body')
-      .find('.tmc-exercise-logout')
-      .first()
-      .click(Session.logout);
-  }
-
   static addBackgroundOverlay() {
     const body = document.querySelector('body');
     const overlay = document.createElement('div');
@@ -42,14 +35,11 @@ export default class WebClient {
 
   static async initialize() {
     this.addBackgroundOverlay();
-    await Session.login();
-    this.initializeLogoutHandler();
     this.findExerciseContainers().forEach(this.initializeEditor);
   }
 
   static async initializePaste() {
     this.addBackgroundOverlay();
-    this.initializeLogoutHandler();
     await Session.login();
     // init paste
     let container = $('#tmc-paste');

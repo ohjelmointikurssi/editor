@@ -13,6 +13,7 @@ export default class Spyware {
   }
 
   submit() {
+    return;
     const old = this.snapshots;
     this.snapshots = [];
 
