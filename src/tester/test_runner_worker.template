@@ -6,7 +6,7 @@ function fileContents(path) {
 }
 
 function importingFile(path) {
-  return () => {
+  return function() {
     eval(fileContents(path));
   };
 }
@@ -100,8 +100,8 @@ function runTests(_testSource, mocha, chai) {
   .on('end', function() {
     var result = {
       status: 'complete',
-      passed,
-      failed,
+      passed: passed,
+      failed: failed,
     };
     postMessage(result);
   });
@@ -113,6 +113,7 @@ var failed = [];
 onmessage = function(event) {
   var message = event.data;
   const url = message.url;
+  importScripts(url + '/js/polyfill.min.js');
   importScripts(url + '/js/mocha.min.js');
   importScripts( url + '/js/chai.min.js');
   importScripts( url + '/js/sinon.min.js');

@@ -1,4 +1,5 @@
 import testWorkerTemplate from './test_runner_worker.template';
+import Bowser from 'bowser';
 
 export default class TestRun {
   constructor(files) {
@@ -29,8 +30,12 @@ export default class TestRun {
       this.resolve = resolve;
       this.reject = reject;
       const workerString = testWorkerTemplate();
-      const workerBlob = new Blob([workerString], {type: 'text/javascript'})
-      this.worker = new Worker(URL.createObjectURL(workerBlob));
+      const workerBlob = new Blob([workerString], {type: 'text/javascript'});
+      if (Bowser.msie || Bowser.msedge) {
+        this.worker = new Worker('/js/worker.min.js');
+      } else {
+        this.worker = new Worker(URL.createObjectURL(workerBlob));
+      }
       this.worker.onmessage = this._handleResponse.bind(this);
     });
   }

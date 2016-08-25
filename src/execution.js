@@ -2,6 +2,7 @@ import TestRun from './tester/test_run.js';
 import codeTemplate from './templates/Code.template';
 import gameTemplate from './templates/Game.template';
 import $ from 'jquery';
+import Bowser from 'bowser';
 
 export default class Execution {
   constructor(exercise, output) {
@@ -15,6 +16,7 @@ export default class Execution {
     this.files = this.exercise.getFiles();
     this.isGame = Execution.determineIsGame(this.files);
     this.code = this.concatenateFilesToCode(this.files);
+    this.secureExecutionSupported = !(Bowser.msie || Bowser.msedge);
   }
 
   run() {
@@ -35,7 +37,20 @@ export default class Execution {
     }
 
     const gameTemplateString = gameTemplate({ id: this.id, code: this.code, isGame: this.isGame });
-    this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplateString)}`;
+    if (this.secureExecutionSupported) {
+      this.gameFrame.src = `data:text/html;charset=utf-8,${encodeURI(gameTemplateString)}`;
+    } else {
+      const escapedTemplate = gameTemplateString.replace(/'/g, '"');
+      //this.gameFrame.src = `javascript:'${escapedTemplate}'`;
+      const iframe = document.createElement('iframe');
+      iframe.className = 'game-sandbox';
+      iframe.id = `game-frame-${this.exercise.id}`;
+      $(this.gameFrame).replaceWith(iframe);
+      iframe.contentWindow.document.open();
+      iframe.contentWindow.document.write(gameTemplateString);
+      iframe.contentWindow.document.close();
+      this.gameFrame = iframe;
+    }
     this.createStopGameHandler();
     this.waitForGameIframe();
   }
