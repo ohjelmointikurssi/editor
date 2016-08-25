@@ -40,7 +40,6 @@ export default class WebClient {
 
   static async initializePaste() {
     this.addBackgroundOverlay();
-    await Session.login();
     // init paste
     let container = $('#tmc-paste');
     const paramParts = window.location.search.split('=');

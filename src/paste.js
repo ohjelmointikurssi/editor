@@ -6,7 +6,7 @@ import Authentication from './authentication.js';
 
 export default class Paste {
   constructor(id) {
-    this.baseUrl = `${Constants.server}/paste`;
+    this.baseUrl = `${Constants.server}/paste/`;
     this.id = id;
   }
 
@@ -28,9 +28,7 @@ export default class Paste {
           const solutionParts = paste.solution_url.split('/');
           const exerciseId = parseInt(solutionParts[solutionParts.length - 2], 10);
           this.exercise = new Exercise(exerciseId);
-          this.exercise.fetch(() => {
-            resolve();
-          });
+          resolve();
         },
         error: () => {
           console.error('Could not download paste');
