@@ -7,6 +7,7 @@ import Editor from './editor.js';
 import Session from './session.js';
 import Paste from './paste.js';
 import exerciseTemplate from './templates/Exercise.template';
+import Constants from './constants.js'
 
 export default class WebClient {
   static findExerciseContainers() {
@@ -33,12 +34,18 @@ export default class WebClient {
     body.appendChild(overlay);
   }
 
-  static async initialize() {
+  static async initialize(server) {
+    if (server) {
+      Constants.server = server;
+    }
     this.addBackgroundOverlay();
     this.findExerciseContainers().forEach(this.initializeEditor);
   }
 
-  static async initializePaste() {
+  static async initializePaste(server) {
+    if (server) {
+      Constants.server = server;
+    }
     this.addBackgroundOverlay();
     // init paste
     let container = $('#tmc-paste');
