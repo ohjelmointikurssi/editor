@@ -35,7 +35,7 @@ export default class Exercise {
   }
 
   localStorageKey() {
-    const courseName = 'tmc-javascript-course';
+    const courseName = 'tmc-javascript-course-2';
     const exerciseName = this.id;
     return `${courseName}-${exerciseName}`;
   }
