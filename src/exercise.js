@@ -43,7 +43,8 @@ export default class Exercise {
   storeCodeToLocalStorage() {
     const currentFiles = {};
     let filenames = Object.getOwnPropertyNames(this.getFiles())
-      .filter(o => o.endsWith('.js'));
+      .filter(o => o.endsWith('.js'))
+      .filter(o => !o.startsWith('.'));
     if (localStorage.getItem('showall') !== 'true') {
       filenames = filenames.filter(o => !o.endsWith('test.js'));
     }
