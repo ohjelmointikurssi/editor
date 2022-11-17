@@ -268,7 +268,7 @@ export default class Editor {
     this.saveActiveFile();
     this.generateFullSnapshot(this.filename, 'file_change', true);
     this.clearEditor();
-    this.changeFile($(event.toElement));
+    this.changeFile($(event.target));
   }
 
   changeFile(element) {

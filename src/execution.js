@@ -85,6 +85,7 @@ export default class Execution {
   concatenateFilesToCode(files) {
     const code = Object.getOwnPropertyNames(files)
       .filter(o => o.endsWith('.js') && !o.endsWith('test.js'))
+      .filter(o => o.indexOf('.tmproject.yml') == -1)
       .sort()
       .map(o => files[o].asText())
       .join('\n');

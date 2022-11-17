@@ -5,6 +5,7 @@ export default class TestRun {
   constructor(files) {
     const fileArray = Object.getOwnPropertyNames(files)
       .filter(o => o.endsWith('.js') && !o.endsWith('test.js'))
+      .filter(o => o.indexOf('.tmproject.yml') == -1)
       .map(o => files[o])
       .map((o) => {
         let nameSplit = o.name.split('/');
@@ -30,7 +31,7 @@ export default class TestRun {
       this.resolve = resolve;
       this.reject = reject;
       const workerString = testWorkerTemplate();
-      const workerBlob = new Blob([workerString], {type: 'text/javascript'});
+      const workerBlob = new Blob([workerString], { type: 'text/javascript' });
       if (Bowser.msie || Bowser.msedge) {
         this.worker = new Worker('/js/worker.min.js');
       } else {
@@ -57,7 +58,7 @@ export default class TestRun {
       testSource: this.testSource,
       // We need this for importing dependencies inside the worker
       url: location.protocol + '//' + location.host,
-    }
+    };
     this.worker.postMessage(msg);
   }
 

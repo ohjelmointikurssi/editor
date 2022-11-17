@@ -36,7 +36,8 @@
   },
   "scripts": {
     "test": "grunt test",
-    "lint": "./node_modules/eslint/bin/eslint.js"
+    "lint": "./node_modules/eslint/bin/eslint.js",
+    "webpack": "webpack"
   },
   "engines": {
     "node": ">=0.10.28",

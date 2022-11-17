@@ -44,9 +44,9 @@ export default class Exercise {
     const currentFiles = {};
     let filenames = Object.getOwnPropertyNames(this.getFiles())
       .filter(o => o.endsWith('.js'))
-      .filter(o => !o.startsWith('.'));
+      .filter(o => o.indexOf('.tmproject.yml') == -1);
     if (localStorage.getItem('showall') !== 'true') {
-      filenames = filenames.filter(o => !o.endsWith('test.js'));
+      filenames = filenames.filter(o => !o.endsWith('test.js')).filter(o => o.indexOf('.tmproject.yml') == -1);
     }
     filenames
       .sort()
@@ -227,7 +227,8 @@ export default class Exercise {
   }
 
   getFilesFromSource() {
-    return this.zip.file(/src(?!\/\.).*/);
+
+    return this.zip.file(/src(?!\/\.).*/).filter(o => o.name.indexOf('.tmproject.yml') == -1);
   }
 
   getTestFilesFromSource() {
@@ -235,7 +236,7 @@ export default class Exercise {
   }
 
   getVisibleFilesFromSource() {
-    return this.getFilesFromSource().filter(o => !o.name.endsWith('.hidden.js'));
+    return this.getFilesFromSource().filter(o => o.name.endsWith(".js")).filter(o => !o.name.endsWith('.hidden.js')).filter(o => o.name.indexOf('.tmproject.yml') == -1);
   }
 
   getFileExtension(filename) {
