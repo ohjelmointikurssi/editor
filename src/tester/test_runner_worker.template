@@ -113,7 +113,7 @@ var failed = [];
 onmessage = function(event) {
   var message = event.data;
   const url = message.url;
-  importScripts(url + '/assets/js/polyfill.min.js');
+
   importScripts(url + '/assets/js/mocha.min.js');
   importScripts( url + '/assets/js/chai.min.js');
   importScripts( url + '/assets/js/sinon.min.js');
